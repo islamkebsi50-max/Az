@@ -1,7 +1,37 @@
-// Aznaf Market - Main JavaScript
+// Aznaf Market - Main JavaScript with Firebase Integration
 
-// Product Data
-const products = [
+// ==========================================
+// Firebase Initialization
+// ==========================================
+
+let db = null;
+let firebaseInitialized = false;
+
+// Initialize Firebase if configured
+function initFirebase() {
+    try {
+        // Check if Firebase config is properly set up
+        if (typeof firebaseConfig !== 'undefined' && isFirebaseConfigured()) {
+            firebase.initializeApp(firebaseConfig);
+            db = firebase.firestore();
+            firebaseInitialized = true;
+            console.log('Firebase initialized successfully');
+            return true;
+        } else {
+            console.log('Firebase not configured - using local product data');
+            return false;
+        }
+    } catch (error) {
+        console.error('Firebase initialization error:', error);
+        return false;
+    }
+}
+
+// ==========================================
+// Local Product Data (Fallback)
+// ==========================================
+
+const localProducts = [
     {
         id: 1,
         name: "Premium Almonds",
@@ -100,30 +130,134 @@ const products = [
     }
 ];
 
+// Products array - will be populated from Firestore or local data
+let products = [];
+
+// ==========================================
+// Firestore Functions
+// ==========================================
+
+async function fetchProducts() {
+    // Show loading state
+    showLoadingState();
+    
+    // Try to fetch from Firestore if initialized
+    if (firebaseInitialized && db) {
+        try {
+            const snapshot = await db.collection('products').get();
+            
+            if (!snapshot.empty) {
+                products = snapshot.docs.map(doc => {
+                    const data = doc.data();
+                    return {
+                        id: doc.id,
+                        name: data.name || 'Unnamed Product',
+                        category: data.category || 'uncategorized',
+                        price: parseFloat(data.price) || 0,
+                        image: data.image || data.imageUrl || 'https://via.placeholder.com/400x400?text=Product',
+                        badge: data.badge || null
+                    };
+                });
+                console.log(`Fetched ${products.length} products from Firestore`);
+                return products;
+            } else {
+                console.log('No products in Firestore, using local data');
+                products = [...localProducts];
+                return products;
+            }
+        } catch (error) {
+            console.error('Error fetching products from Firestore:', error);
+            console.log('Falling back to local product data');
+            products = [...localProducts];
+            return products;
+        }
+    } else {
+        // Use local products if Firebase is not configured
+        console.log('Using local product data');
+        products = [...localProducts];
+        return products;
+    }
+}
+
+// Show loading skeleton while fetching products
+function showLoadingState() {
+    const productGrid = document.getElementById('product-grid');
+    if (!productGrid) return;
+    
+    const skeletonHTML = Array(8).fill('').map(() => `
+        <div class="product-card bg-white dark:bg-dark-card rounded-2xl overflow-hidden shadow-md">
+            <div class="product-image aspect-square skeleton"></div>
+            <div class="p-4">
+                <div class="h-3 w-16 skeleton rounded mb-2"></div>
+                <div class="h-5 w-full skeleton rounded mb-2"></div>
+                <div class="flex items-center justify-between">
+                    <div class="h-6 w-16 skeleton rounded"></div>
+                    <div class="h-10 w-10 skeleton rounded-full"></div>
+                </div>
+            </div>
+        </div>
+    `).join('');
+    
+    productGrid.innerHTML = skeletonHTML;
+}
+
+// ==========================================
 // Cart State
+// ==========================================
+
 let cart = [];
 let cartCount = 0;
 
+// ==========================================
 // DOM Elements
-const productGrid = document.getElementById('product-grid');
-const cartCountElement = document.getElementById('cart-count');
-const themeToggle = document.getElementById('theme-toggle');
-const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-const mobileMenu = document.getElementById('mobile-menu');
-const mobileSearchBtn = document.getElementById('mobile-search-btn');
-const mobileSearch = document.getElementById('mobile-search');
-const toast = document.getElementById('toast');
-const toastMessage = document.getElementById('toast-message');
-const categoryBtns = document.querySelectorAll('.category-btn');
+// ==========================================
 
-// Initialize
-document.addEventListener('DOMContentLoaded', () => {
+let productGrid;
+let cartCountElement;
+let themeToggle;
+let mobileMenuBtn;
+let mobileMenu;
+let mobileSearchBtn;
+let mobileSearch;
+let toast;
+let toastMessage;
+let categoryBtns;
+
+// ==========================================
+// Initialization
+// ==========================================
+
+document.addEventListener('DOMContentLoaded', async () => {
+    // Cache DOM elements
+    productGrid = document.getElementById('product-grid');
+    cartCountElement = document.getElementById('cart-count');
+    themeToggle = document.getElementById('theme-toggle');
+    mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    mobileMenu = document.getElementById('mobile-menu');
+    mobileSearchBtn = document.getElementById('mobile-search-btn');
+    mobileSearch = document.getElementById('mobile-search');
+    toast = document.getElementById('toast');
+    toastMessage = document.getElementById('toast-message');
+    categoryBtns = document.querySelectorAll('.category-btn');
+    
+    // Initialize theme
     initTheme();
+    
+    // Initialize Firebase
+    initFirebase();
+    
+    // Fetch and render products
+    await fetchProducts();
     renderProducts('all');
+    
+    // Set up event listeners
     initEventListeners();
 });
 
+// ==========================================
 // Theme Management
+// ==========================================
+
 function initTheme() {
     const savedTheme = localStorage.getItem('theme');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -140,31 +274,42 @@ function toggleTheme() {
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
 }
 
+// ==========================================
 // Event Listeners
+// ==========================================
+
 function initEventListeners() {
     // Theme Toggle
-    themeToggle.addEventListener('click', toggleTheme);
+    if (themeToggle) {
+        themeToggle.addEventListener('click', toggleTheme);
+    }
     
     // Mobile Menu Toggle
-    mobileMenuBtn.addEventListener('click', () => {
-        mobileMenu.classList.toggle('hidden');
-        mobileMenu.classList.toggle('open');
-    });
+    if (mobileMenuBtn && mobileMenu) {
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            mobileMenu.classList.toggle('open');
+        });
+    }
     
     // Mobile Search Toggle
-    mobileSearchBtn.addEventListener('click', () => {
-        mobileSearch.classList.toggle('hidden');
-    });
+    if (mobileSearchBtn && mobileSearch) {
+        mobileSearchBtn.addEventListener('click', () => {
+            mobileSearch.classList.toggle('hidden');
+        });
+    }
     
     // Category Buttons
-    categoryBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            categoryBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            const category = btn.dataset.category;
-            renderProducts(category);
+    if (categoryBtns) {
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                categoryBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const category = btn.dataset.category;
+                renderProducts(category);
+            });
         });
-    });
+    }
     
     // Listen for system theme changes
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
@@ -178,18 +323,33 @@ function initEventListeners() {
     });
 }
 
-// Render Products
+// ==========================================
+// Product Rendering
+// ==========================================
+
 function renderProducts(category) {
+    if (!productGrid) return;
+    
     const filteredProducts = category === 'all' 
         ? products 
         : products.filter(p => p.category === category);
+    
+    if (filteredProducts.length === 0) {
+        productGrid.innerHTML = `
+            <div class="col-span-full text-center py-12">
+                <i class="fas fa-box-open text-4xl text-gray-400 mb-4"></i>
+                <p class="text-gray-500 dark:text-gray-400">No products found in this category.</p>
+            </div>
+        `;
+        return;
+    }
     
     productGrid.innerHTML = filteredProducts.map(product => createProductCard(product)).join('');
     
     // Add event listeners to new Add to Cart buttons
     document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
-            const productId = parseInt(e.currentTarget.dataset.productId);
+            const productId = e.currentTarget.dataset.productId;
             addToCart(productId);
         });
     });
@@ -215,6 +375,15 @@ function createProductCard(product) {
         'drinks': 'Drinks'
     };
     
+    // Handle image URL - ensure it's valid
+    let imageUrl = product.image || product.imageUrl || '';
+    if (!imageUrl || imageUrl === '') {
+        imageUrl = 'https://via.placeholder.com/400x400?text=Product';
+    }
+    
+    // Handle price - ensure it's a number
+    const price = typeof product.price === 'number' ? product.price : parseFloat(product.price) || 0;
+    
     return `
         <div class="product-card bg-white dark:bg-dark-card rounded-2xl overflow-hidden shadow-md">
             <div class="product-image relative aspect-square overflow-hidden">
@@ -224,23 +393,23 @@ function createProductCard(product) {
                     </span>
                 ` : ''}
                 <img 
-                    src="${product.image}" 
+                    src="${imageUrl}" 
                     alt="${product.name}"
                     class="w-full h-full object-cover"
                     loading="lazy"
-                    onerror="this.src='https://via.placeholder.com/400x400?text=Product'"
+                    onerror="this.onerror=null; this.src='https://via.placeholder.com/400x400?text=Product'"
                 >
             </div>
             <div class="p-4">
                 <span class="text-xs text-primary-500 dark:text-primary-400 font-medium uppercase tracking-wide">
-                    ${categoryLabels[product.category]}
+                    ${categoryLabels[product.category] || product.category || 'Product'}
                 </span>
                 <h3 class="font-semibold text-gray-900 dark:text-white mt-1 mb-2 truncate">
                     ${product.name}
                 </h3>
                 <div class="flex items-center justify-between">
                     <span class="text-lg font-bold text-gray-900 dark:text-white price-tag">
-                        $${product.price.toFixed(2)}
+                        $${price.toFixed(2)}
                     </span>
                     <button 
                         class="add-to-cart-btn bg-primary-500 hover:bg-primary-600 text-white p-2.5 rounded-full shadow-md"
@@ -255,12 +424,16 @@ function createProductCard(product) {
     `;
 }
 
-// Add to Cart
+// ==========================================
+// Cart Functions
+// ==========================================
+
 function addToCart(productId) {
-    const product = products.find(p => p.id === productId);
+    // Handle both string and number IDs (Firestore uses strings)
+    const product = products.find(p => String(p.id) === String(productId));
     if (!product) return;
     
-    const existingItem = cart.find(item => item.id === productId);
+    const existingItem = cart.find(item => String(item.id) === String(productId));
     
     if (existingItem) {
         existingItem.quantity += 1;
@@ -273,35 +446,51 @@ function addToCart(productId) {
     showToast(`${product.name} added to cart!`);
 }
 
-// Update Cart Count
 function updateCartCount() {
-    cartCountElement.textContent = cartCount;
-    cartCountElement.classList.add('pulse');
-    setTimeout(() => {
-        cartCountElement.classList.remove('pulse');
-    }, 400);
+    if (cartCountElement) {
+        cartCountElement.textContent = cartCount;
+        cartCountElement.classList.add('pulse');
+        setTimeout(() => {
+            cartCountElement.classList.remove('pulse');
+        }, 400);
+    }
 }
 
-// Show Toast Notification
+// ==========================================
+// Toast Notification
+// ==========================================
+
 function showToast(message) {
-    toastMessage.textContent = message;
-    toast.classList.add('toast-show');
-    
-    setTimeout(() => {
-        toast.classList.remove('toast-show');
-    }, 3000);
+    if (toastMessage && toast) {
+        toastMessage.textContent = message;
+        toast.classList.add('toast-show');
+        
+        setTimeout(() => {
+            toast.classList.remove('toast-show');
+        }, 3000);
+    }
 }
 
-// Smooth scroll for anchor links
+// ==========================================
+// Smooth Scrolling
+// ==========================================
+
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
+        const href = this.getAttribute('href');
+        if (href && href.length > 1) {
+            e.preventDefault();
+            try {
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            } catch (error) {
+                console.log('Invalid selector:', href);
+            }
         }
     });
 });
