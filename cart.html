@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - Aznaf Market</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#fef7ee',
+                            100: '#fdedd3',
+                            200: '#fad7a5',
+                            300: '#f6ba6d',
+                            400: '#f19333',
+                            500: '#ee7712',
+                            600: '#df5c08',
+                            700: '#b94409',
+                            800: '#93360f',
+                            900: '#772f10',
+                        },
+                        dark: {
+                            bg: '#0f172a',
+                            card: '#1e293b',
+                            border: '#334155',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body class="bg-gray-50 dark:bg-dark-bg text-gray-900 dark:text-gray-100 transition-colors duration-300">
+    
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white dark:bg-dark-card shadow-md transition-colors duration-300">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16 md:h-20">
+                <a href="index.html" class="flex items-center space-x-2">
+                    <span class="text-2xl md:text-3xl font-extrabold text-primary-600 dark:text-primary-400">
+                        Aznaf<span class="text-gray-800 dark:text-white">Market</span>
+                    </span>
+                </a>
+                
+                <h1 class="text-xl md:text-2xl font-bold">Shopping Cart</h1>
+                
+                <div class="flex items-center space-x-2 md:space-x-4">
+                    <button id="theme-toggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-sun text-lg text-yellow-500 dark:hidden"></i>
+                        <i class="fas fa-moon text-lg text-blue-400 hidden dark:block"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- Cart Items -->
+            <div class="lg:col-span-2">
+                <h2 class="text-2xl font-bold mb-6">Cart Items</h2>
+                
+                <!-- Empty Cart Message -->
+                <div id="empty-cart" class="hidden text-center py-12">
+                    <i class="fas fa-shopping-cart text-6xl text-gray-300 dark:text-gray-600 mb-4"></i>
+                    <p class="text-xl text-gray-500 dark:text-gray-400 mb-4">Your cart is empty</p>
+                    <a href="index.html" class="inline-block bg-primary-500 hover:bg-primary-600 text-white font-semibold px-8 py-3 rounded-lg transition-all">
+                        Continue Shopping
+                    </a>
+                </div>
+                
+                <!-- Cart Items List -->
+                <div id="cart-items" class="space-y-4">
+                    <!-- Items will be rendered here -->
+                </div>
+            </div>
+            
+            <!-- Order Summary -->
+            <div class="lg:col-span-1">
+                <div class="bg-white dark:bg-dark-card rounded-2xl shadow-lg p-6 sticky top-24">
+                    <h2 class="text-xl font-bold mb-6">Order Summary</h2>
+                    
+                    <div class="space-y-4 mb-6 pb-6 border-b border-gray-200 dark:border-dark-border">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600 dark:text-gray-400">Subtotal:</span>
+                            <span class="font-semibold" id="subtotal">$0.00</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600 dark:text-gray-400">Tax (10%):</span>
+                            <span class="font-semibold" id="tax">$0.00</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600 dark:text-gray-400">Shipping:</span>
+                            <span class="font-semibold" id="shipping">Free</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center mb-6 text-lg font-bold">
+                        <span>Total:</span>
+                        <span class="text-primary-600 dark:text-primary-400" id="total">$0.00</span>
+                    </div>
+                    
+                    <button id="checkout-btn" class="w-full bg-primary-500 hover:bg-primary-600 text-white font-semibold py-3 px-6 rounded-lg transition-all mb-3 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed">
+                        <i class="fas fa-credit-card mr-2"></i>
+                        Proceed to Checkout
+                    </button>
+                    
+                    <button id="clear-cart-btn" class="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-6 rounded-lg transition-all flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed">
+                        <i class="fas fa-trash mr-2"></i>
+                        Clear Cart
+                    </button>
+                    
+                    <a href="index.html" class="block text-center mt-4 text-primary-500 hover:text-primary-600 font-medium">
+                        Continue Shopping
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Inject Environment Variables -->
+    <script>
+        window.__FIREBASE_API_KEY__ = '%FIREBASE_API_KEY%';
+        window.__FIREBASE_AUTH_DOMAIN__ = '%FIREBASE_AUTH_DOMAIN%';
+        window.__FIREBASE_PROJECT_ID__ = '%FIREBASE_PROJECT_ID%';
+        window.__FIREBASE_STORAGE_BUCKET__ = '%FIREBASE_STORAGE_BUCKET%';
+        window.__FIREBASE_MESSAGING_SENDER_ID__ = '%FIREBASE_MESSAGING_SENDER_ID%';
+        window.__FIREBASE_APP_ID__ = '%FIREBASE_APP_ID%';
+        window.__IMGBB_API_KEY__ = '%IMGBB_API_KEY%';
+    </script>
+
+    <!-- Cart Script -->
+    <script src="cart.js"></script>
+</body>
+</html>
