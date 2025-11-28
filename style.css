@@ -1,0 +1,309 @@
+/* Custom Styles for Aznaf Market */
+
+/* Scrollbar Hide for Categories */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Hero Section */
+.hero-section {
+    min-height: 500px;
+}
+
+.hero-bg {
+    transition: transform 0.3s ease;
+}
+
+.hero-section:hover .hero-bg {
+    transform: scale(1.02);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.8s ease forwards;
+}
+
+.animate-slide-up {
+    animation: slideInUp 0.6s ease forwards;
+}
+
+/* Product Card Animations */
+.product-card {
+    animation: slideInUp 0.5s ease forwards;
+    opacity: 0;
+}
+
+.product-card:nth-child(1) { animation-delay: 0.1s; }
+.product-card:nth-child(2) { animation-delay: 0.15s; }
+.product-card:nth-child(3) { animation-delay: 0.2s; }
+.product-card:nth-child(4) { animation-delay: 0.25s; }
+.product-card:nth-child(5) { animation-delay: 0.3s; }
+.product-card:nth-child(6) { animation-delay: 0.35s; }
+.product-card:nth-child(7) { animation-delay: 0.4s; }
+.product-card:nth-child(8) { animation-delay: 0.45s; }
+
+/* Category Buttons */
+.category-btn {
+    background-color: #f3f4f6;
+    color: #374151;
+    border: 2px solid transparent;
+}
+
+.category-btn:hover {
+    background-color: #fed7aa;
+    color: #c2410c;
+}
+
+.category-btn.active {
+    background-color: #ee7712;
+    color: white;
+    box-shadow: 0 4px 14px rgba(238, 119, 18, 0.4);
+}
+
+/* Dark Mode Category Buttons */
+.dark .category-btn {
+    background-color: #1e293b;
+    color: #94a3b8;
+}
+
+.dark .category-btn:hover {
+    background-color: #b94409;
+    color: white;
+}
+
+.dark .category-btn.active {
+    background-color: #ee7712;
+    color: white;
+}
+
+/* Product Card Styling */
+.product-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.dark .product-card:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.product-card .product-image {
+    transition: transform 0.4s ease;
+    overflow: hidden;
+}
+
+.product-card:hover .product-image img {
+    transform: scale(1.1);
+}
+
+/* Add to Cart Button */
+.add-to-cart-btn {
+    transition: all 0.3s ease;
+}
+
+.add-to-cart-btn:hover {
+    transform: scale(1.05);
+}
+
+.add-to-cart-btn:active {
+    transform: scale(0.95);
+}
+
+/* Cart Badge Animation */
+.cart-badge {
+    transition: transform 0.3s ease;
+}
+
+.cart-badge.pulse {
+    animation: pulse 0.4s ease;
+}
+
+/* Toast Animation */
+.toast-show {
+    transform: translateY(0) !important;
+    opacity: 1 !important;
+}
+
+/* Mobile Menu Transition */
+#mobile-menu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+#mobile-menu.open {
+    max-height: 400px;
+}
+
+/* Search Bar Focus */
+input[type="text"]:focus {
+    box-shadow: 0 0 0 3px rgba(238, 119, 18, 0.2);
+}
+
+/* Theme Toggle Animation */
+#theme-toggle i {
+    transition: transform 0.3s ease;
+}
+
+#theme-toggle:hover i {
+    transform: rotate(20deg);
+}
+
+/* Dark Mode Transitions */
+body, header, section, footer, .product-card, .category-btn {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Image Placeholder Styling */
+.product-image {
+    position: relative;
+    background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+}
+
+.dark .product-image {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+}
+
+.product-image img {
+    transition: transform 0.4s ease, opacity 0.3s ease;
+}
+
+/* Smooth Scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Focus States for Accessibility */
+button:focus, a:focus, input:focus {
+    outline: 2px solid #ee7712;
+    outline-offset: 2px;
+}
+
+button:focus:not(:focus-visible), 
+a:focus:not(:focus-visible), 
+input:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* Loading Skeleton */
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+.dark .skeleton {
+    background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+    background-size: 200% 100%;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .hero-section {
+        min-height: 400px;
+    }
+    
+    .hero-section h1 {
+        font-size: 2rem;
+    }
+    
+    .product-card {
+        animation-delay: 0s !important;
+    }
+}
+
+/* Price Tag Styling */
+.price-tag {
+    font-variant-numeric: tabular-nums;
+}
+
+/* Category Scroll Shadow Indicators */
+.categories-scroll {
+    position: relative;
+}
+
+/* Sale Badge */
+.sale-badge {
+    animation: bounce 2s infinite;
+}
+
+/* Hover Effects for Interactive Elements */
+.interactive-hover {
+    position: relative;
+    overflow: hidden;
+}
+
+.interactive-hover::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(238, 119, 18, 0.1);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+}
+
+.interactive-hover:hover::after {
+    width: 300%;
+    height: 300%;
+}

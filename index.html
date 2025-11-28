@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aznaf Market - Premium Spices, Nuts & More</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#fef7ee',
+                            100: '#fdedd3',
+                            200: '#fad7a5',
+                            300: '#f6ba6d',
+                            400: '#f19333',
+                            500: '#ee7712',
+                            600: '#df5c08',
+                            700: '#b94409',
+                            800: '#93360f',
+                            900: '#772f10',
+                        },
+                        dark: {
+                            bg: '#0f172a',
+                            card: '#1e293b',
+                            border: '#334155',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body class="bg-gray-50 dark:bg-dark-bg text-gray-900 dark:text-gray-100 transition-colors duration-300">
+    
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white dark:bg-dark-card shadow-md transition-colors duration-300">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16 md:h-20">
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+                
+                <!-- Brand Name -->
+                <a href="#" class="flex items-center space-x-2">
+                    <span class="text-2xl md:text-3xl font-extrabold text-primary-600 dark:text-primary-400">
+                        Aznaf<span class="text-gray-800 dark:text-white">Market</span>
+                    </span>
+                </a>
+                
+                <!-- Search Bar (Desktop) -->
+                <div class="hidden md:flex flex-1 max-w-xl mx-8">
+                    <div class="relative w-full">
+                        <input 
+                            type="text" 
+                            placeholder="Search for products..." 
+                            class="w-full px-4 py-2.5 pl-12 rounded-full border border-gray-300 dark:border-dark-border bg-gray-50 dark:bg-dark-bg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                        >
+                        <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                    </div>
+                </div>
+                
+                <!-- Header Icons -->
+                <div class="flex items-center space-x-2 md:space-x-4">
+                    <!-- Search Icon (Mobile) -->
+                    <button id="mobile-search-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-search text-lg"></i>
+                    </button>
+                    
+                    <!-- Dark Mode Toggle -->
+                    <button id="theme-toggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" aria-label="Toggle dark mode">
+                        <i class="fas fa-sun text-lg text-yellow-500 dark:hidden"></i>
+                        <i class="fas fa-moon text-lg text-blue-400 hidden dark:block"></i>
+                    </button>
+                    
+                    <!-- User Icon -->
+                    <button class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-user text-lg"></i>
+                    </button>
+                    
+                    <!-- Cart Icon -->
+                    <button id="cart-btn" class="relative p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-shopping-cart text-lg"></i>
+                        <span id="cart-count" class="absolute -top-1 -right-1 bg-primary-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center cart-badge">0</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Search Bar -->
+            <div id="mobile-search" class="hidden pb-4 md:hidden">
+                <div class="relative w-full">
+                    <input 
+                        type="text" 
+                        placeholder="Search for products..." 
+                        class="w-full px-4 py-2.5 pl-12 rounded-full border border-gray-300 dark:border-dark-border bg-gray-50 dark:bg-dark-bg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                    >
+                    <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-white dark:bg-dark-card border-t border-gray-200 dark:border-dark-border">
+            <nav class="container mx-auto px-4 py-4">
+                <ul class="space-y-3">
+                    <li><a href="#" class="block py-2 px-4 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">Home</a></li>
+                    <li><a href="#" class="block py-2 px-4 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">Shop</a></li>
+                    <li><a href="#" class="block py-2 px-4 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">Categories</a></li>
+                    <li><a href="#" class="block py-2 px-4 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">About Us</a></li>
+                    <li><a href="#" class="block py-2 px-4 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-black/70 to-black/40 z-10"></div>
+        <div class="hero-bg absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1596040033229-a9821ebd058d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');"></div>
+        <div class="container mx-auto px-4 py-20 md:py-32 relative z-20">
+            <div class="max-w-2xl text-white animate-fade-in">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                    Premium Spices & Nuts from Around the World
+                </h1>
+                <p class="text-lg md:text-xl mb-8 text-gray-200">
+                    Discover our handpicked selection of authentic spices, fresh nuts, and specialty food products. Quality you can taste in every bite.
+                </p>
+                <a href="#products" class="inline-block bg-primary-500 hover:bg-primary-600 text-white font-semibold px-8 py-4 rounded-full transition-all transform hover:scale-105 shadow-lg hover:shadow-xl">
+                    <i class="fas fa-shopping-bag mr-2"></i>
+                    Shop Now
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Navigation -->
+    <section class="bg-white dark:bg-dark-card shadow-sm transition-colors duration-300 sticky top-16 md:top-20 z-40">
+        <div class="container mx-auto px-4">
+            <div class="categories-scroll flex items-center space-x-2 py-4 overflow-x-auto scrollbar-hide">
+                <button class="category-btn active flex-shrink-0 px-6 py-2.5 rounded-full font-medium transition-all" data-category="all">
+                    <i class="fas fa-th-large mr-2"></i>All
+                </button>
+                <button class="category-btn flex-shrink-0 px-6 py-2.5 rounded-full font-medium transition-all" data-category="nuts">
+                    <i class="fas fa-seedling mr-2"></i>Nuts
+                </button>
+                <button class="category-btn flex-shrink-0 px-6 py-2.5 rounded-full font-medium transition-all" data-category="spices">
+                    <i class="fas fa-pepper-hot mr-2"></i>Spices
+                </button>
+                <button class="category-btn flex-shrink-0 px-6 py-2.5 rounded-full font-medium transition-all" data-category="food">
+                    <i class="fas fa-utensils mr-2"></i>Food Products
+                </button>
+                <button class="category-btn flex-shrink-0 px-6 py-2.5 rounded-full font-medium transition-all" data-category="cosmetics">
+                    <i class="fas fa-spa mr-2"></i>Cosmetics
+                </button>
+                <button class="category-btn flex-shrink-0 px-6 py-2.5 rounded-full font-medium transition-all" data-category="diapers">
+                    <i class="fas fa-baby mr-2"></i>Baby Diapers
+                </button>
+                <button class="category-btn flex-shrink-0 px-6 py-2.5 rounded-full font-medium transition-all" data-category="drinks">
+                    <i class="fas fa-glass-water mr-2"></i>Drinks
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="py-12 md:py-16">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-2xl md:text-3xl font-bold">Featured Products</h2>
+                <a href="#" class="text-primary-500 hover:text-primary-600 font-medium flex items-center">
+                    View All <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+            
+            <!-- Product Grid -->
+            <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                <!-- Products will be dynamically inserted here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="bg-white dark:bg-dark-card py-12 md:py-16 transition-colors duration-300">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+                <div class="text-center p-4">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-primary-100 dark:bg-primary-900/30 rounded-full flex items-center justify-center">
+                        <i class="fas fa-truck text-2xl text-primary-500"></i>
+                    </div>
+                    <h3 class="font-semibold mb-2">Free Shipping</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">On orders over $50</p>
+                </div>
+                <div class="text-center p-4">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-primary-100 dark:bg-primary-900/30 rounded-full flex items-center justify-center">
+                        <i class="fas fa-shield-alt text-2xl text-primary-500"></i>
+                    </div>
+                    <h3 class="font-semibold mb-2">Secure Payment</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">100% secure checkout</p>
+                </div>
+                <div class="text-center p-4">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-primary-100 dark:bg-primary-900/30 rounded-full flex items-center justify-center">
+                        <i class="fas fa-undo text-2xl text-primary-500"></i>
+                    </div>
+                    <h3 class="font-semibold mb-2">Easy Returns</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">30-day return policy</p>
+                </div>
+                <div class="text-center p-4">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-primary-100 dark:bg-primary-900/30 rounded-full flex items-center justify-center">
+                        <i class="fas fa-headset text-2xl text-primary-500"></i>
+                    </div>
+                    <h3 class="font-semibold mb-2">24/7 Support</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Dedicated support team</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 dark:bg-black text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="text-2xl font-bold mb-4">
+                        <span class="text-primary-400">Aznaf</span>Market
+                    </h3>
+                    <p class="text-gray-400 mb-4">Your trusted source for premium spices, nuts, and specialty food products.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Shop</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Categories</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Nuts</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Spices</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Food Products</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Cosmetics</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Contact Us</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><i class="fas fa-map-marker-alt mr-2"></i>123 Market Street, NY</li>
+                        <li><i class="fas fa-phone mr-2"></i>+1 234 567 890</li>
+                        <li><i class="fas fa-envelope mr-2"></i>info@aznafmarket.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Aznaf Market. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform translate-y-full opacity-0 transition-all duration-300 z-50">
+        <div class="flex items-center space-x-2">
+            <i class="fas fa-check-circle"></i>
+            <span id="toast-message">Item added to cart!</span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
