@@ -1,38 +1,30 @@
 // Firebase & imgbb Configuration for Aznaf Market
 // ==========================================
-// SECURITY NOTE: Replace these placeholder values with your actual credentials.
-//
-// Firebase Credentials:
-// You can find these in your Firebase Console: Project Settings > General > Your apps
-//
-// imgbb API Key:
-// Get your free API key from: https://api.imgbb.com/
-//
-// IMPORTANT: For production deployments:
+// Configuration is loaded from environment variables via the server
+// For production deployments:
 // - Set up proper Firestore Security Rules in your Firebase Console
 // - Keep your imgbb API key secure
 
-// Firebase Configuration
+// Firebase Configuration - loaded from window globals set by HTML
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: window.__FIREBASE_API_KEY__ || "",
+    authDomain: window.__FIREBASE_AUTH_DOMAIN__ || "",
+    projectId: window.__FIREBASE_PROJECT_ID__ || "",
+    storageBucket: window.__FIREBASE_STORAGE_BUCKET__ || "",
+    messagingSenderId: window.__FIREBASE_MESSAGING_SENDER_ID__ || "",
+    appId: window.__FIREBASE_APP_ID__ || ""
 };
 
 // imgbb API Key for image uploads
-// Get your free API key from: https://api.imgbb.com/
-const imgbbApiKey = "YOUR_IMGBB_API_KEY";
+const imgbbApiKey = window.__IMGBB_API_KEY__ || "";
 
 // Check if Firebase config has been set up
 function isFirebaseConfigured() {
-    return firebaseConfig.apiKey !== "YOUR_API_KEY" && 
-           firebaseConfig.projectId !== "YOUR_PROJECT_ID";
+    return firebaseConfig.apiKey && firebaseConfig.apiKey.length > 0 && 
+           firebaseConfig.projectId && firebaseConfig.projectId.length > 0;
 }
 
 // Check if imgbb is configured
 function isImgbbConfigured() {
-    return imgbbApiKey !== "YOUR_IMGBB_API_KEY" && imgbbApiKey.length > 0;
+    return imgbbApiKey && imgbbApiKey.length > 0;
 }
