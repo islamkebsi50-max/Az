@@ -46,6 +46,7 @@ Preferred communication style: Simple, everyday language.
 - Product grid/card layout
 - Category filtering system
 - Badge system for product highlights (Sale, Premium, Organic)
+- Admin panel (admin.html) for product management with Arabic RTL interface
 
 ### Data Architecture
 
@@ -86,8 +87,20 @@ Preferred communication style: Simple, everyday language.
   - Required fields: name, category, price, image (or imageUrl)
   - Optional field: badge
 
+- **imgbb**: Image hosting service for product images
+  - Get API key from: https://api.imgbb.com/
+  - Images uploaded via admin panel are stored on imgbb
+  - Image URLs are saved in Firestore product documents
+
+### Admin Panel
+- Access via: `/admin.html`
+- Features: Add, edit, delete products
+- Image upload: Drag & drop or click to select
+- Arabic RTL interface
+- Note: Currently no authentication - consider adding Firebase Auth for production
+
 ### Future Integration Considerations
 - Payment gateway integration (Stripe, PayPal) for checkout functionality
-- User authentication system using Firebase Auth
+- User authentication system using Firebase Auth for admin panel security
 - Shopping cart persistence using localStorage or Firestore
 - Order management and inventory tracking
