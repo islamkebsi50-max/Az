@@ -17,6 +17,7 @@ Preferred communication style: Simple, everyday language.
 - **Tailwind CSS (CDN)**: Utility-first CSS framework for styling with custom theme configuration
 - **Vanilla JavaScript**: Client-side logic without framework dependencies
 - **Font Awesome (CDN)**: Icon library for UI elements
+- **Firebase Firestore (CDN)**: Cloud database for dynamic product management (optional)
 
 **Design Patterns**
 - Single Page Application (SPA) approach with client-side rendering
@@ -32,11 +33,11 @@ Preferred communication style: Simple, everyday language.
 - Hover effects and transitions for interactive elements
 
 **State Management**
-- Client-side product data stored in JavaScript arrays
+- Client-side product data stored in JavaScript arrays with Firebase Firestore integration
 - Product objects contain: id, name, category, price, image URL, and optional badge
 - Categories include: Nuts, Spices, Food Products, Cosmetics, Baby Diapers, and Drinks
 - Theme preference stored in localStorage for persistence across sessions
-- No backend API calls - all data is static client-side
+- Graceful fallback to local product data when Firebase is not configured
 
 **UI Components**
 - Sticky header with navigation
@@ -76,13 +77,17 @@ Preferred communication style: Simple, everyday language.
 - **Tailwind CSS** (cdn.tailwindcss.com): Core styling framework with runtime configuration
 - **Font Awesome 6.4.2** (cdnjs.cloudflare.com): Icon library for UI elements
 - **Unsplash** (images.unsplash.com): Product image hosting with URL-based transformations
+- **Firebase SDK 10.7.1** (gstatic.com): Firebase App and Firestore libraries
 
 ### Third-Party Integrations
-- None currently implemented (no payment processors, analytics, or backend services)
+- **Firebase Firestore**: Cloud database for dynamic product management
+  - Configuration file: `firebase-config.js` (replace placeholder values with your Firebase credentials)
+  - Collection name: `products`
+  - Required fields: name, category, price, image (or imageUrl)
+  - Optional field: badge
 
 ### Future Integration Considerations
-- Potential for backend API integration for dynamic product management
 - Payment gateway integration (Stripe, PayPal) for checkout functionality
-- Database storage for product inventory and order management
-- User authentication system for account management
-- Shopping cart persistence using localStorage or backend API
+- User authentication system using Firebase Auth
+- Shopping cart persistence using localStorage or Firestore
+- Order management and inventory tracking
