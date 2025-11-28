@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة الإدارة - Aznaf Market</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#fef7ee',
+                            100: '#fdedd3',
+                            200: '#fad7a5',
+                            300: '#f6ba6d',
+                            400: '#f19333',
+                            500: '#ee7712',
+                            600: '#df5c08',
+                            700: '#b94409',
+                            800: '#93360f',
+                            900: '#772f10',
+                        },
+                        dark: {
+                            bg: '#0f172a',
+                            card: '#1e293b',
+                            border: '#334155',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        .upload-area {
+            border: 2px dashed #d1d5db;
+            transition: all 0.3s ease;
+        }
+        .upload-area:hover, .upload-area.dragover {
+            border-color: #ee7712;
+            background-color: rgba(238, 119, 18, 0.05);
+        }
+        .dark .upload-area {
+            border-color: #475569;
+        }
+        .dark .upload-area:hover, .dark .upload-area.dragover {
+            border-color: #ee7712;
+            background-color: rgba(238, 119, 18, 0.1);
+        }
+        .image-preview {
+            max-width: 200px;
+            max-height: 200px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-dark-bg text-gray-900 dark:text-gray-100 transition-colors duration-300 min-h-screen">
+    
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white dark:bg-dark-card shadow-md transition-colors duration-300">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16 md:h-20">
+                <a href="index.html" class="flex items-center space-x-2 space-x-reverse">
+                    <i class="fas fa-arrow-right text-gray-500 ml-3"></i>
+                    <span class="text-2xl md:text-3xl font-extrabold text-primary-600 dark:text-primary-400">
+                        Aznaf<span class="text-gray-800 dark:text-white">Market</span>
+                    </span>
+                </a>
+                
+                <h1 class="text-xl font-bold">لوحة الإدارة</h1>
+                
+                <button id="theme-toggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                    <i class="fas fa-sun text-lg text-yellow-500 dark:hidden"></i>
+                    <i class="fas fa-moon text-lg text-blue-400 hidden dark:block"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Status Messages -->
+    <div id="status-container" class="fixed top-24 left-4 right-4 z-50 flex flex-col gap-2"></div>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        
+        <!-- Configuration Check -->
+        <div id="config-warning" class="hidden mb-6 bg-yellow-100 dark:bg-yellow-900/30 border border-yellow-400 dark:border-yellow-600 text-yellow-800 dark:text-yellow-200 p-4 rounded-lg">
+            <div class="flex items-center">
+                <i class="fas fa-exclamation-triangle text-xl ml-3"></i>
+                <div>
+                    <h3 class="font-bold">تنبيه: الإعدادات غير مكتملة</h3>
+                    <p class="text-sm">يرجى تحديث ملف firebase-config.js بمفاتيح Firebase و imgbb API الخاصة بك.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            <!-- Add Product Form -->
+            <div class="bg-white dark:bg-dark-card rounded-2xl shadow-lg p-6">
+                <h2 class="text-xl font-bold mb-6 flex items-center">
+                    <i class="fas fa-plus-circle text-primary-500 ml-2"></i>
+                    إضافة منتج جديد
+                </h2>
+                
+                <form id="product-form" class="space-y-4">
+                    <input type="hidden" id="product-id" value="">
+                    
+                    <!-- Product Name -->
+                    <div>
+                        <label class="block text-sm font-medium mb-2">اسم المنتج *</label>
+                        <input 
+                            type="text" 
+                            id="product-name" 
+                            required
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-dark-border bg-gray-50 dark:bg-dark-bg focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all"
+                            placeholder="مثال: لوز فاخر"
+                        >
+                    </div>
+                    
+                    <!-- Category -->
+                    <div>
+                        <label class="block text-sm font-medium mb-2">التصنيف *</label>
+                        <select 
+                            id="product-category" 
+                            required
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-dark-border bg-gray-50 dark:bg-dark-bg focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all"
+                        >
+                            <option value="">اختر التصنيف</option>
+                            <option value="nuts">المكسرات</option>
+                            <option value="spices">البهارات</option>
+                            <option value="food">منتجات غذائية</option>
+                            <option value="cosmetics">مستحضرات التجميل</option>
+                            <option value="diapers">حفاضات الأطفال</option>
+                            <option value="drinks">المشروبات</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Price -->
+                    <div>
+                        <label class="block text-sm font-medium mb-2">السعر ($) *</label>
+                        <input 
+                            type="number" 
+                            id="product-price" 
+                            required
+                            min="0"
+                            step="0.01"
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-dark-border bg-gray-50 dark:bg-dark-bg focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all"
+                            placeholder="0.00"
+                        >
+                    </div>
+                    
+                    <!-- Badge -->
+                    <div>
+                        <label class="block text-sm font-medium mb-2">الشارة (اختياري)</label>
+                        <select 
+                            id="product-badge"
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-dark-border bg-gray-50 dark:bg-dark-bg focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all"
+                        >
+                            <option value="">بدون شارة</option>
+                            <option value="Sale">تخفيض</option>
+                            <option value="Premium">مميز</option>
+                            <option value="Organic">عضوي</option>
+                            <option value="Bestseller">الأكثر مبيعًا</option>
+                            <option value="New">جديد</option>
+                            <option value="Value Pack">عرض خاص</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Image Upload -->
+                    <div>
+                        <label class="block text-sm font-medium mb-2">صورة المنتج *</label>
+                        <div 
+                            id="upload-area" 
+                            class="upload-area rounded-lg p-8 text-center cursor-pointer"
+                        >
+                            <input 
+                                type="file" 
+                                id="product-image" 
+                                accept="image/*"
+                                class="hidden"
+                            >
+                            <div id="upload-placeholder">
+                                <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-3"></i>
+                                <p class="text-gray-500 dark:text-gray-400">اسحب الصورة هنا أو انقر للاختيار</p>
+                                <p class="text-xs text-gray-400 mt-2">PNG, JPG, WEBP (حد أقصى 32MB)</p>
+                            </div>
+                            <div id="image-preview-container" class="hidden">
+                                <img id="image-preview" class="image-preview mx-auto rounded-lg shadow-md mb-3">
+                                <p id="image-name" class="text-sm text-gray-500"></p>
+                                <button type="button" id="remove-image" class="mt-2 text-red-500 hover:text-red-600 text-sm">
+                                    <i class="fas fa-times ml-1"></i> إزالة الصورة
+                                </button>
+                            </div>
+                        </div>
+                        <input type="hidden" id="product-image-url" value="">
+                    </div>
+                    
+                    <!-- Upload Progress -->
+                    <div id="upload-progress" class="hidden">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-sm">جاري رفع الصورة...</span>
+                            <span id="progress-percent" class="text-sm font-medium">0%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                            <div id="progress-bar" class="bg-primary-500 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Submit Button -->
+                    <div class="flex gap-3 pt-4">
+                        <button 
+                            type="submit" 
+                            id="submit-btn"
+                            class="flex-1 bg-primary-500 hover:bg-primary-600 text-white font-semibold py-3 px-6 rounded-lg transition-all flex items-center justify-center"
+                        >
+                            <i class="fas fa-plus ml-2"></i>
+                            <span id="submit-text">إضافة المنتج</span>
+                        </button>
+                        <button 
+                            type="button" 
+                            id="cancel-edit-btn"
+                            class="hidden px-6 py-3 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-semibold rounded-lg transition-all"
+                        >
+                            إلغاء
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Products List -->
+            <div class="bg-white dark:bg-dark-card rounded-2xl shadow-lg p-6">
+                <h2 class="text-xl font-bold mb-6 flex items-center justify-between">
+                    <span>
+                        <i class="fas fa-box text-primary-500 ml-2"></i>
+                        المنتجات (<span id="products-count">0</span>)
+                    </span>
+                    <button 
+                        id="refresh-btn"
+                        class="text-primary-500 hover:text-primary-600 transition-colors"
+                        title="تحديث القائمة"
+                    >
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                </h2>
+                
+                <div id="products-list" class="space-y-4 max-h-[600px] overflow-y-auto">
+                    <!-- Products will be loaded here -->
+                    <div class="text-center py-8 text-gray-500">
+                        <i class="fas fa-spinner fa-spin text-3xl mb-3"></i>
+                        <p>جاري تحميل المنتجات...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="delete-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+        <div class="bg-white dark:bg-dark-card rounded-2xl p-6 m-4 max-w-md w-full shadow-2xl">
+            <div class="text-center">
+                <div class="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-trash-alt text-3xl text-red-500"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">تأكيد الحذف</h3>
+                <p class="text-gray-500 dark:text-gray-400 mb-6">هل أنت متأكد من حذف هذا المنتج؟ لا يمكن التراجع عن هذا الإجراء.</p>
+                <div class="flex gap-3">
+                    <button 
+                        id="confirm-delete-btn"
+                        class="flex-1 bg-red-500 hover:bg-red-600 text-white font-semibold py-3 rounded-lg transition-all"
+                    >
+                        نعم، احذف
+                    </button>
+                    <button 
+                        id="cancel-delete-btn"
+                        class="flex-1 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-semibold py-3 rounded-lg transition-all"
+                    >
+                        إلغاء
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    
+    <!-- Firebase Configuration -->
+    <script src="firebase-config.js"></script>
+    
+    <!-- Admin Script -->
+    <script src="admin.js"></script>
+</body>
+</html>

@@ -1,15 +1,18 @@
-// Firebase Configuration for Aznaf Market
+// Firebase & imgbb Configuration for Aznaf Market
 // ==========================================
-// SECURITY NOTE: Replace these placeholder values with your actual Firebase credentials.
+// SECURITY NOTE: Replace these placeholder values with your actual credentials.
+//
+// Firebase Credentials:
 // You can find these in your Firebase Console: Project Settings > General > Your apps
 //
+// imgbb API Key:
+// Get your free API key from: https://api.imgbb.com/
+//
 // IMPORTANT: For production deployments:
-// - Consider using environment variables or a secrets management service
-// - Firebase API keys are safe to expose in client-side code as security is enforced
-//   through Firebase Security Rules, but you should still configure proper rules
 // - Set up proper Firestore Security Rules in your Firebase Console
-// - Enable only the Firebase services you actually use
+// - Keep your imgbb API key secure
 
+// Firebase Configuration
 const firebaseConfig = {
     apiKey: "YOUR_API_KEY",
     authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
@@ -19,8 +22,17 @@ const firebaseConfig = {
     appId: "YOUR_APP_ID"
 };
 
+// imgbb API Key for image uploads
+// Get your free API key from: https://api.imgbb.com/
+const imgbbApiKey = "YOUR_IMGBB_API_KEY";
+
 // Check if Firebase config has been set up
 function isFirebaseConfigured() {
     return firebaseConfig.apiKey !== "YOUR_API_KEY" && 
            firebaseConfig.projectId !== "YOUR_PROJECT_ID";
+}
+
+// Check if imgbb is configured
+function isImgbbConfigured() {
+    return imgbbApiKey !== "YOUR_IMGBB_API_KEY" && imgbbApiKey.length > 0;
 }
