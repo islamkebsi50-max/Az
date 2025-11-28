@@ -1,6 +1,14 @@
-// Firebase Configuration
-// Replace the placeholder values with your actual Firebase project credentials
-// You can find these in your Firebase Console: Project Settings > General > Your apps > Firebase SDK snippet
+// Firebase Configuration for Aznaf Market
+// ==========================================
+// SECURITY NOTE: Replace these placeholder values with your actual Firebase credentials.
+// You can find these in your Firebase Console: Project Settings > General > Your apps
+//
+// IMPORTANT: For production deployments:
+// - Consider using environment variables or a secrets management service
+// - Firebase API keys are safe to expose in client-side code as security is enforced
+//   through Firebase Security Rules, but you should still configure proper rules
+// - Set up proper Firestore Security Rules in your Firebase Console
+// - Enable only the Firebase services you actually use
 
 const firebaseConfig = {
     apiKey: "YOUR_API_KEY",
@@ -11,5 +19,8 @@ const firebaseConfig = {
     appId: "YOUR_APP_ID"
 };
 
-// Export the configuration for use in other modules
-// This will be used by script.js to initialize Firebase
+// Check if Firebase config has been set up
+function isFirebaseConfigured() {
+    return firebaseConfig.apiKey !== "YOUR_API_KEY" && 
+           firebaseConfig.projectId !== "YOUR_PROJECT_ID";
+}
