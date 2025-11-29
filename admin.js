@@ -684,14 +684,31 @@ async function renderAdminProducts(filterCategory = 'all') {
 
         inventoryProducts.innerHTML = products.map(product => {
             const displayName = product.name_ar || product.name || '';
+            const categoryLabels = {
+                'nuts': 'المكسرات',
+                'spices': 'البهارات',
+                'food': 'منتجات غذائية',
+                'cosmetics': 'مستحضرات التجميل',
+                'baby': 'حفاضات الأطفال',
+                'diapers': 'حفاضات الأطفال',
+                'drinks': 'المشروبات'
+            };
             return `
-                <div class="bg-gray-50 dark:bg-dark-bg p-3 rounded-lg border border-gray-200 dark:border-dark-border flex flex-col items-center text-center hover:shadow-md transition-shadow">
-                    <img src="${product.image || 'https://via.placeholder.com/80x80?text=No+Image'}" alt="${displayName}" class="w-20 h-20 object-cover rounded mb-2">
-                    <h3 class="font-semibold text-sm truncate max-w-full">${displayName}</h3>
-                    <p class="text-primary-500 font-bold text-sm">${product.price?.toFixed(2) || '0.00'} ${CURRENCY_SYMBOL}</p>
-                    <button class="delete-inventory-product-btn mt-2 px-3 py-1 text-xs bg-red-500 hover:bg-red-600 text-white rounded transition-colors" data-id="${product.id}">
-                        <i class="fas fa-trash"></i>
-                    </button>
+                <div class="bg-white dark:bg-dark-card rounded-xl shadow p-4 flex gap-4 hover:shadow-lg transition-shadow">
+                    <div class="flex-shrink-0">
+                        <img src="${product.image || 'https://via.placeholder.com/120x120?text=No+Image'}" alt="${displayName}" class="w-24 h-24 object-cover rounded-lg">
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-bold text-base mb-1">${displayName}</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">${categoryLabels[product.category] || product.category}</p>
+                        <p class="text-primary-600 dark:text-primary-400 font-bold text-lg mb-3">${product.price?.toFixed(2) || '0.00'} ${CURRENCY_SYMBOL}</p>
+                    </div>
+                    <div class="flex flex-col items-end justify-center">
+                        <button class="delete-inventory-product-btn px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors flex items-center gap-2" data-id="${product.id}">
+                            <i class="fas fa-trash"></i>
+                            <span>حذف</span>
+                        </button>
+                    </div>
                 </div>
             `;
         }).join('');
