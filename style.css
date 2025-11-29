@@ -1,6 +1,61 @@
 /* Custom Styles for Aznaf Market */
 
-/* Scrollbar Hide for Categories */
+/* ==========================================
+   RTL/LTR Support
+   ========================================== */
+
+/* Default font for Arabic (RTL) */
+html[dir="rtl"] {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Font for English (LTR) */
+html[dir="ltr"] {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Text alignment based on direction */
+html[dir="rtl"] body {
+    text-align: right;
+}
+
+html[dir="ltr"] body {
+    text-align: left;
+}
+
+/* Flexbox direction adjustments */
+html[dir="rtl"] .flex-row-reverse-rtl {
+    flex-direction: row-reverse;
+}
+
+/* Logical properties for margins and paddings */
+.ms-2 { margin-inline-start: 0.5rem; }
+.me-2 { margin-inline-end: 0.5rem; }
+.ps-12 { padding-inline-start: 3rem; }
+.pe-12 { padding-inline-end: 3rem; }
+
+/* Icon mirroring for LTR */
+html[dir="ltr"] .fa-arrow-left {
+    transform: scaleX(-1);
+}
+
+/* Start/End positioning */
+.start-4 { inset-inline-start: 1rem; }
+.end-4 { inset-inline-end: 1rem; }
+.start-0 { inset-inline-start: 0; }
+.end-0 { inset-inline-end: 0; }
+.start-3 { inset-inline-start: 0.75rem; }
+.end-3 { inset-inline-end: 0.75rem; }
+
+/* Language toggle button styling */
+#lang-toggle {
+    min-width: 70px;
+    text-align: center;
+}
+
+/* ==========================================
+   Scrollbar Hide for Categories 
+   ========================================== */
 .scrollbar-hide::-webkit-scrollbar {
     display: none;
 }

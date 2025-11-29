@@ -8,6 +8,236 @@ const CURRENCY_SYMBOL = "د.ج";
 const TAX_RATE = 0.10;
 
 // ==========================================
+// Translations
+// ==========================================
+
+const translations = {
+    ar: {
+        // Navigation
+        nav_home: "الرئيسية",
+        nav_shop: "المتجر",
+        nav_cart: "السلة",
+        nav_contact: "اتصل بنا",
+        
+        // Hero Section
+        hero_title: "توابل ومكسرات فاخرة من جميع أنحاء العالم",
+        hero_subtitle: "اكتشف مجموعتنا المختارة بعناية من التوابل الأصيلة والمكسرات الطازجة والمنتجات الغذائية المميزة. جودة تتذوقها في كل قضمة.",
+        hero_btn: "تسوق الآن",
+        
+        // Categories
+        cat_all: "الكل",
+        cat_nuts: "مكسرات",
+        cat_spices: "توابل",
+        cat_food: "منتجات غذائية",
+        cat_cosmetics: "مستحضرات تجميل",
+        cat_diapers: "حفاضات أطفال",
+        cat_drinks: "مشروبات",
+        
+        // Products Section
+        sect_featured: "المنتجات المميزة",
+        view_all: "عرض الكل",
+        add_to_cart: "أضف إلى السلة",
+        added_to_cart: "تمت الإضافة ✓",
+        no_products: "لا توجد منتجات",
+        
+        // Features
+        feat_shipping: "شحن مجاني",
+        feat_shipping_desc: "للطلبات فوق 50$",
+        feat_payment: "دفع آمن",
+        feat_payment_desc: "دفع آمن 100%",
+        feat_returns: "إرجاع سهل",
+        feat_returns_desc: "سياسة إرجاع 30 يوم",
+        feat_support: "دعم 24/7",
+        feat_support_desc: "فريق دعم متخصص",
+        
+        // Footer
+        footer_desc: "مصدرك الموثوق للتوابل والمكسرات والمنتجات الغذائية الفاخرة.",
+        footer_links: "روابط سريعة",
+        footer_about: "من نحن",
+        footer_categories: "الأصناف",
+        footer_contact: "اتصل بنا",
+        footer_address: "123 شارع السوق، نيويورك",
+        footer_rights: "© 2024 أزناف ماركت. جميع الحقوق محفوظة.",
+        
+        // Cart
+        cart_title: "سلة التسوق",
+        cart_items: "عناصر السلة",
+        cart_empty: "السلة فارغة",
+        continue_shopping: "متابعة التسوق",
+        order_summary: "ملخص الطلب",
+        cart_subtotal: "المجموع الفرعي:",
+        cart_tax: "الضريبة (10%):",
+        cart_shipping: "الشحن:",
+        free: "مجاني",
+        cart_total: "المجموع:",
+        checkout_btn: "طلب عبر واتس أب",
+        clear_cart: "إفراغ السلة",
+        
+        // Modal
+        modal_clear_title: "إفراغ السلة",
+        modal_clear_msg: "هل أنت متأكد من إفراغ السلة؟ لا يمكن التراجع عن هذا الإجراء.",
+        modal_cancel: "إلغاء",
+        modal_confirm: "نعم، إفراغ السلة",
+        
+        // Search
+        search_placeholder: "ابحث عن المنتجات...",
+        
+        // Toast
+        toast_added: "تمت إضافة المنتج للسلة!",
+        
+        // Language
+        lang_toggle: "English"
+    },
+    en: {
+        // Navigation
+        nav_home: "Home",
+        nav_shop: "Shop",
+        nav_cart: "Cart",
+        nav_contact: "Contact",
+        
+        // Hero Section
+        hero_title: "Premium Spices & Nuts from Around the World",
+        hero_subtitle: "Discover our handpicked selection of authentic spices, fresh nuts, and specialty food products. Quality you can taste in every bite.",
+        hero_btn: "Shop Now",
+        
+        // Categories
+        cat_all: "All",
+        cat_nuts: "Nuts",
+        cat_spices: "Spices",
+        cat_food: "Food Products",
+        cat_cosmetics: "Cosmetics",
+        cat_diapers: "Baby Diapers",
+        cat_drinks: "Drinks",
+        
+        // Products Section
+        sect_featured: "Featured Products",
+        view_all: "View All",
+        add_to_cart: "Add to Cart",
+        added_to_cart: "Added ✓",
+        no_products: "No products found",
+        
+        // Features
+        feat_shipping: "Free Shipping",
+        feat_shipping_desc: "On orders over $50",
+        feat_payment: "Secure Payment",
+        feat_payment_desc: "100% secure checkout",
+        feat_returns: "Easy Returns",
+        feat_returns_desc: "30-day return policy",
+        feat_support: "24/7 Support",
+        feat_support_desc: "Dedicated support team",
+        
+        // Footer
+        footer_desc: "Your trusted source for premium spices, nuts, and specialty food products.",
+        footer_links: "Quick Links",
+        footer_about: "About Us",
+        footer_categories: "Categories",
+        footer_contact: "Contact Us",
+        footer_address: "123 Market Street, NY",
+        footer_rights: "© 2024 Aznaf Market. All rights reserved.",
+        
+        // Cart
+        cart_title: "Shopping Cart",
+        cart_items: "Cart Items",
+        cart_empty: "Your cart is empty",
+        continue_shopping: "Continue Shopping",
+        order_summary: "Order Summary",
+        cart_subtotal: "Subtotal:",
+        cart_tax: "Tax (10%):",
+        cart_shipping: "Shipping:",
+        free: "Free",
+        cart_total: "Total:",
+        checkout_btn: "Order via WhatsApp",
+        clear_cart: "Clear Cart",
+        
+        // Modal
+        modal_clear_title: "Clear Cart",
+        modal_clear_msg: "Are you sure you want to clear your cart? This action cannot be undone.",
+        modal_cancel: "Cancel",
+        modal_confirm: "Yes, Clear Cart",
+        
+        // Search
+        search_placeholder: "Search for products...",
+        
+        // Toast
+        toast_added: "Item added to cart!",
+        
+        // Language
+        lang_toggle: "عربي"
+    }
+};
+
+// Current language
+let currentLang = 'ar';
+
+// ==========================================
+// Language Functions
+// ==========================================
+
+function initLanguage() {
+    const savedLang = localStorage.getItem('aznaf_lang') || 'ar';
+    setLanguage(savedLang, false);
+}
+
+function setLanguage(lang, save = true) {
+    currentLang = lang;
+    
+    if (save) {
+        localStorage.setItem('aznaf_lang', lang);
+    }
+    
+    // Update HTML dir and lang attributes
+    const html = document.documentElement;
+    html.lang = lang;
+    html.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    
+    // Update all elements with data-lang-key
+    document.querySelectorAll('[data-lang-key]').forEach(el => {
+        const key = el.getAttribute('data-lang-key');
+        if (translations[lang] && translations[lang][key]) {
+            el.textContent = translations[lang][key];
+        }
+    });
+    
+    // Update all placeholders with data-lang-placeholder
+    document.querySelectorAll('[data-lang-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-lang-placeholder');
+        if (translations[lang] && translations[lang][key]) {
+            el.placeholder = translations[lang][key];
+        }
+    });
+    
+    // Update language toggle button
+    const langToggle = document.getElementById('lang-toggle');
+    if (langToggle) {
+        langToggle.textContent = translations[lang].lang_toggle;
+    }
+    
+    // Re-render products to update button text
+    if (typeof renderProducts === 'function' && products.length > 0) {
+        renderProducts(products);
+    }
+}
+
+function toggleLanguage() {
+    const newLang = currentLang === 'ar' ? 'en' : 'ar';
+    setLanguage(newLang);
+}
+
+function setupLanguageToggle() {
+    const langToggle = document.getElementById('lang-toggle');
+    if (langToggle) {
+        langToggle.addEventListener('click', toggleLanguage);
+    }
+}
+
+// Get translation helper
+function t(key) {
+    return translations[currentLang] && translations[currentLang][key] 
+        ? translations[currentLang][key] 
+        : key;
+}
+
+// ==========================================
 // Price Formatting Function
 // ==========================================
 
@@ -98,7 +328,6 @@ async function initFirebase() {
             apiKey: firebaseConfig?.apiKey?.substring(0, 10)
         });
         
-        // Check if Firebase config is valid (not empty strings or placeholders)
         if (!firebaseConfig || !firebaseConfig.projectId || firebaseConfig.projectId === '' || firebaseConfig.projectId.includes('%')) {
             console.log('Firebase not configured, using local data');
             loadLocalProducts();
@@ -157,7 +386,7 @@ function renderProducts(productsToShow = products) {
     productGrid.innerHTML = '';
 
     if (productsToShow.length === 0) {
-        productGrid.innerHTML = '<p class="text-center text-gray-500">No products found</p>';
+        productGrid.innerHTML = `<p class="text-center text-gray-500 col-span-full">${t('no_products')}</p>`;
         return;
     }
 
@@ -173,7 +402,7 @@ function renderProducts(productsToShow = products) {
                     class="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
                     onerror="this.src='https://via.placeholder.com/400x400?text=Product+Image'"
                 >
-                ${product.badge ? `<span class="absolute top-3 right-3 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">${product.badge}</span>` : ''}
+                ${product.badge ? `<span class="absolute top-3 end-3 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">${product.badge}</span>` : ''}
             </div>
             <div class="p-4">
                 <h3 class="font-semibold text-lg text-gray-800 dark:text-white mb-2">${product.name}</h3>
@@ -185,7 +414,7 @@ function renderProducts(productsToShow = products) {
                     data-product-price="${product.price}"
                     data-product-image="${product.image}"
                 >
-                    أضف إلى السلة
+                    ${t('add_to_cart')}
                 </button>
             </div>
         `;
@@ -299,9 +528,9 @@ function addToCart(e) {
     updateCartBadge();
 
     // Show feedback
-    btn.textContent = 'تمت الإضافة ✓';
+    btn.textContent = t('added_to_cart');
     setTimeout(() => {
-        btn.textContent = 'أضف إلى السلة';
+        btn.textContent = t('add_to_cart');
     }, 1500);
 }
 
@@ -364,12 +593,14 @@ function setupUIControls() {
 // ==========================================
 
 document.addEventListener('DOMContentLoaded', () => {
+    initLanguage();
     initTheme();
     loadCartFromLocalStorage();
     updateCartBadge();
     setupSearch();
     setupCategoryFilters();
     setupUIControls();
+    setupLanguageToggle();
     initFirebase();
 });
 
@@ -379,3 +610,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 window.formatPrice = formatPrice;
 window.addToCart = addToCart;
+window.translations = translations;
+window.currentLang = currentLang;
+window.t = t;
+window.setLanguage = setLanguage;
+window.toggleLanguage = toggleLanguage;

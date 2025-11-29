@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,18 +42,23 @@
     <header class="sticky top-0 z-50 bg-white dark:bg-dark-card shadow-md transition-colors duration-300">
         <div class="container mx-auto px-4">
             <div class="flex items-center justify-between h-16 md:h-20">
-                <a href="index.html" class="flex items-center space-x-2">
+                <a href="index.html" class="flex items-center gap-2">
                     <span class="text-2xl md:text-3xl font-extrabold text-primary-600 dark:text-primary-400">
                         Aznaf<span class="text-gray-800 dark:text-white">Market</span>
                     </span>
                 </a>
                 
-                <h1 class="text-xl md:text-2xl font-bold">Shopping Cart</h1>
+                <h1 class="text-xl md:text-2xl font-bold" data-lang-key="cart_title">سلة التسوق</h1>
                 
-                <div class="flex items-center space-x-2 md:space-x-4">
+                <div class="flex items-center gap-2 md:gap-4">
                     <button id="theme-toggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
                         <i class="fas fa-sun text-lg text-yellow-500 dark:hidden"></i>
                         <i class="fas fa-moon text-lg text-blue-400 hidden dark:block"></i>
+                    </button>
+                    
+                    <!-- Language Toggle -->
+                    <button id="lang-toggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors font-semibold text-sm">
+                        English
                     </button>
                 </div>
             </div>
@@ -66,14 +71,14 @@
             
             <!-- Cart Items -->
             <div class="lg:col-span-2">
-                <h2 class="text-2xl font-bold mb-6">Cart Items</h2>
+                <h2 class="text-2xl font-bold mb-6" data-lang-key="cart_items">عناصر السلة</h2>
                 
                 <!-- Empty Cart Message -->
                 <div id="empty-cart" class="hidden text-center py-12">
                     <i class="fas fa-shopping-cart text-6xl text-gray-300 dark:text-gray-600 mb-4"></i>
-                    <p class="text-xl text-gray-500 dark:text-gray-400 mb-4">Your cart is empty</p>
-                    <a href="index.html" class="inline-block bg-primary-500 hover:bg-primary-600 text-white font-semibold px-8 py-3 rounded-lg transition-all">
-                        Continue Shopping
+                    <p class="text-xl text-gray-500 dark:text-gray-400 mb-4" data-lang-key="cart_empty">السلة فارغة</p>
+                    <a href="index.html" class="inline-block bg-primary-500 hover:bg-primary-600 text-white font-semibold px-8 py-3 rounded-lg transition-all" data-lang-key="continue_shopping">
+                        متابعة التسوق
                     </a>
                 </div>
                 
@@ -86,40 +91,40 @@
             <!-- Order Summary -->
             <div class="lg:col-span-1">
                 <div class="bg-white dark:bg-dark-card rounded-2xl shadow-lg p-6 sticky top-24">
-                    <h2 class="text-xl font-bold mb-6">Order Summary</h2>
+                    <h2 class="text-xl font-bold mb-6" data-lang-key="order_summary">ملخص الطلب</h2>
                     
                     <div class="space-y-4 mb-6 pb-6 border-b border-gray-200 dark:border-dark-border">
                         <div class="flex justify-between">
-                            <span class="text-gray-600 dark:text-gray-400">المجموع الفرعي:</span>
-                            <span class="font-semibold" id="subtotal">د.ج0.00</span>
+                            <span class="text-gray-600 dark:text-gray-400" data-lang-key="cart_subtotal">المجموع الفرعي:</span>
+                            <span class="font-semibold" id="subtotal">0.00 د.ج</span>
                         </div>
                         <div class="flex justify-between">
-                            <span class="text-gray-600 dark:text-gray-400">الضريبة (10%):</span>
-                            <span class="font-semibold" id="tax">د.ج0.00</span>
+                            <span class="text-gray-600 dark:text-gray-400" data-lang-key="cart_tax">الضريبة (10%):</span>
+                            <span class="font-semibold" id="tax">0.00 د.ج</span>
                         </div>
                         <div class="flex justify-between">
-                            <span class="text-gray-600 dark:text-gray-400">Shipping:</span>
-                            <span class="font-semibold" id="shipping">Free</span>
+                            <span class="text-gray-600 dark:text-gray-400" data-lang-key="cart_shipping">الشحن:</span>
+                            <span class="font-semibold" id="shipping" data-lang-key="free">مجاني</span>
                         </div>
                     </div>
                     
                     <div class="flex justify-between items-center mb-6 text-lg font-bold">
-                        <span>المجموع:</span>
-                        <span class="text-2xl font-bold text-primary-600 dark:text-primary-400" id="total">د.ج0.00</span>
+                        <span data-lang-key="cart_total">المجموع:</span>
+                        <span class="text-2xl font-bold text-primary-600 dark:text-primary-400" id="total">0.00 د.ج</span>
                     </div>
                     
                     <button id="checkout-btn" class="w-full bg-primary-500 hover:bg-primary-600 text-white font-semibold py-3 px-6 rounded-lg transition-all mb-3 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed">
-                        <i class="fab fa-whatsapp mr-2"></i>
-                        طلب عبر واتس أب
+                        <i class="fab fa-whatsapp me-2"></i>
+                        <span data-lang-key="checkout_btn">طلب عبر واتس أب</span>
                     </button>
                     
                     <button id="clear-cart-btn" class="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-6 rounded-lg transition-all flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed">
-                        <i class="fas fa-trash mr-2"></i>
-                        إفراغ السلة
+                        <i class="fas fa-trash me-2"></i>
+                        <span data-lang-key="clear_cart">إفراغ السلة</span>
                     </button>
                     
-                    <a href="index.html" class="block text-center mt-4 text-primary-500 hover:text-primary-600 font-medium">
-                        المتابعة للتسوق
+                    <a href="index.html" class="block text-center mt-4 text-primary-500 hover:text-primary-600 font-medium" data-lang-key="continue_shopping">
+                        متابعة التسوق
                     </a>
                 </div>
             </div>
@@ -139,16 +144,16 @@
                     <div class="mx-auto w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mb-4">
                         <i class="fas fa-trash-alt text-3xl text-red-500"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">إفراغ السلة</h3>
-                    <p class="text-gray-600 dark:text-gray-400 px-6">هل أنت متأكد من إفراغ السلة؟ لا يمكن التراجع عن هذا الإجراء.</p>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2" data-lang-key="modal_clear_title">إفراغ السلة</h3>
+                    <p class="text-gray-600 dark:text-gray-400 px-6" data-lang-key="modal_clear_msg">هل أنت متأكد من إفراغ السلة؟ لا يمكن التراجع عن هذا الإجراء.</p>
                 </div>
                 
                 <!-- Buttons -->
                 <div class="flex gap-3 p-6 pt-4">
-                    <button id="modal-cancel" class="flex-1 py-3 px-4 rounded-xl border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-semibold hover:bg-gray-100 dark:hover:bg-gray-700 transition-all">
+                    <button id="modal-cancel" class="flex-1 py-3 px-4 rounded-xl border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-semibold hover:bg-gray-100 dark:hover:bg-gray-700 transition-all" data-lang-key="modal_cancel">
                         إلغاء
                     </button>
-                    <button id="modal-confirm" class="flex-1 py-3 px-4 rounded-xl bg-red-500 hover:bg-red-600 text-white font-semibold transition-all">
+                    <button id="modal-confirm" class="flex-1 py-3 px-4 rounded-xl bg-red-500 hover:bg-red-600 text-white font-semibold transition-all" data-lang-key="modal_confirm">
                         نعم، إفراغ السلة
                     </button>
                 </div>

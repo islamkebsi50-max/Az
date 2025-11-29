@@ -12,6 +12,128 @@ function formatPrice(price) {
 }
 
 // ==========================================
+// Translations (same as main script)
+// ==========================================
+
+const translations = {
+    ar: {
+        nav_home: "الرئيسية",
+        nav_shop: "المتجر",
+        nav_cart: "السلة",
+        nav_contact: "اتصل بنا",
+        cart_title: "سلة التسوق",
+        cart_items: "عناصر السلة",
+        cart_empty: "السلة فارغة",
+        continue_shopping: "متابعة التسوق",
+        order_summary: "ملخص الطلب",
+        cart_subtotal: "المجموع الفرعي:",
+        cart_tax: "الضريبة (10%):",
+        cart_shipping: "الشحن:",
+        free: "مجاني",
+        cart_total: "المجموع:",
+        checkout_btn: "طلب عبر واتس أب",
+        clear_cart: "إفراغ السلة",
+        modal_clear_title: "إفراغ السلة",
+        modal_clear_msg: "هل أنت متأكد من إفراغ السلة؟ لا يمكن التراجع عن هذا الإجراء.",
+        modal_cancel: "إلغاء",
+        modal_confirm: "نعم، إفراغ السلة",
+        search_placeholder: "ابحث عن المنتجات...",
+        lang_toggle: "English",
+        remove: "حذف",
+        product: "منتج"
+    },
+    en: {
+        nav_home: "Home",
+        nav_shop: "Shop",
+        nav_cart: "Cart",
+        nav_contact: "Contact",
+        cart_title: "Shopping Cart",
+        cart_items: "Cart Items",
+        cart_empty: "Your cart is empty",
+        continue_shopping: "Continue Shopping",
+        order_summary: "Order Summary",
+        cart_subtotal: "Subtotal:",
+        cart_tax: "Tax (10%):",
+        cart_shipping: "Shipping:",
+        free: "Free",
+        cart_total: "Total:",
+        checkout_btn: "Order via WhatsApp",
+        clear_cart: "Clear Cart",
+        modal_clear_title: "Clear Cart",
+        modal_clear_msg: "Are you sure you want to clear your cart? This action cannot be undone.",
+        modal_cancel: "Cancel",
+        modal_confirm: "Yes, Clear Cart",
+        search_placeholder: "Search for products...",
+        lang_toggle: "عربي",
+        remove: "Remove",
+        product: "Product"
+    }
+};
+
+let currentLang = 'ar';
+
+function t(key) {
+    return translations[currentLang] && translations[currentLang][key] 
+        ? translations[currentLang][key] 
+        : key;
+}
+
+// ==========================================
+// Language Functions
+// ==========================================
+
+function initLanguage() {
+    const savedLang = localStorage.getItem('aznaf_lang') || 'ar';
+    setLanguage(savedLang, false);
+}
+
+function setLanguage(lang, save = true) {
+    currentLang = lang;
+    
+    if (save) {
+        localStorage.setItem('aznaf_lang', lang);
+    }
+    
+    const html = document.documentElement;
+    html.lang = lang;
+    html.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    
+    document.querySelectorAll('[data-lang-key]').forEach(el => {
+        const key = el.getAttribute('data-lang-key');
+        if (translations[lang] && translations[lang][key]) {
+            el.textContent = translations[lang][key];
+        }
+    });
+    
+    document.querySelectorAll('[data-lang-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-lang-placeholder');
+        if (translations[lang] && translations[lang][key]) {
+            el.placeholder = translations[lang][key];
+        }
+    });
+    
+    const langToggle = document.getElementById('lang-toggle');
+    if (langToggle) {
+        langToggle.textContent = translations[lang].lang_toggle;
+    }
+    
+    // Re-render cart
+    renderCart();
+}
+
+function toggleLanguage() {
+    const newLang = currentLang === 'ar' ? 'en' : 'ar';
+    setLanguage(newLang);
+}
+
+function setupLanguageToggle() {
+    const langToggle = document.getElementById('lang-toggle');
+    if (langToggle) {
+        langToggle.addEventListener('click', toggleLanguage);
+    }
+}
+
+// ==========================================
 // Theme Management
 // ==========================================
 
@@ -84,17 +206,13 @@ document.addEventListener('DOMContentLoaded', () => {
     checkoutBtn = document.getElementById('checkout-btn');
     clearCartBtn = document.getElementById('clear-cart-btn');
     
-    // Initialize theme
+    // Initialize
+    initLanguage();
     initTheme();
-    
-    // Load cart from localStorage
     loadCartFromLocalStorage();
-    
-    // Render cart
     renderCart();
-    
-    // Setup event listeners
     setupEventListeners();
+    setupLanguageToggle();
 });
 
 function setupEventListeners() {
@@ -130,18 +248,20 @@ function setupEventListeners() {
 // ==========================================
 
 function renderCart() {
+    if (!cartItemsContainer || !emptyCartMessage) return;
+    
     if (cart.length === 0) {
         cartItemsContainer.innerHTML = '';
         emptyCartMessage.classList.remove('hidden');
-        checkoutBtn.disabled = true;
-        clearCartBtn.disabled = true;
+        if (checkoutBtn) checkoutBtn.disabled = true;
+        if (clearCartBtn) clearCartBtn.disabled = true;
         updateCartSummary();
         return;
     }
     
     emptyCartMessage.classList.add('hidden');
-    checkoutBtn.disabled = false;
-    clearCartBtn.disabled = false;
+    if (checkoutBtn) checkoutBtn.disabled = false;
+    if (clearCartBtn) clearCartBtn.disabled = false;
     
     const itemsHTML = cart.map(item => `
         <div class="bg-white dark:bg-dark-card rounded-xl shadow p-4 flex gap-4">
@@ -158,8 +278,8 @@ function renderCart() {
             <!-- Item Details -->
             <div class="flex-1">
                 <h3 class="font-semibold text-gray-900 dark:text-white mb-1">${item.name}</h3>
-                <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">${item.category || 'Product'}</p>
-                <p class="text-lg font-bold text-primary-600 dark:text-primary-400">${CURRENCY_SYMBOL}${(item.price * item.quantity).toFixed(2)}</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">${item.category || t('product')}</p>
+                <p class="text-lg font-bold text-primary-600 dark:text-primary-400">${formatPrice(item.price * item.quantity)}</p>
             </div>
             
             <!-- Quantity Adjuster -->
@@ -184,7 +304,7 @@ function renderCart() {
                     data-product-id="${item.id}"
                     title="Remove item"
                 >
-                    Remove
+                    ${t('remove')}
                 </button>
             </div>
         </div>
@@ -238,9 +358,9 @@ function updateCartSummary() {
     const tax = subtotal * TAX_RATE;
     const total = subtotal + tax;
     
-    subtotalEl.textContent = formatPrice(subtotal);
-    taxEl.textContent = formatPrice(tax);
-    totalEl.textContent = formatPrice(total);
+    if (subtotalEl) subtotalEl.textContent = formatPrice(subtotal);
+    if (taxEl) taxEl.textContent = formatPrice(tax);
+    if (totalEl) totalEl.textContent = formatPrice(total);
 }
 
 // ==========================================
@@ -249,26 +369,29 @@ function updateCartSummary() {
 
 function handleCheckout() {
     if (cart.length === 0) {
-        alert('السلة فارغة');
+        alert(t('cart_empty'));
         return;
     }
     
-    // Build cart message in Arabic
     const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     const tax = subtotal * TAX_RATE;
     const total = subtotal + tax;
     
-    let message = 'مرحباً، أريد طلب:\n\n';
+    let message = currentLang === 'ar' 
+        ? 'مرحباً، أريد طلب:\n\n'
+        : 'Hello, I would like to order:\n\n';
+    
     cart.forEach(item => {
         message += `- ${item.name} (x${item.quantity}) : ${formatPrice(item.price * item.quantity)}\n`;
     });
-    message += `\nالمجموع الكلي: ${formatPrice(total)}`;
     
-    // Encode message for WhatsApp URL
+    message += currentLang === 'ar'
+        ? `\nالمجموع الكلي: ${formatPrice(total)}`
+        : `\nTotal: ${formatPrice(total)}`;
+    
     const encodedMessage = encodeURIComponent(message);
     const whatsappURL = `https://wa.me/${WHATSAPP_PHONE}?text=${encodedMessage}`;
     
-    // Redirect to WhatsApp
     window.open(whatsappURL, '_blank');
 }
 
@@ -280,9 +403,10 @@ function showConfirmModal() {
     const modal = document.getElementById('confirm-modal');
     const modalContent = document.getElementById('modal-content');
     
+    if (!modal || !modalContent) return;
+    
     modal.classList.remove('hidden');
     
-    // Animate in
     setTimeout(() => {
         modalContent.classList.remove('scale-95', 'opacity-0');
         modalContent.classList.add('scale-100', 'opacity-100');
@@ -293,7 +417,8 @@ function hideConfirmModal() {
     const modal = document.getElementById('confirm-modal');
     const modalContent = document.getElementById('modal-content');
     
-    // Animate out
+    if (!modal || !modalContent) return;
+    
     modalContent.classList.remove('scale-100', 'opacity-100');
     modalContent.classList.add('scale-95', 'opacity-0');
     
