@@ -130,8 +130,9 @@ const localProducts = [
     }
 ];
 
-// Products array - will be populated from Firestore or local data
+// Products arrays - will be populated from Firestore or local data
 let products = [];
+let allProducts = []; // Global storage for all products (used for instant search)
 
 // ==========================================
 // Firestore Functions
@@ -159,23 +160,28 @@ async function fetchProducts() {
                         description: data.description || ''
                     };
                 });
+                // Store in global array for instant search
+                allProducts = [...products];
                 console.log(`Fetched ${products.length} products from Firestore (ordered by newest first)`);
                 return products;
             } else {
                 console.log('No products in Firestore, using local data');
                 products = [...localProducts];
+                allProducts = [...localProducts];
                 return products;
             }
         } catch (error) {
             console.error('Error fetching products from Firestore:', error);
             console.log('Falling back to local product data');
             products = [...localProducts];
+            allProducts = [...localProducts];
             return products;
         }
     } else {
         // Use local products if Firebase is not configured
         console.log('Using local product data');
         products = [...localProducts];
+        allProducts = [...localProducts];
         return products;
     }
 }
@@ -254,6 +260,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     // Set up event listeners
     initEventListeners();
+    
+    // Initialize instant search functionality
+    initializeInstantSearch();
 });
 
 // ==========================================
@@ -478,12 +487,12 @@ function showToast(message) {
 // ==========================================
 
 // ==========================================
-// Search Functionality
+// Instant Live Search Functionality
 // ==========================================
 
-function searchProducts(query) {
-    if (!query || !query.trim()) {
-        // Reset to all products category
+function performInstantSearch(query) {
+    if (!query || query.trim().length === 0) {
+        // Empty search - show all products
         categoryBtns.forEach(b => b.classList.remove('active'));
         const allBtn = Array.from(categoryBtns).find(btn => btn.dataset.category === 'all');
         if (allBtn) allBtn.classList.add('active');
@@ -493,20 +502,39 @@ function searchProducts(query) {
     
     const searchTerm = query.toLowerCase().trim();
     
-    // Filter products by name or category (supports English & Arabic)
-    const filteredProducts = products.filter(p => {
-        const nameMatch = p.name.toLowerCase().includes(searchTerm);
-        const categoryMatch = p.category && p.category.toLowerCase().includes(searchTerm);
-        const descriptionMatch = p.description && p.description.toLowerCase().includes(searchTerm);
-        return nameMatch || categoryMatch || descriptionMatch;
-    });
+    if (!productGrid || allProducts.length === 0) return;
     
-    if (!productGrid) return;
+    // Prioritize products that START with search term, then include products that contain it
+    const exactStarts = allProducts.filter(p => 
+        p.name.toLowerCase().startsWith(searchTerm)
+    );
+    
+    const includes = allProducts.filter(p => 
+        !p.name.toLowerCase().startsWith(searchTerm) && 
+        p.name.toLowerCase().includes(searchTerm)
+    );
+    
+    const categoryMatches = allProducts.filter(p =>
+        !p.name.toLowerCase().includes(searchTerm) &&
+        p.category && p.category.toLowerCase().includes(searchTerm)
+    );
+    
+    const descriptionMatches = allProducts.filter(p =>
+        !p.name.toLowerCase().includes(searchTerm) &&
+        (!p.category || !p.category.toLowerCase().includes(searchTerm)) &&
+        p.description && p.description.toLowerCase().includes(searchTerm)
+    );
+    
+    // Combine results with priority: starts with > includes > category > description
+    const filteredProducts = [...exactStarts, ...includes, ...categoryMatches, ...descriptionMatches];
+    
+    // Remove duplicates by ID
+    const uniqueProducts = Array.from(new Map(filteredProducts.map(p => [p.id, p])).values());
     
     // Remove active state from category buttons during search
     categoryBtns.forEach(b => b.classList.remove('active'));
     
-    if (filteredProducts.length === 0) {
+    if (uniqueProducts.length === 0) {
         productGrid.innerHTML = `
             <div class="col-span-full text-center py-12">
                 <i class="fas fa-search text-4xl text-gray-400 mb-4"></i>
@@ -516,8 +544,8 @@ function searchProducts(query) {
         return;
     }
     
-    // Render filtered products
-    productGrid.innerHTML = filteredProducts.map(product => createProductCard(product)).join('');
+    // Render filtered products immediately
+    productGrid.innerHTML = uniqueProducts.map(product => createProductCard(product)).join('');
     
     // Attach event listeners to add-to-cart buttons
     document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
@@ -528,30 +556,24 @@ function searchProducts(query) {
     });
 }
 
-// Initialize search inputs after DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-    // Desktop search input
+// Initialize instant search with event listeners
+function initializeInstantSearch() {
+    // Desktop search input - instant on every keystroke
     const desktopSearchInput = document.querySelector('div.flex-1 input[placeholder="Search for products..."]');
     if (desktopSearchInput) {
-        desktopSearchInput.addEventListener('keyup', (e) => {
-            searchProducts(e.target.value);
-        });
         desktopSearchInput.addEventListener('input', (e) => {
-            searchProducts(e.target.value);
+            performInstantSearch(e.target.value);
         });
     }
     
-    // Mobile search input
+    // Mobile search input - instant on every keystroke
     const mobileSearchInput = document.querySelector('#mobile-search input[placeholder="Search for products..."]');
     if (mobileSearchInput) {
-        mobileSearchInput.addEventListener('keyup', (e) => {
-            searchProducts(e.target.value);
-        });
         mobileSearchInput.addEventListener('input', (e) => {
-            searchProducts(e.target.value);
+            performInstantSearch(e.target.value);
         });
     }
-}, { once: true });
+}
 
 // ==========================================
 // Smooth Scrolling
