@@ -568,13 +568,29 @@ async function editProduct(productId) {
 function openDeleteModal(productId) {
     productToDelete = productId;
     deleteModal.classList.remove('hidden');
-    deleteModal.classList.add('flex');
+    
+    // Trigger animation
+    setTimeout(() => {
+        const modalContent = document.getElementById('modal-content');
+        if (modalContent) {
+            modalContent.classList.remove('scale-95', 'opacity-0');
+            modalContent.classList.add('scale-100', 'opacity-100');
+        }
+    }, 10);
 }
 
 function closeDeleteModal() {
     productToDelete = null;
-    deleteModal.classList.add('hidden');
-    deleteModal.classList.remove('flex');
+    const modalContent = document.getElementById('modal-content');
+    
+    if (modalContent) {
+        modalContent.classList.remove('scale-100', 'opacity-100');
+        modalContent.classList.add('scale-95', 'opacity-0');
+    }
+    
+    setTimeout(() => {
+        deleteModal.classList.add('hidden');
+    }, 300);
 }
 
 async function confirmDelete() {
