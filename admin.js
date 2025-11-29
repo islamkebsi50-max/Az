@@ -106,7 +106,7 @@ let statusContainer;
 let selectedFile = null;
 let productToDelete = null;
 let categoryToDelete = null;
-let deleteAllProducts = false;
+let shouldDeleteAll = false;
 let isEditing = false;
 
 // ==========================================
@@ -589,7 +589,7 @@ function openDeleteModal(productId) {
 function closeDeleteModal() {
     productToDelete = null;
     categoryToDelete = null;
-    deleteAllProducts = false;
+    shouldDeleteAll = false;
     
     // Reset modal text to default
     const modalTitle = document.querySelector('#modal-content h3');
@@ -649,8 +649,8 @@ async function confirmDelete() {
         await deleteAllInCategory();
     }
     // Check if deleting all products
-    else if (deleteAllProducts) {
-        await deleteAllProducts();
+    else if (shouldDeleteAll) {
+        await deleteAllProductsFunc();
     }
 }
 
@@ -767,7 +767,7 @@ function openDeleteCategoryModal() {
     
     categoryToDelete = filterCategory;
     productToDelete = null;
-    deleteAllProducts = false;
+    shouldDeleteAll = false;
     
     // Update modal text for category deletion
     const modalTitle = document.querySelector('#modal-content h3');
@@ -789,7 +789,7 @@ function openDeleteCategoryModal() {
 }
 
 function openDeleteAllModal() {
-    deleteAllProducts = true;
+    shouldDeleteAll = true;
     productToDelete = null;
     categoryToDelete = null;
     
@@ -842,7 +842,7 @@ async function deleteAllInCategory() {
     }
 }
 
-async function deleteAllProducts() {
+async function deleteAllProductsFunc() {
     try {
         confirmDeleteBtn.disabled = true;
         confirmDeleteBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
@@ -903,4 +903,40 @@ function showStatus(message, type = 'info') {
         statusEl.style.transform = 'translateY(-20px)';
         setTimeout(() => statusEl.remove(), 300);
     }, 4000);
+}
+
+// ==========================================
+// Tab Navigation
+// ==========================================
+
+function initTabNavigation() {
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const tabName = btn.dataset.tab;
+            
+            // Hide all tabs and remove active state
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(b => {
+                b.classList.remove('active');
+            });
+            
+            // Show selected tab and set active state
+            document.getElementById(tabName + '-tab').classList.add('active');
+            btn.classList.add('active');
+            
+            // Reload products if inventory tab is opened
+            if (tabName === 'inventory') {
+                setTimeout(() => renderAdminProducts('all'), 300);
+            }
+        });
+    });
+}
+
+// Call tab navigation init after DOM is loaded
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTabNavigation);
+} else {
+    initTabNavigation();
 }

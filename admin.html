@@ -471,31 +471,6 @@
     
     <!-- Admin Script -->
     <script src="admin.js"></script>
-    
-    <!-- Tab Navigation Script -->
-    <script>
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const tabName = btn.dataset.tab;
-                
-                // Hide all tabs and remove active state
-                document.querySelectorAll('.tab-content').forEach(tab => {
-                    tab.classList.remove('active');
-                });
-                document.querySelectorAll('.tab-btn').forEach(b => {
-                    b.classList.remove('active');
-                });
-                
-                // Show selected tab and set active state
-                document.getElementById(tabName + '-tab').classList.add('active');
-                btn.classList.add('active');
-                
-                // Reload products if inventory tab is opened
-                if (tabName === 'inventory') {
-                    setTimeout(() => renderAdminProducts('all'), 300);
-                }
-            });
-        });
-    </script>
+
 </body>
 </html>
