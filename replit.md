@@ -172,24 +172,36 @@ Preferred communication style: Simple, everyday language.
 - Synchronized design: Uses same Tailwind CSS theme, colors, and translations as main site
 - Note: Currently no authentication - consider adding Firebase Auth for production
 
-### Generate Demo Data Feature (November 29, 2025)
+### Generate Demo Data Feature - Procedural Generation (November 29, 2025)
 - Added green "Demo" button in admin panel (Products section header)
-- `generateDemoData()` function creates 12 realistic demo products:
-  - **2 products per category** (nuts, spices, food, cosmetics, diapers, drinks)
-  - Realistic Arabic/English product names
-  - Prices in DZD (ranging from 150-950 د.ج)
-  - Placeholder images (https://placehold.co/400)
-- Saves all products to Firestore automatically
-- Shows success message upon completion
-- Auto-refreshes product list after demo data insertion
+- `generateDemoData()` function uses **Procedural Generation** to create unique random products:
 
-**Demo Products:**
-- Nuts: Premium Almonds (450 د.ج), Organic Walnuts (380 د.ج)
-- Spices: Pure Saffron (950 د.ج), Mixed Spices (220 د.ج)
-- Food: Natural Honey (320 د.ج), Extra Virgin Olive Oil (580 د.ج)
-- Cosmetics: Natural Care Cream (280 د.ج), Organic Lip Balm (150 د.ج)
-- Diapers: Soft Baby Diapers (320 د.ج), Safe Baby Wipes (180 د.ج)
-- Drinks: Arabic Coffee (420 د.ج), Premium Black Tea (250 د.ج)
+**Procedural Generation Details:**
+- **Brands Array (10):** Soummam, Candia, Ifri, Cevital, Bimo, Safina, Sim, Ngaous, Elio, Omo
+- **Items Array (10):** Milk 1L, Yoghurt, Orange Juice, Sugar 1kg, Sunflower Oil, Pasta 500g, Biscuits, Mineral Water, Detergent, Coffee
+- **Categories (6):** food, drinks, cosmetics, baby, nuts, spices
+- **Random Logic:**
+  - Each click generates **5 unique random products**
+  - Product name = Random Brand + Random Item (e.g., "Soummam Yoghurt", "Sim Pasta 500g")
+  - Price = Random between 100-3000 DZD
+  - Category = Randomly selected from 6 categories
+  - Image = Dynamic placeholder URL with product name (https://placehold.co/400?text=BRAND+ITEM)
+  - Arabic translations included for all items
+- Saves all products to Firestore automatically
+- Shows success message: "✓ تم إضافة 5 منتجات عشوائية جديدة!"
+- Auto-refreshes product list after insertion
+
+**Example Generated Products:**
+- "Candia Milk 1L" (890 د.ج) - drinks
+- "Ifri Orange Juice" (450 د.ج) - drinks
+- "Soummam Coffee" (1250 د.ج) - food
+- "Omo Detergent" (350 د.ج) - cosmetics
+- "Bimo Biscuits" (180 د.ج) - food
+
+**Key Benefits:**
+- Click 100 times → get 500 different product combinations
+- Bilingual support (Arabic/English names)
+- Realistic Algerian brand names and product types
 
 ### Future Integration Considerations
 - Payment gateway integration (Stripe, PayPal) for checkout functionality

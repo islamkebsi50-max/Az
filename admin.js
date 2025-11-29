@@ -655,40 +655,57 @@ async function confirmDelete() {
 }
 
 // ==========================================
-// Generate Demo Data
+// Generate Demo Data (Procedural Generation)
 // ==========================================
 
 async function generateDemoData() {
-    const demoProducts = [
-        // Food Products (8 items)
-        { name_ar: "سميد سفينة", name_en: "Safina Semoule", category: "food", price: 110, image: "https://placehold.co/400" },
-        { name_ar: "إندومي دجاج كاري", name_en: "Indomie Chicken Curry", category: "food", price: 65, image: "https://placehold.co/400" },
-        { name_ar: "لافاش الضاحكة - 32 حصة", name_en: "La Vache Qui Rit - 32 portions", category: "food", price: 980, image: "https://placehold.co/400" },
-        { name_ar: "عدس SOS 1 كيلو", name_en: "SOS Lentils 1kg", category: "food", price: 320, image: "https://placehold.co/400" },
-        { name_ar: "زيت التونة إيزابيل", name_en: "Isabel Tuna Oil", category: "food", price: 350, image: "https://placehold.co/400" },
-        { name_ar: "مايونيز هاينز", name_en: "Heinz Mayonnaise", category: "food", price: 550, image: "https://placehold.co/400" },
-        { name_ar: "فاصوليا بيضاء ثيكا", name_en: "Thika White Beans", category: "food", price: 290, image: "https://placehold.co/400" },
-        { name_ar: "كسكس عمور بن عمور", name_en: "Amor Benamor Couscous", category: "food", price: 170, image: "https://placehold.co/400" },
-        
-        // Other Categories (1 item each)
-        { name_ar: "لوز فاخر", name_en: "Premium Almonds", category: "nuts", price: 450, image: "https://placehold.co/400" },
-        { name_ar: "زعفران أصيل", name_en: "Pure Saffron", category: "spices", price: 950, image: "https://placehold.co/400" },
-        { name_ar: "قهوة عربية أصيلة", name_en: "Arabic Coffee", category: "drinks", price: 420, image: "https://placehold.co/400" },
-        { name_ar: "كريم العناية الطبيعي", name_en: "Natural Care Cream", category: "cosmetics", price: 280, image: "https://placehold.co/400" },
-        { name_ar: "حفاضات ناعمة", name_en: "Soft Baby Diapers", category: "baby", price: 320, image: "https://placehold.co/400" }
-    ];
-
+    // Define arrays for random combinations
+    const brands = ["Soummam", "Candia", "Ifri", "Cevital", "Bimo", "Safina", "Sim", "Ngaous", "Elio", "Omo"];
+    const items = ["Milk 1L", "Yoghurt", "Orange Juice", "Sugar 1kg", "Sunflower Oil", "Pasta 500g", "Biscuits", "Mineral Water", "Detergent", "Coffee"];
+    const categories = ["food", "drinks", "cosmetics", "baby", "nuts", "spices"];
+    
+    // Arabic translations for items
+    const itemsAr = ["حليب 1 لتر", "لبن زبادي", "عصير برتقال", "سكر 1 كيلو", "زيت دوار الشمس", "معكرونة 500غ", "بسكويت", "ماء معدني", "منظف الأطباق", "قهوة"];
+    
     if (typeof db === 'undefined' || !db) {
         showStatus("Firebase غير متصل!", "error");
         return;
     }
 
+    // Generate 5 random products
+    const randomProducts = [];
+    for (let i = 0; i < 5; i++) {
+        const randomBrand = brands[Math.floor(Math.random() * brands.length)];
+        const randomItemIndex = Math.floor(Math.random() * items.length);
+        const randomItem = items[randomItemIndex];
+        const randomItemAr = itemsAr[randomItemIndex];
+        const randomCategory = categories[Math.floor(Math.random() * categories.length)];
+        const randomPrice = Math.floor(Math.random() * (3000 - 100 + 1)) + 100; // Random between 100-3000
+        
+        // Create product name combining brand + item
+        const productName = `${randomBrand} ${randomItem}`;
+        const productNameAr = `${randomBrand} ${randomItemAr}`;
+        
+        // Dynamic image URL with product name as text
+        const imageUrl = `https://placehold.co/400?text=${encodeURIComponent(productName)}`;
+        
+        randomProducts.push({
+            name_ar: productNameAr,
+            name_en: productName,
+            category: randomCategory,
+            price: randomPrice,
+            image: imageUrl,
+            createdAt: new Date()
+        });
+    }
+
+    // Save all products to Firestore
     let count = 0;
-    demoProducts.forEach((product) => {
-        db.collection("products").add({...product, createdAt: new Date()}).then(() => {
+    randomProducts.forEach((product) => {
+        db.collection("products").add(product).then(() => {
             count++;
-            if (count === demoProducts.length) {
-                showStatus(`✓ تم إضافة ${demoProducts.length} منتج (8 جزائري + 5 فئات)!`, "success");
+            if (count === randomProducts.length) {
+                showStatus("✓ تم إضافة 5 منتجات عشوائية جديدة!", "success");
                 loadProducts();
             }
         }).catch(error => {
