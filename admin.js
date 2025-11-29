@@ -225,7 +225,8 @@ function initEventListeners() {
     const deleteAllBtn = document.getElementById('delete-all-btn');
     if (filterCategory) {
         filterCategory.addEventListener('change', (e) => renderAdminProducts(e.target.value));
-        renderAdminProducts('all');
+        // Initial render after a small delay to allow Firebase to initialize
+        setTimeout(() => renderAdminProducts('all'), 800);
     }
     if (deleteCategoryBtn) {
         deleteCategoryBtn.addEventListener('click', openDeleteCategoryModal);
@@ -410,7 +411,7 @@ function resetForm() {
 // ==========================================
 
 async function loadProducts() {
-    if (!firebaseInitialized) {
+    if (typeof db === 'undefined' || !db) {
         productsList.innerHTML = `
             <div class="text-center py-8 text-gray-500">
                 <i class="fas fa-exclamation-circle text-3xl mb-3 text-yellow-500"></i>
@@ -704,7 +705,7 @@ async function renderAdminProducts(filterCategory = 'all') {
     const inventoryProducts = document.getElementById('inventory-products');
     const deleteCategoryBtn = document.getElementById('delete-category-btn');
     
-    if (!firebaseInitialized) {
+    if (typeof db === 'undefined' || !db) {
         inventoryProducts.innerHTML = '<div class="col-span-full text-center py-8 text-red-500"><i class="fas fa-exclamation-circle text-3xl mb-3"></i><p>Firebase غير متصل</p></div>';
         return;
     }
