@@ -106,6 +106,7 @@ let statusContainer;
 let selectedFile = null;
 let productToDelete = null;
 let categoryToDelete = null;
+let deleteAllProducts = false;
 let isEditing = false;
 
 // ==========================================
@@ -221,12 +222,16 @@ function initEventListeners() {
     // Inventory Management
     const filterCategory = document.getElementById('inventory-filter-category');
     const deleteCategoryBtn = document.getElementById('delete-category-btn');
+    const deleteAllBtn = document.getElementById('delete-all-btn');
     if (filterCategory) {
         filterCategory.addEventListener('change', (e) => renderAdminProducts(e.target.value));
         renderAdminProducts('all');
     }
     if (deleteCategoryBtn) {
         deleteCategoryBtn.addEventListener('click', openDeleteCategoryModal);
+    }
+    if (deleteAllBtn) {
+        deleteAllBtn.addEventListener('click', openDeleteAllModal);
     }
 }
 
@@ -583,6 +588,7 @@ function openDeleteModal(productId) {
 function closeDeleteModal() {
     productToDelete = null;
     categoryToDelete = null;
+    deleteAllProducts = false;
     
     // Reset modal text to default
     const modalTitle = document.querySelector('#modal-content h3');
@@ -635,6 +641,10 @@ async function confirmDelete() {
     // Check if deleting a category
     else if (categoryToDelete) {
         await deleteAllInCategory();
+    }
+    // Check if deleting all products
+    else if (deleteAllProducts) {
+        await deleteAllProducts();
     }
 }
 
@@ -751,14 +761,39 @@ function openDeleteCategoryModal() {
     
     categoryToDelete = filterCategory;
     productToDelete = null;
+    deleteAllProducts = false;
     
     // Update modal text for category deletion
     const modalTitle = document.querySelector('#modal-content h3');
     const modalMsg = document.querySelector('#modal-content p');
     const confirmBtn = document.getElementById('confirm-delete-btn');
     
+    modalTitle.textContent = 'حذف الفئة';
+    modalMsg.textContent = 'هل أنت متأكد من حذف جميع المنتجات في هذه الفئة؟ لا يمكن التراجع عن هذا الإجراء.';
+    confirmBtn.textContent = 'نعم، احذف الفئة';
+    
+    deleteModal.classList.remove('hidden');
+    setTimeout(() => {
+        const modalContent = document.getElementById('modal-content');
+        if (modalContent) {
+            modalContent.classList.remove('scale-95', 'opacity-0');
+            modalContent.classList.add('scale-100', 'opacity-100');
+        }
+    }, 10);
+}
+
+function openDeleteAllModal() {
+    deleteAllProducts = true;
+    productToDelete = null;
+    categoryToDelete = null;
+    
+    // Update modal text for deleting all products
+    const modalTitle = document.querySelector('#modal-content h3');
+    const modalMsg = document.querySelector('#modal-content p');
+    const confirmBtn = document.getElementById('confirm-delete-btn');
+    
     modalTitle.textContent = 'حذف الكل';
-    modalMsg.textContent = 'هل أنت متأكد من حذف جميع المنتجات؟ لا يمكن التراجع عن هذا الإجراء.';
+    modalMsg.textContent = 'هل أنت متأكد من حذف جميع المنتجات من جميع الفئات؟ لا يمكن التراجع عن هذا الإجراء.';
     confirmBtn.textContent = 'نعم، احذف الكل';
     
     deleteModal.classList.remove('hidden');
@@ -792,7 +827,30 @@ async function deleteAllInCategory() {
         showStatus('خطأ: ' + error.message, 'error');
     } finally {
         confirmDeleteBtn.disabled = false;
-        confirmDeleteBtn.innerHTML = 'نعم، احذف';
+        confirmDeleteBtn.innerHTML = 'نعم، احذف الفئة';
+    }
+}
+
+async function deleteAllProducts() {
+    try {
+        confirmDeleteBtn.disabled = true;
+        confirmDeleteBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        
+        const snapshot = await db.collection('products').get();
+        const batch = db.batch();
+        snapshot.docs.forEach(doc => batch.delete(doc.ref));
+        await batch.commit();
+        
+        showStatus('تم حذف جميع المنتجات بنجاح', 'success');
+        closeDeleteModal();
+        document.getElementById('inventory-filter-category').value = 'all';
+        renderAdminProducts('all');
+        loadProducts();
+    } catch (error) {
+        showStatus('خطأ: ' + error.message, 'error');
+    } finally {
+        confirmDeleteBtn.disabled = false;
+        confirmDeleteBtn.innerHTML = 'نعم، احذف الكل';
     }
 }
 

@@ -341,13 +341,20 @@
                         <option value="drinks" data-lang-key="admin_opt_drinks">المشروبات</option>
                     </select>
                 </div>
-                <div class="flex items-end">
+                <div class="flex items-end gap-2">
                     <button 
                         id="delete-category-btn"
                         class="hidden px-6 py-2.5 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg transition-colors flex items-center gap-2"
-                        data-lang-key="admin_delete_all"
+                        data-lang-key="admin_delete_category_products"
                     >
                         <i class="fas fa-trash ml-1"></i>
+                        حذف الفئة
+                    </button>
+                    <button 
+                        id="delete-all-btn"
+                        class="px-6 py-2.5 bg-red-700 hover:bg-red-800 text-white font-semibold rounded-lg transition-colors flex items-center gap-2"
+                    >
+                        <i class="fas fa-trash-alt ml-1"></i>
                         حذف الكل
                     </button>
                 </div>
