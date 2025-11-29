@@ -137,29 +137,7 @@ async function fetchProducts() {
 }
 
 function loadLocalProducts() {
-    products = [
-        {
-            id: '1',
-            name: 'زيت الزيتون الخام',
-            category: 'food',
-            price: 1500,
-            image: 'https://images.unsplash.com/photo-1474836599038-b981a64b9edf?w=400&h=400&fit=crop'
-        },
-        {
-            id: '2',
-            name: 'الفستق الحلبي',
-            category: 'nuts',
-            price: 2500,
-            image: 'https://images.unsplash.com/photo-1599599810694-a5f89b5c6ba7?w=400&h=400&fit=crop'
-        },
-        {
-            id: '3',
-            name: 'الزعفران الفاخر',
-            category: 'spices',
-            price: 3000,
-            image: 'https://images.unsplash.com/photo-1596040424414-d68d4caa3fb8?w=400&h=400&fit=crop'
-        }
-    ];
+    products = [];
 }
 
 // ==========================================

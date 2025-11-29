@@ -461,7 +461,7 @@ function createProductItem(product) {
                     ${product.badge ? `<span class="${badgeColors[product.badge] || 'bg-gray-500'} text-white text-xs px-2 py-0.5 rounded-full">${product.badge}</span>` : ''}
                 </div>
                 <p class="text-sm text-gray-500 dark:text-gray-400">${categoryLabels[product.category] || product.category}</p>
-                <p class="text-primary-500 font-bold">${CURRENCY_SYMBOL}${product.price?.toFixed(2) || '0.00'}</p>
+                <p class="text-primary-500 font-bold">${product.price?.toFixed(2) || '0.00'} ${CURRENCY_SYMBOL}</p>
             </div>
             <div class="flex gap-2">
                 <button 
