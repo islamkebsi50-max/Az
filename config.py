@@ -6,7 +6,7 @@ import socketserver
 
 class EnvInjectionHandler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
-        if self.path.endswith('.html') or self.path == '/' or self.path == '/index.html':
+        if self.path.endswith('.html') or self.path == '/' or self.path == '/index.html' or self.path.endswith('firebase-config.js'):
             file_path = self.path.lstrip('/')
             if not file_path or file_path == 'index.html':
                 file_path = 'index.html'
@@ -24,8 +24,13 @@ class EnvInjectionHandler(http.server.SimpleHTTPRequestHandler):
                 content = content.replace('%FIREBASE_APP_ID%', os.environ.get('FIREBASE_APP_ID', ''))
                 content = content.replace('%IMGBB_API_KEY%', os.environ.get('IMGBB_API_KEY', ''))
                 
+                if file_path.endswith('.js'):
+                    content_type = 'application/javascript; charset=utf-8'
+                else:
+                    content_type = 'text/html; charset=utf-8'
+                
                 self.send_response(200)
-                self.send_header('Content-type', 'text/html; charset=utf-8')
+                self.send_header('Content-type', content_type)
                 self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
                 self.send_header('Pragma', 'no-cache')
                 self.send_header('Expires', '0')
