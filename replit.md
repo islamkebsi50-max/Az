@@ -37,6 +37,15 @@ Preferred communication style: Simple, everyday language.
   - Price: "0.00" (both languages)
   - Descriptions with full translations
 
+### Admin Header Layout Fixed
+- Restructured header with proper flexbox layout
+- **Left Side:** Back arrow + brand name grouped together with `flex items-center gap-2`
+- **Center:** Responsive title "Admin" (mobile) / "Admin Panel" (desktop) with `hidden sm:inline`
+- **Right Side:** Theme toggle + language toggle grouped with `flex items-center gap-3`
+- Added `px-4 py-3` spacing for breathing room
+- Eliminated overlapping text on mobile devices
+- Smooth responsive behavior across all screen sizes
+
 ### Mobile Menu Fix
 - Fixed mobile menu not closing when clicking navigation links
 - Added click listeners to all menu links in `setupUIControls()` function
