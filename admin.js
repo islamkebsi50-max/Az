@@ -81,6 +81,7 @@ let productIdInput;
 let productNameInput;
 let productCategoryInput;
 let productPriceInput;
+let productDescriptionInput;
 let productBadgeInput;
 let productImageInput;
 let productImageUrlInput;
@@ -127,6 +128,7 @@ function cacheElements() {
     productNameInput = document.getElementById('product-name');
     productCategoryInput = document.getElementById('product-category');
     productPriceInput = document.getElementById('product-price');
+    productDescriptionInput = document.getElementById('product-description') || { value: '' };
     productBadgeInput = document.getElementById('product-badge');
     productImageInput = document.getElementById('product-image');
     productImageUrlInput = document.getElementById('product-image-url');
