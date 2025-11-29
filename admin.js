@@ -658,11 +658,8 @@ async function renderAdminProducts(filterCategory = 'all') {
     inventoryProducts.innerHTML = '<div class="col-span-full text-center py-8"><i class="fas fa-spinner fa-spin text-3xl mb-3"></i><p>جاري التحميل...</p></div>';
     
     try {
-        let query = db.collection('products');
-        if (filterCategory !== 'all') {
-            query = query.where('category', '==', filterCategory);
-        }
-        const snapshot = await query.orderBy('createdAt', 'desc').get();
+        // Get all products (no ordering to avoid Firebase index requirement)
+        const snapshot = await db.collection('products').get();
         
         if (snapshot.empty) {
             inventoryProducts.innerHTML = '<div class="col-span-full text-center py-8 text-gray-500"><i class="fas fa-box-open text-3xl mb-3"></i><p>لا توجد منتجات</p></div>';
@@ -670,7 +667,19 @@ async function renderAdminProducts(filterCategory = 'all') {
             return;
         }
 
-        const products = snapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
+        // Sort and filter in JavaScript
+        let products = snapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
+        products.sort((a, b) => (b.createdAt?.toMillis?.() || 0) - (a.createdAt?.toMillis?.() || 0));
+        if (filterCategory !== 'all') {
+            products = products.filter(p => p.category === filterCategory);
+        }
+        
+        if (products.length === 0) {
+            inventoryProducts.innerHTML = '<div class="col-span-full text-center py-8 text-gray-500"><i class="fas fa-box-open text-3xl mb-3"></i><p>لا توجد منتجات</p></div>';
+            deleteCategoryBtn.classList.add('hidden');
+            return;
+        }
+        
         deleteCategoryBtn.classList.toggle('hidden', filterCategory === 'all');
 
         inventoryProducts.innerHTML = products.map(product => {
