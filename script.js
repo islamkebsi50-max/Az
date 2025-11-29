@@ -296,10 +296,10 @@ function setLanguage(lang, save = true) {
         }
     });
     
-    // Update language toggle button
+    // Update language toggle button - show opposite language shortcut
     const langToggle = document.getElementById('lang-toggle');
     if (langToggle) {
-        langToggle.textContent = translations[lang].lang_toggle;
+        langToggle.textContent = lang === 'ar' ? 'EN' : 'AR';
     }
     
     // Re-render products to update button text

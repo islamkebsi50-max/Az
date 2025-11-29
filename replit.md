@@ -10,6 +10,13 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes (November 29, 2025)
 
+### Language Toggle Button Redesigned
+- Updated styling to minimal, clean text (removed background box)
+- Changed button text logic to show opposite language shortcut
+- Arabic active → Shows "EN" | English active → Shows "AR"
+- Hover effects with orange color matching brand theme
+- Applied consistently across index.html, cart.html, and admin.html
+
 ### Admin Panel Translation Complete
 - All form labels now have `data-lang-key` attributes
 - All input placeholders now have `data-lang-placeholder` attributes
