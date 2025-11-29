@@ -1,6 +1,13 @@
 // Aznaf Market - Shopping Cart Page
 
 // ==========================================
+// Configuration
+// ==========================================
+
+const WHATSAPP_PHONE_NUMBER = '213XXXXXXXXX'; // Replace with actual Algerian WhatsApp number
+const CURRENCY_SYMBOL = 'د.ج';
+
+// ==========================================
 // Theme Management
 // ==========================================
 
@@ -145,7 +152,7 @@ function renderCart() {
             <div class="flex-1">
                 <h3 class="font-semibold text-gray-900 dark:text-white mb-1">${item.name}</h3>
                 <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">${item.category || 'Product'}</p>
-                <p class="text-lg font-bold text-primary-600 dark:text-primary-400">$${(item.price * item.quantity).toFixed(2)}</p>
+                <p class="text-lg font-bold text-primary-600 dark:text-primary-400">${CURRENCY_SYMBOL}${(item.price * item.quantity).toFixed(2)}</p>
             </div>
             
             <!-- Quantity Adjuster -->
@@ -224,9 +231,9 @@ function updateCartSummary() {
     const tax = subtotal * TAX_RATE;
     const total = subtotal + tax;
     
-    subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
-    taxEl.textContent = `$${tax.toFixed(2)}`;
-    totalEl.textContent = `$${total.toFixed(2)}`;
+    subtotalEl.textContent = `${CURRENCY_SYMBOL}${subtotal.toFixed(2)}`;
+    taxEl.textContent = `${CURRENCY_SYMBOL}${tax.toFixed(2)}`;
+    totalEl.textContent = `${CURRENCY_SYMBOL}${total.toFixed(2)}`;
 }
 
 // ==========================================
@@ -235,12 +242,27 @@ function updateCartSummary() {
 
 function handleCheckout() {
     if (cart.length === 0) {
-        alert('Your cart is empty!');
+        alert('سلتك فارغة!');
         return;
     }
     
-    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0) * (1 + TAX_RATE);
-    alert(`Thank you for your order!\n\nTotal: $${total.toFixed(2)}\n\nThis is a demo. Checkout would be integrated with a payment gateway like Stripe.`);
+    // Build cart message in Arabic
+    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const tax = subtotal * TAX_RATE;
+    const total = subtotal + tax;
+    
+    let message = 'سلام عليكم، أريد طلب هذه المنتجات من متجر أزنف:\n\n';
+    cart.forEach(item => {
+        message += `- ${item.name} (${item.quantity} كجم) - ${CURRENCY_SYMBOL}${(item.price * item.quantity).toFixed(2)}\n`;
+    });
+    message += `\nالمجموع الكلي (شامل الضريبة 10%): ${CURRENCY_SYMBOL}${total.toFixed(2)}`;
+    
+    // Encode message for WhatsApp URL
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappURL = `https://wa.me/${WHATSAPP_PHONE_NUMBER}?text=${encodedMessage}`;
+    
+    // Redirect to WhatsApp
+    window.open(whatsappURL, '_blank');
     
     // Clear cart after checkout
     cart = [];

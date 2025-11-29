@@ -1,6 +1,13 @@
 // Aznaf Market - Main JavaScript with Firebase Integration
 
 // ==========================================
+// Configuration
+// ==========================================
+
+const WHATSAPP_PHONE_NUMBER = '213XXXXXXXXX'; // Replace with actual Algerian WhatsApp number
+const CURRENCY_SYMBOL = 'د.ج';
+
+// ==========================================
 // Admin Secret Access (5 clicks on logo)
 // ==========================================
 
