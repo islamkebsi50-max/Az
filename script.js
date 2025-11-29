@@ -144,7 +144,7 @@ async function fetchProducts() {
     // Try to fetch from Firestore if initialized
     if (firebaseInitialized && db) {
         try {
-            const snapshot = await db.collection('products').get();
+            const snapshot = await db.collection('products').orderBy('createdAt', 'desc').get();
             
             if (!snapshot.empty) {
                 products = snapshot.docs.map(doc => {
@@ -155,10 +155,11 @@ async function fetchProducts() {
                         category: data.category || 'uncategorized',
                         price: parseFloat(data.price) || 0,
                         image: data.image || data.imageUrl || 'https://via.placeholder.com/400x400?text=Product',
-                        badge: data.badge || null
+                        badge: data.badge || null,
+                        description: data.description || ''
                     };
                 });
-                console.log(`Fetched ${products.length} products from Firestore`);
+                console.log(`Fetched ${products.length} products from Firestore (ordered by newest first)`);
                 return products;
             } else {
                 console.log('No products in Firestore, using local data');
@@ -184,15 +185,16 @@ function showLoadingState() {
     const productGrid = document.getElementById('product-grid');
     if (!productGrid) return;
     
-    const skeletonHTML = Array(8).fill('').map(() => `
-        <div class="product-card bg-white dark:bg-dark-card rounded-2xl overflow-hidden shadow-md">
-            <div class="product-image aspect-square skeleton"></div>
+    const skeletonCount = 12;
+    const skeletonHTML = Array(skeletonCount).fill('').map(() => `
+        <div class="product-card bg-white dark:bg-dark-card rounded-2xl overflow-hidden shadow-md animate-pulse">
+            <div class="product-image aspect-square bg-gray-300 dark:bg-gray-700"></div>
             <div class="p-4">
-                <div class="h-3 w-16 skeleton rounded mb-2"></div>
-                <div class="h-5 w-full skeleton rounded mb-2"></div>
+                <div class="h-3 w-16 bg-gray-300 dark:bg-gray-700 rounded mb-3"></div>
+                <div class="h-5 w-full bg-gray-300 dark:bg-gray-700 rounded mb-3"></div>
                 <div class="flex items-center justify-between">
-                    <div class="h-6 w-16 skeleton rounded"></div>
-                    <div class="h-10 w-10 skeleton rounded-full"></div>
+                    <div class="h-6 w-20 bg-gray-300 dark:bg-gray-700 rounded"></div>
+                    <div class="h-10 w-10 bg-gray-300 dark:bg-gray-700 rounded-full"></div>
                 </div>
             </div>
         </div>
@@ -480,31 +482,44 @@ function showToast(message) {
 // ==========================================
 
 function searchProducts(query) {
-    if (!query.trim()) {
+    if (!query || !query.trim()) {
+        // Reset to all products category
+        categoryBtns.forEach(b => b.classList.remove('active'));
+        const allBtn = Array.from(categoryBtns).find(btn => btn.dataset.category === 'all');
+        if (allBtn) allBtn.classList.add('active');
         renderProducts('all');
         return;
     }
     
-    const searchTerm = query.toLowerCase();
-    const filteredProducts = products.filter(p => 
-        p.name.toLowerCase().includes(searchTerm) || 
-        (p.category && p.category.toLowerCase().includes(searchTerm))
-    );
+    const searchTerm = query.toLowerCase().trim();
+    
+    // Filter products by name or category (supports English & Arabic)
+    const filteredProducts = products.filter(p => {
+        const nameMatch = p.name.toLowerCase().includes(searchTerm);
+        const categoryMatch = p.category && p.category.toLowerCase().includes(searchTerm);
+        const descriptionMatch = p.description && p.description.toLowerCase().includes(searchTerm);
+        return nameMatch || categoryMatch || descriptionMatch;
+    });
     
     if (!productGrid) return;
+    
+    // Remove active state from category buttons during search
+    categoryBtns.forEach(b => b.classList.remove('active'));
     
     if (filteredProducts.length === 0) {
         productGrid.innerHTML = `
             <div class="col-span-full text-center py-12">
                 <i class="fas fa-search text-4xl text-gray-400 mb-4"></i>
-                <p class="text-gray-500 dark:text-gray-400">No products found matching "${query}"</p>
+                <p class="text-gray-500 dark:text-gray-400">لا توجد منتجات تطابق "${query}"</p>
             </div>
         `;
         return;
     }
     
+    // Render filtered products
     productGrid.innerHTML = filteredProducts.map(product => createProductCard(product)).join('');
     
+    // Attach event listeners to add-to-cart buttons
     document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             const productId = e.currentTarget.dataset.productId;
@@ -513,21 +528,30 @@ function searchProducts(query) {
     });
 }
 
-// Desktop search input
-const desktopSearchInput = document.querySelector('input[placeholder="Search for products..."]');
-if (desktopSearchInput && !desktopSearchInput.closest('#mobile-search')) {
-    desktopSearchInput.addEventListener('input', (e) => {
-        searchProducts(e.target.value);
-    });
-}
-
-// Mobile search input
-const mobileSearchInput = document.querySelector('#mobile-search input[placeholder="Search for products..."]');
-if (mobileSearchInput) {
-    mobileSearchInput.addEventListener('input', (e) => {
-        searchProducts(e.target.value);
-    });
-}
+// Initialize search inputs after DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    // Desktop search input
+    const desktopSearchInput = document.querySelector('div.flex-1 input[placeholder="Search for products..."]');
+    if (desktopSearchInput) {
+        desktopSearchInput.addEventListener('keyup', (e) => {
+            searchProducts(e.target.value);
+        });
+        desktopSearchInput.addEventListener('input', (e) => {
+            searchProducts(e.target.value);
+        });
+    }
+    
+    // Mobile search input
+    const mobileSearchInput = document.querySelector('#mobile-search input[placeholder="Search for products..."]');
+    if (mobileSearchInput) {
+        mobileSearchInput.addEventListener('keyup', (e) => {
+            searchProducts(e.target.value);
+        });
+        mobileSearchInput.addEventListener('input', (e) => {
+            searchProducts(e.target.value);
+        });
+    }
+}, { once: true });
 
 // ==========================================
 // Smooth Scrolling

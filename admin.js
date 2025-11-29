@@ -270,6 +270,7 @@ async function handleFormSubmit(e) {
     const name = productNameInput.value.trim();
     const category = productCategoryInput.value;
     const price = parseFloat(productPriceInput.value);
+    const description = productDescriptionInput.value.trim() || '';
     const badge = productBadgeInput.value || null;
     
     if (!name || !category || isNaN(price)) {
@@ -308,6 +309,7 @@ async function handleFormSubmit(e) {
         name,
         category,
         price,
+        description,
         badge,
         image: imageUrl,
         updatedAt: firebase.firestore.FieldValue.serverTimestamp()
