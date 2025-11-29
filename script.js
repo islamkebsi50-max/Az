@@ -90,10 +90,10 @@ let products = [];
 
 async function initFirebase() {
     try {
-        // Firebase config from firebase-config.js
         const firebaseConfig = window.firebaseConfig;
         
-        if (!firebaseConfig || !firebaseConfig.projectId) {
+        // Check if Firebase config is valid (not empty strings)
+        if (!firebaseConfig || !firebaseConfig.projectId || firebaseConfig.projectId === '') {
             console.log('Firebase not configured, using local data');
             loadLocalProducts();
             renderProducts();
