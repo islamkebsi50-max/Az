@@ -105,6 +105,7 @@ let statusContainer;
 
 let selectedFile = null;
 let productToDelete = null;
+let categoryToDelete = null;
 let isEditing = false;
 
 // ==========================================
@@ -225,7 +226,7 @@ function initEventListeners() {
         renderAdminProducts('all');
     }
     if (deleteCategoryBtn) {
-        deleteCategoryBtn.addEventListener('click', deleteAllInCategory);
+        deleteCategoryBtn.addEventListener('click', openDeleteCategoryModal);
     }
 }
 
@@ -581,6 +582,17 @@ function openDeleteModal(productId) {
 
 function closeDeleteModal() {
     productToDelete = null;
+    categoryToDelete = null;
+    
+    // Reset modal text to default
+    const modalTitle = document.querySelector('#modal-content h3');
+    const modalMsg = document.querySelector('#modal-content p');
+    const confirmBtn = document.getElementById('confirm-delete-btn');
+    
+    modalTitle.textContent = 'تأكيد الحذف';
+    modalMsg.textContent = 'هل أنت متأكد من حذف هذا المنتج؟ لا يمكن التراجع عن هذا الإجراء.';
+    confirmBtn.textContent = 'نعم، احذف';
+    
     const modalContent = document.getElementById('modal-content');
     
     if (modalContent) {
@@ -594,30 +606,35 @@ function closeDeleteModal() {
 }
 
 async function confirmDelete() {
-    if (!productToDelete) return;
-    
-    try {
-        confirmDeleteBtn.disabled = true;
-        confirmDeleteBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-        
-        await db.collection('products').doc(productToDelete).delete();
-        
-        showStatus('تم حذف المنتج بنجاح', 'success');
-        closeDeleteModal();
-        loadProducts();
-        
-        // Refresh inventory if visible
-        const filterCategory = document.getElementById('inventory-filter-category');
-        if (filterCategory) {
-            renderAdminProducts(filterCategory.value);
+    // Check if deleting a product
+    if (productToDelete) {
+        try {
+            confirmDeleteBtn.disabled = true;
+            confirmDeleteBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            
+            await db.collection('products').doc(productToDelete).delete();
+            
+            showStatus('تم حذف المنتج بنجاح', 'success');
+            closeDeleteModal();
+            loadProducts();
+            
+            // Refresh inventory if visible
+            const filterCategory = document.getElementById('inventory-filter-category');
+            if (filterCategory) {
+                renderAdminProducts(filterCategory.value);
+            }
+            
+        } catch (error) {
+            console.error('Delete error:', error);
+            showStatus('فشل حذف المنتج: ' + error.message, 'error');
+        } finally {
+            confirmDeleteBtn.disabled = false;
+            confirmDeleteBtn.innerHTML = 'نعم، احذف';
         }
-        
-    } catch (error) {
-        console.error('Delete error:', error);
-        showStatus('فشل حذف المنتج: ' + error.message, 'error');
-    } finally {
-        confirmDeleteBtn.disabled = false;
-        confirmDeleteBtn.innerHTML = 'نعم، احذف';
+    }
+    // Check if deleting a category
+    else if (categoryToDelete) {
+        await deleteAllInCategory();
     }
 }
 
@@ -728,21 +745,54 @@ async function renderAdminProducts(filterCategory = 'all') {
 }
 
 
-async function deleteAllInCategory() {
+function openDeleteCategoryModal() {
     const filterCategory = document.getElementById('inventory-filter-category').value;
-    if (filterCategory === 'all' || !confirm(`هل أنت متأكد من حذف جميع المنتجات في هذه الفئة؟ لا يمكن التراجع.`)) return;
+    if (filterCategory === 'all') return;
+    
+    categoryToDelete = filterCategory;
+    productToDelete = null;
+    
+    // Update modal text for category deletion
+    const modalTitle = document.querySelector('#modal-content h3');
+    const modalMsg = document.querySelector('#modal-content p');
+    const confirmBtn = document.getElementById('confirm-delete-btn');
+    
+    modalTitle.textContent = 'حذف الفئة';
+    modalMsg.textContent = 'هل أنت متأكد من حذف جميع المنتجات في هذه الفئة؟ لا يمكن التراجع عن هذا الإجراء.';
+    confirmBtn.textContent = 'نعم، احذف الفئة';
+    
+    deleteModal.classList.remove('hidden');
+    setTimeout(() => {
+        const modalContent = document.getElementById('modal-content');
+        if (modalContent) {
+            modalContent.classList.remove('scale-95', 'opacity-0');
+            modalContent.classList.add('scale-100', 'opacity-100');
+        }
+    }, 10);
+}
+
+async function deleteAllInCategory() {
+    if (!categoryToDelete) return;
     
     try {
-        const snapshot = await db.collection('products').where('category', '==', filterCategory).get();
+        confirmDeleteBtn.disabled = true;
+        confirmDeleteBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        
+        const snapshot = await db.collection('products').where('category', '==', categoryToDelete).get();
         const batch = db.batch();
         snapshot.docs.forEach(doc => batch.delete(doc.ref));
         await batch.commit();
+        
         showStatus('تم حذف الفئة بنجاح', 'success');
+        closeDeleteModal();
         document.getElementById('inventory-filter-category').value = 'all';
         renderAdminProducts('all');
         loadProducts();
     } catch (error) {
         showStatus('خطأ: ' + error.message, 'error');
+    } finally {
+        confirmDeleteBtn.disabled = false;
+        confirmDeleteBtn.innerHTML = 'نعم، احذف';
     }
 }
 
