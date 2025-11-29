@@ -1,0 +1,44 @@
+I need to populate the store with a comprehensive list of demo products covering ALL categories.
+
+Please update `script.js` to add the `generateDemoData()` function with this specific dataset suitable for the Algerian market:
+
+1.  **The Dataset (Mixed Categories):**
+    Use this exact array of objects for the demo data:
+    ```javascript
+    const demoData = [
+      // Nuts (مكسرات)
+      { name_ar: "فستق حلبي فاخر", name_en: "Premium Pistachios", price: 3500, category: "nuts", image: "[https://placehold.co/400x400/orange/white?text=Pistachios](https://placehold.co/400x400/orange/white?text=Pistachios)" },
+      { name_ar: "لوز محمص مملح", name_en: "Roasted Almonds", price: 1800, category: "nuts", image: "[https://placehold.co/400x400/orange/white?text=Almonds](https://placehold.co/400x400/orange/white?text=Almonds)" },
+
+      // Spices (توابل)
+      { name_ar: "زعفران حر أصلي", name_en: "Original Saffron", price: 4500, category: "spices", image: "[https://placehold.co/400x400/red/white?text=Saffron](https://placehold.co/400x400/red/white?text=Saffron)" },
+      { name_ar: "فلفل أسود مطحون", name_en: "Black Pepper", price: 400, category: "spices", image: "[https://placehold.co/400x400/red/white?text=Pepper](https://placehold.co/400x400/red/white?text=Pepper)" },
+      { name_ar: "كمون بلدي", name_en: "Cumin", price: 350, category: "spices", image: "[https://placehold.co/400x400/red/white?text=Cumin](https://placehold.co/400x400/red/white?text=Cumin)" },
+
+      // Food Products (منتجات غذائية)
+      { name_ar: "زيت زيتون بكر (1 لتر)", name_en: "Virgin Olive Oil (1L)", price: 1200, category: "food", image: "[https://placehold.co/400x400/green/white?text=Olive+Oil](https://placehold.co/400x400/green/white?text=Olive+Oil)" },
+      { name_ar: "أرز بسمتي طويل الحبة", name_en: "Basmati Rice", price: 350, category: "food", image: "[https://placehold.co/400x400/green/white?text=Rice](https://placehold.co/400x400/green/white?text=Rice)" },
+
+      // Cosmetics (مستحضرات تجميل)
+      { name_ar: "زيت أركان للشعر", name_en: "Argan Oil Serum", price: 2200, category: "cosmetics", image: "[https://placehold.co/400x400/purple/white?text=Argan+Oil](https://placehold.co/400x400/purple/white?text=Argan+Oil)" },
+      { name_ar: "شامبو طبيعي", name_en: "Natural Shampoo", price: 650, category: "cosmetics", image: "[https://placehold.co/400x400/purple/white?text=Shampoo](https://placehold.co/400x400/purple/white?text=Shampoo)" },
+
+      // Baby Diapers (حفاضات أطفال)
+      { name_ar: "حفاضات أطفال (عبوة كبيرة)", name_en: "Baby Diapers (Mega Pack)", price: 1950, category: "baby", image: "[https://placehold.co/400x400/blue/white?text=Diapers](https://placehold.co/400x400/blue/white?text=Diapers)" },
+      { name_ar: "مناديل مبللة للأطفال", name_en: "Baby Wipes", price: 250, category: "baby", image: "[https://placehold.co/400x400/blue/white?text=Wipes](https://placehold.co/400x400/blue/white?text=Wipes)" },
+
+      // Drinks (مشروبات)
+      { name_ar: "عصير برتقال طبيعي", name_en: "Natural Orange Juice", price: 200, category: "drinks", image: "[https://placehold.co/400x400/yellow/black?text=Juice](https://placehold.co/400x400/yellow/black?text=Juice)" },
+      { name_ar: "مشروب غازي (1.5 لتر)", name_en: "Soda (1.5L)", price: 120, category: "drinks", image: "[https://placehold.co/400x400/yellow/black?text=Soda](https://placehold.co/400x400/yellow/black?text=Soda)" }
+    ];
+    ```
+
+2.  **Implementation:**
+    * Create a button in `admin.html` with ID `btn-generate-demo` and text "توليد منتجات تجريبية".
+    * In `script.js`, add the listener. When clicked:
+        * Loop through `demoData`.
+        * Add `createdAt: firebase.firestore.FieldValue.serverTimestamp()` to each item.
+        * Save to Firestore collection 'products'.
+        * Show a success alert when all are added.
+
+Please implement this bulk generator now.

@@ -768,6 +768,60 @@ function setupUIControls() {
 }
 
 // ==========================================
+// Generate Demo Data
+// ==========================================
+
+function generateDemoData() {
+    const demoProducts = [
+        // Nuts (المكسرات)
+        { name_ar: "لوز فاخر", name_en: "Premium Almonds", category: "nuts", price: 450, image: "https://placehold.co/400" },
+        { name_ar: "جوز عضوي", name_en: "Organic Walnuts", category: "nuts", price: 380, image: "https://placehold.co/400" },
+        
+        // Spices (البهارات)
+        { name_ar: "زعفران أصيل", name_en: "Pure Saffron", category: "spices", price: 950, image: "https://placehold.co/400" },
+        { name_ar: "بهارات مشكلة", name_en: "Mixed Spices", category: "spices", price: 220, image: "https://placehold.co/400" },
+        
+        // Food Products (منتجات غذائية)
+        { name_ar: "عسل طبيعي", name_en: "Natural Honey", category: "food", price: 320, image: "https://placehold.co/400" },
+        { name_ar: "زيت زيتون بكر", name_en: "Extra Virgin Olive Oil", category: "food", price: 580, image: "https://placehold.co/400" },
+        
+        // Cosmetics (مستحضرات التجميل)
+        { name_ar: "كريم العناية الطبيعي", name_en: "Natural Care Cream", category: "cosmetics", price: 280, image: "https://placehold.co/400" },
+        { name_ar: "مرطب الشفاه العضوي", name_en: "Organic Lip Balm", category: "cosmetics", price: 150, image: "https://placehold.co/400" },
+        
+        // Baby Diapers (حفاضات الأطفال)
+        { name_ar: "حفاضات ناعمة", name_en: "Soft Baby Diapers", category: "diapers", price: 320, image: "https://placehold.co/400" },
+        { name_ar: "مناديل مبللة آمنة", name_en: "Safe Baby Wipes", category: "diapers", price: 180, image: "https://placehold.co/400" },
+        
+        // Drinks (المشروبات)
+        { name_ar: "قهوة عربية أصيلة", name_en: "Arabic Coffee", category: "drinks", price: 420, image: "https://placehold.co/400" },
+        { name_ar: "شاي أسود فاخر", name_en: "Premium Black Tea", category: "drinks", price: 250, image: "https://placehold.co/400" }
+    ];
+
+    if (!db) {
+        showStatus("Firebase غير متصل. لا يمكن إضافة البيانات.", "error");
+        return;
+    }
+
+    let count = 0;
+    demoProducts.forEach(product => {
+        db.collection("products").add(product).then(() => {
+            count++;
+            if (count === demoProducts.length) {
+                showStatus(`تم إضافة ${demoProducts.length} منتج تجريبي بنجاح!`, "success");
+                // Reload products if on admin page
+                if (window.loadAdminProducts) {
+                    window.loadAdminProducts();
+                }
+            }
+        }).catch(error => {
+            console.error("Error adding demo product:", error);
+            showStatus("حدث خطأ في إضافة المنتجات", "error");
+        });
+    });
+}
+
+// ==========================================
 // Initialization
 // ==========================================
 
@@ -781,6 +835,12 @@ document.addEventListener('DOMContentLoaded', () => {
     setupUIControls();
     setupLanguageToggle();
     initFirebase();
+    
+    // Setup demo data button if on admin page
+    const demoBtnEl = document.getElementById('demo-data-btn');
+    if (demoBtnEl) {
+        demoBtnEl.addEventListener('click', generateDemoData);
+    }
 });
 
 // ==========================================

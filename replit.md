@@ -172,6 +172,25 @@ Preferred communication style: Simple, everyday language.
 - Synchronized design: Uses same Tailwind CSS theme, colors, and translations as main site
 - Note: Currently no authentication - consider adding Firebase Auth for production
 
+### Generate Demo Data Feature (November 29, 2025)
+- Added green "Demo" button in admin panel (Products section header)
+- `generateDemoData()` function creates 12 realistic demo products:
+  - **2 products per category** (nuts, spices, food, cosmetics, diapers, drinks)
+  - Realistic Arabic/English product names
+  - Prices in DZD (ranging from 150-950 د.ج)
+  - Placeholder images (https://placehold.co/400)
+- Saves all products to Firestore automatically
+- Shows success message upon completion
+- Auto-refreshes product list after demo data insertion
+
+**Demo Products:**
+- Nuts: Premium Almonds (450 د.ج), Organic Walnuts (380 د.ج)
+- Spices: Pure Saffron (950 د.ج), Mixed Spices (220 د.ج)
+- Food: Natural Honey (320 د.ج), Extra Virgin Olive Oil (580 د.ج)
+- Cosmetics: Natural Care Cream (280 د.ج), Organic Lip Balm (150 د.ج)
+- Diapers: Soft Baby Diapers (320 د.ج), Safe Baby Wipes (180 د.ج)
+- Drinks: Arabic Coffee (420 د.ج), Premium Black Tea (250 د.ج)
+
 ### Future Integration Considerations
 - Payment gateway integration (Stripe, PayPal) for checkout functionality
 - User authentication system using Firebase Auth for admin panel security
