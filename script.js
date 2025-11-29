@@ -238,6 +238,35 @@ function t(key) {
 }
 
 // ==========================================
+// Category Translations
+// ==========================================
+
+const categoryLabels = {
+    ar: {
+        'nuts': 'مكسرات',
+        'spices': 'توابل',
+        'food': 'منتجات غذائية',
+        'cosmetics': 'مستحضرات تجميل',
+        'diapers': 'حفاضات أطفال',
+        'drinks': 'مشروبات'
+    },
+    en: {
+        'nuts': 'Nuts',
+        'spices': 'Spices',
+        'food': 'Food Products',
+        'cosmetics': 'Cosmetics',
+        'diapers': 'Baby Diapers',
+        'drinks': 'Drinks'
+    }
+};
+
+function getCategoryLabel(categoryCode) {
+    return categoryLabels[currentLang] && categoryLabels[currentLang][categoryCode]
+        ? categoryLabels[currentLang][categoryCode]
+        : categoryCode;
+}
+
+// ==========================================
 // Price Formatting Function
 // ==========================================
 
@@ -394,23 +423,31 @@ function renderProducts(productsToShow = products) {
         const card = document.createElement('div');
         card.className = 'bg-white dark:bg-dark-card rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow';
         
+        // Get product name in current language
+        let displayName = product.name || '';
+        if (currentLang === 'en') {
+            displayName = product.name_en || product.name_ar || product.name || '';
+        } else {
+            displayName = product.name_ar || product.name || '';
+        }
+        
         card.innerHTML = `
             <div class="relative overflow-hidden bg-gray-100 h-48">
                 <img 
                     src="${product.image}" 
-                    alt="${product.name}"
+                    alt="${displayName}"
                     class="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
                     onerror="this.src='https://via.placeholder.com/400x400?text=Product+Image'"
                 >
                 ${product.badge ? `<span class="absolute top-3 end-3 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">${product.badge}</span>` : ''}
             </div>
             <div class="p-4">
-                <h3 class="font-semibold text-lg text-gray-800 dark:text-white mb-2">${product.name}</h3>
+                <h3 class="font-semibold text-lg text-gray-800 dark:text-white mb-2">${displayName}</h3>
                 <p class="text-primary-500 font-bold text-xl mb-3">${formatPrice(product.price)}</p>
                 <button 
                     class="add-to-cart-btn w-full bg-primary-500 hover:bg-primary-600 text-white py-2 rounded-lg transition-colors"
                     data-product-id="${product.id}"
-                    data-product-name="${product.name}"
+                    data-product-name="${displayName}"
                     data-product-price="${product.price}"
                     data-product-image="${product.image}"
                 >

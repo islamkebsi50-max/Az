@@ -78,10 +78,12 @@ async function uploadToImgbb(file) {
 
 let productForm;
 let productIdInput;
-let productNameInput;
+let nameArInput;
+let nameEnInput;
+let descArInput;
+let descEnInput;
 let productCategoryInput;
 let productPriceInput;
-let productDescriptionInput;
 let productBadgeInput;
 let productImageInput;
 let productImageUrlInput;
@@ -125,10 +127,12 @@ document.addEventListener('DOMContentLoaded', () => {
 function cacheElements() {
     productForm = document.getElementById('product-form');
     productIdInput = document.getElementById('product-id');
-    productNameInput = document.getElementById('product-name');
+    nameArInput = document.getElementById('name_ar');
+    nameEnInput = document.getElementById('name_en');
+    descArInput = document.getElementById('desc_ar') || { value: '' };
+    descEnInput = document.getElementById('desc_en') || { value: '' };
     productCategoryInput = document.getElementById('product-category');
     productPriceInput = document.getElementById('product-price');
-    productDescriptionInput = document.getElementById('product-description') || { value: '' };
     productBadgeInput = document.getElementById('product-badge');
     productImageInput = document.getElementById('product-image');
     productImageUrlInput = document.getElementById('product-image-url');
@@ -275,13 +279,15 @@ async function handleFormSubmit(e) {
         return;
     }
     
-    const name = productNameInput.value.trim();
+    const nameAr = nameArInput.value.trim();
+    const nameEn = nameEnInput.value.trim();
+    const descAr = descArInput.value.trim() || '';
+    const descEn = descEnInput.value.trim() || '';
     const category = productCategoryInput.value;
     const price = parseFloat(productPriceInput.value);
-    const description = productDescriptionInput.value.trim() || '';
     const badge = productBadgeInput.value || null;
     
-    if (!name || !category || isNaN(price)) {
+    if (!nameAr || !nameEn || !category || isNaN(price)) {
         showStatus('يرجى ملء جميع الحقول المطلوبة', 'error');
         return;
     }
@@ -314,10 +320,13 @@ async function handleFormSubmit(e) {
     }
     
     const productData = {
-        name,
+        name_ar: nameAr,
+        name_en: nameEn,
+        name: nameAr,
+        desc_ar: descAr,
+        desc_en: descEn,
         category,
         price,
-        description,
         badge,
         image: imageUrl,
         updatedAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -449,17 +458,20 @@ function createProductItem(product) {
         'New': 'bg-teal-500'
     };
     
+    // Get bilingual product name (showing Arabic version in admin)
+    const displayName = product.name_ar || product.name || '';
+    
     return `
         <div class="flex items-center gap-4 p-4 bg-gray-50 dark:bg-dark-bg rounded-xl transition-colors">
             <img 
                 src="${product.image || 'https://via.placeholder.com/80x80?text=No+Image'}" 
-                alt="${product.name}"
+                alt="${displayName}"
                 class="w-16 h-16 object-cover rounded-lg"
                 onerror="this.src='https://via.placeholder.com/80x80?text=Error'"
             >
             <div class="flex-1 min-w-0">
                 <div class="flex items-center gap-2 mb-1">
-                    <h3 class="font-semibold truncate">${product.name}</h3>
+                    <h3 class="font-semibold truncate">${displayName}</h3>
                     ${product.badge ? `<span class="${badgeColors[product.badge] || 'bg-gray-500'} text-white text-xs px-2 py-0.5 rounded-full">${product.badge}</span>` : ''}
                 </div>
                 <p class="text-sm text-gray-500 dark:text-gray-400">${categoryLabels[product.category] || product.category}</p>
@@ -497,7 +509,10 @@ async function editProduct(productId) {
         const product = doc.data();
         
         productIdInput.value = productId;
-        productNameInput.value = product.name || '';
+        nameArInput.value = product.name_ar || product.name || '';
+        nameEnInput.value = product.name_en || '';
+        descArInput.value = product.desc_ar || '';
+        descEnInput.value = product.desc_en || '';
         productCategoryInput.value = product.category || '';
         productPriceInput.value = product.price || '';
         productBadgeInput.value = product.badge || '';
@@ -515,7 +530,7 @@ async function editProduct(productId) {
         submitBtn.querySelector('i').className = 'fas fa-save ml-2';
         cancelEditBtn.classList.remove('hidden');
         
-        productNameInput.focus();
+        nameArInput.focus();
         window.scrollTo({ top: 0, behavior: 'smooth' });
         
     } catch (error) {
