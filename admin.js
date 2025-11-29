@@ -216,6 +216,17 @@ function initEventListeners() {
     deleteModal.addEventListener('click', (e) => {
         if (e.target === deleteModal) closeDeleteModal();
     });
+    
+    // Inventory Management
+    const filterCategory = document.getElementById('inventory-filter-category');
+    const deleteCategoryBtn = document.getElementById('delete-category-btn');
+    if (filterCategory) {
+        filterCategory.addEventListener('change', (e) => renderAdminProducts(e.target.value));
+        renderAdminProducts('all');
+    }
+    if (deleteCategoryBtn) {
+        deleteCategoryBtn.addEventListener('click', deleteAllInCategory);
+    }
 }
 
 // ==========================================
@@ -629,6 +640,92 @@ async function generateDemoData() {
             showStatus("خطأ: " + error.message, "error");
         });
     });
+}
+
+// ==========================================
+// Inventory Management (Filter & Delete)
+// ==========================================
+
+async function renderAdminProducts(filterCategory = 'all') {
+    const inventoryProducts = document.getElementById('inventory-products');
+    const deleteCategoryBtn = document.getElementById('delete-category-btn');
+    
+    if (!firebaseInitialized) {
+        inventoryProducts.innerHTML = '<div class="col-span-full text-center py-8 text-red-500"><i class="fas fa-exclamation-circle text-3xl mb-3"></i><p>Firebase غير متصل</p></div>';
+        return;
+    }
+
+    inventoryProducts.innerHTML = '<div class="col-span-full text-center py-8"><i class="fas fa-spinner fa-spin text-3xl mb-3"></i><p>جاري التحميل...</p></div>';
+    
+    try {
+        let query = db.collection('products');
+        if (filterCategory !== 'all') {
+            query = query.where('category', '==', filterCategory);
+        }
+        const snapshot = await query.orderBy('createdAt', 'desc').get();
+        
+        if (snapshot.empty) {
+            inventoryProducts.innerHTML = '<div class="col-span-full text-center py-8 text-gray-500"><i class="fas fa-box-open text-3xl mb-3"></i><p>لا توجد منتجات</p></div>';
+            deleteCategoryBtn.classList.add('hidden');
+            return;
+        }
+
+        const products = snapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
+        deleteCategoryBtn.classList.toggle('hidden', filterCategory === 'all');
+
+        inventoryProducts.innerHTML = products.map(product => {
+            const displayName = product.name_ar || product.name || '';
+            return `
+                <div class="bg-gray-50 dark:bg-dark-bg p-3 rounded-lg border border-gray-200 dark:border-dark-border flex flex-col items-center text-center hover:shadow-md transition-shadow">
+                    <img src="${product.image || 'https://via.placeholder.com/80x80?text=No+Image'}" alt="${displayName}" class="w-20 h-20 object-cover rounded mb-2">
+                    <h3 class="font-semibold text-sm truncate max-w-full">${displayName}</h3>
+                    <p class="text-primary-500 font-bold text-sm">${product.price?.toFixed(2) || '0.00'} ${CURRENCY_SYMBOL}</p>
+                    <button class="delete-inventory-product-btn mt-2 px-3 py-1 text-xs bg-red-500 hover:bg-red-600 text-white rounded transition-colors" data-id="${product.id}">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `;
+        }).join('');
+
+        document.querySelectorAll('.delete-inventory-product-btn').forEach(btn => {
+            btn.addEventListener('click', () => deleteAdminProduct(btn.dataset.id));
+        });
+    } catch (error) {
+        console.error('Render error:', error);
+        inventoryProducts.innerHTML = '<div class="col-span-full text-center py-8 text-red-500"><i class="fas fa-exclamation-circle text-3xl mb-3"></i><p>خطأ: ' + error.message + '</p></div>';
+    }
+}
+
+async function deleteAdminProduct(productId) {
+    if (!confirm('هل أنت متأكد من حذف هذا المنتج؟')) return;
+    
+    try {
+        await db.collection('products').doc(productId).delete();
+        showStatus('تم حذف المنتج بنجاح', 'success');
+        const filterCategory = document.getElementById('inventory-filter-category').value;
+        renderAdminProducts(filterCategory);
+        loadProducts();
+    } catch (error) {
+        showStatus('خطأ في الحذف: ' + error.message, 'error');
+    }
+}
+
+async function deleteAllInCategory() {
+    const filterCategory = document.getElementById('inventory-filter-category').value;
+    if (filterCategory === 'all' || !confirm(`هل أنت متأكد من حذف جميع المنتجات في هذه الفئة؟ لا يمكن التراجع.`)) return;
+    
+    try {
+        const snapshot = await db.collection('products').where('category', '==', filterCategory).get();
+        const batch = db.batch();
+        snapshot.docs.forEach(doc => batch.delete(doc.ref));
+        await batch.commit();
+        showStatus('تم حذف الفئة بنجاح', 'success');
+        document.getElementById('inventory-filter-category').value = 'all';
+        renderAdminProducts('all');
+        loadProducts();
+    } catch (error) {
+        showStatus('خطأ: ' + error.message, 'error');
+    }
 }
 
 // ==========================================

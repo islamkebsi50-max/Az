@@ -134,6 +134,15 @@ const translations = {
         admin_opt_bestseller: "الأكثر مبيعًا",
         admin_opt_new: "جديد",
         admin_opt_value_pack: "عرض خاص",
+        admin_opt_all_categories: "جميع الفئات",
+        admin_opt_baby: "حفاضات الأطفال",
+        
+        // Admin Inventory Management
+        admin_manage_inventory: "إدارة المخزون",
+        admin_filter_category: "تصفية حسب الفئة",
+        admin_delete_category: "حذف الفئة",
+        admin_delete_all_confirm: "هل أنت متأكد من حذف جميع المنتجات في",
+        admin_delete_all_cannot_undo: "لا يمكن التراجع عن هذا الإجراء",
         
         // Contact Page
         contact_title: "اتصل بنا",
@@ -269,6 +278,15 @@ const translations = {
         admin_opt_bestseller: "Bestseller",
         admin_opt_new: "New",
         admin_opt_value_pack: "Value Pack",
+        admin_opt_all_categories: "All Categories",
+        admin_opt_baby: "Baby Diapers",
+        
+        // Admin Inventory Management
+        admin_manage_inventory: "Manage Inventory",
+        admin_filter_category: "Filter by Category",
+        admin_delete_category: "Delete Category",
+        admin_delete_all_confirm: "Are you sure you want to delete all products in",
+        admin_delete_all_cannot_undo: "This action cannot be undone",
         
         // Contact Page
         contact_title: "Contact Us",
