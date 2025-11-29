@@ -1,10 +1,5 @@
 // Aznaf Market - Admin Panel JavaScript
-
-// ==========================================
-// Configuration
-// ==========================================
-
-const CURRENCY_SYMBOL = 'د.ج';
+// Note: CURRENCY_SYMBOL is defined in script.js
 
 // ==========================================
 // Firebase & imgbb Initialization

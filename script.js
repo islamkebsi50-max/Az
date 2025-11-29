@@ -108,10 +108,10 @@ const translations = {
         
         // Admin Placeholders
         admin_ph_name_ar: "مثال: لوز فاخر",
-        admin_ph_name_en: "مثال: Premium Almonds",
+        admin_ph_name_en: "Example: Premium Almonds",
         admin_ph_price: "0.00",
         admin_ph_desc_ar: "أدخل وصف المنتج بالعربية...",
-        admin_ph_desc_en: "أدخل وصف المنتج بالإنجليزية...",
+        admin_ph_desc_en: "Enter product description in English...",
         
         // Upload placeholders
         admin_ph_upload: "اسحب الصورة هنا أو انقر للاختيار",
@@ -224,10 +224,10 @@ const translations = {
         admin_no_products: "No products yet",
         
         // Admin Placeholders
-        admin_ph_name_ar: "Example: Premium Almonds",
+        admin_ph_name_ar: "مثال: لوز فاخر",
         admin_ph_name_en: "Example: Premium Almonds",
         admin_ph_price: "0.00",
-        admin_ph_desc_ar: "Enter product description in Arabic...",
+        admin_ph_desc_ar: "أدخل وصف المنتج بالعربية...",
         admin_ph_desc_en: "Enter product description in English...",
         
         // Upload placeholders
@@ -280,11 +280,19 @@ function setLanguage(lang, save = true) {
         }
     });
     
-    // Update all placeholders with data-lang-placeholder
+    // Update all placeholders with data-lang-placeholder (input, textarea)
     document.querySelectorAll('[data-lang-placeholder]').forEach(el => {
         const key = el.getAttribute('data-lang-placeholder');
         if (translations[lang] && translations[lang][key]) {
             el.placeholder = translations[lang][key];
+        }
+    });
+    
+    // Update select options if needed
+    document.querySelectorAll('select[data-lang-key]').forEach(el => {
+        const key = el.getAttribute('data-lang-key');
+        if (translations[lang] && translations[lang][key]) {
+            // For selects, update the label elsewhere (already handled above)
         }
     });
     
