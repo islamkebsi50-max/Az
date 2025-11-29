@@ -86,7 +86,25 @@ const translations = {
         toast_added: "تمت إضافة المنتج للسلة!",
         
         // Language
-        lang_toggle: "English"
+        lang_toggle: "English",
+        
+        // Admin Panel
+        admin_panel: "لوحة الإدارة",
+        admin_add_product: "إضافة منتج جديد",
+        admin_label_name_ar: "اسم المنتج (العربية) *",
+        admin_label_name_en: "اسم المنتج (الإنجليزية) *",
+        admin_label_category: "التصنيف *",
+        admin_label_price: "السعر (د.ج) *",
+        admin_label_desc_ar: "الوصف (العربية - اختياري)",
+        admin_label_desc_en: "الوصف (الإنجليزية - اختياري)",
+        admin_label_badge: "الشارة (اختياري)",
+        admin_label_image: "صورة المنتج *",
+        admin_btn_add: "إضافة المنتج",
+        admin_btn_cancel: "إلغاء",
+        admin_btn_update: "تحديث المنتج",
+        admin_products_list: "المنتجات",
+        admin_loading: "جاري تحميل المنتجات...",
+        admin_no_products: "لا توجد منتجات بعد"
     },
     en: {
         // Navigation
@@ -162,7 +180,25 @@ const translations = {
         toast_added: "Item added to cart!",
         
         // Language
-        lang_toggle: "عربي"
+        lang_toggle: "عربي",
+        
+        // Admin Panel
+        admin_panel: "Admin Panel",
+        admin_add_product: "Add New Product",
+        admin_label_name_ar: "Product Name (Arabic) *",
+        admin_label_name_en: "Product Name (English) *",
+        admin_label_category: "Category *",
+        admin_label_price: "Price (DZD) *",
+        admin_label_desc_ar: "Description (Arabic - Optional)",
+        admin_label_desc_en: "Description (English - Optional)",
+        admin_label_badge: "Badge (Optional)",
+        admin_label_image: "Product Image *",
+        admin_btn_add: "Add Product",
+        admin_btn_cancel: "Cancel",
+        admin_btn_update: "Update Product",
+        admin_products_list: "Products",
+        admin_loading: "Loading products...",
+        admin_no_products: "No products yet"
     }
 };
 

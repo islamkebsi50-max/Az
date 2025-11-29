@@ -71,12 +71,19 @@
                     </span>
                 </a>
                 
-                <h1 class="text-xl font-bold">لوحة الإدارة</h1>
+                <h1 class="text-xl font-bold" data-lang-key="admin_panel">لوحة الإدارة</h1>
                 
-                <button id="theme-toggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-                    <i class="fas fa-sun text-lg text-yellow-500 dark:hidden"></i>
-                    <i class="fas fa-moon text-lg text-blue-400 hidden dark:block"></i>
-                </button>
+                <div class="flex items-center gap-2 md:gap-4">
+                    <button id="theme-toggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-sun text-lg text-yellow-500 dark:hidden"></i>
+                        <i class="fas fa-moon text-lg text-blue-400 hidden dark:block"></i>
+                    </button>
+                    
+                    <!-- Language Toggle -->
+                    <button id="lang-toggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors font-semibold text-sm">
+                        English
+                    </button>
+                </div>
             </div>
         </div>
     </header>
@@ -102,7 +109,7 @@
             
             <!-- Add Product Form -->
             <div class="bg-white dark:bg-dark-card rounded-2xl shadow-lg p-6">
-                <h2 class="text-xl font-bold mb-6 flex items-center">
+                <h2 class="text-xl font-bold mb-6 flex items-center" data-lang-key="admin_add_product">
                     <i class="fas fa-plus-circle text-primary-500 ml-2"></i>
                     إضافة منتج جديد
                 </h2>
@@ -112,7 +119,7 @@
                     
                     <!-- Product Name (Arabic) -->
                     <div>
-                        <label class="block text-sm font-medium mb-2">اسم المنتج (العربية) *</label>
+                        <label class="block text-sm font-medium mb-2" data-lang-key="admin_label_name_ar">اسم المنتج (العربية) *</label>
                         <input 
                             type="text" 
                             id="name_ar" 
@@ -124,7 +131,7 @@
                     
                     <!-- Product Name (English) -->
                     <div>
-                        <label class="block text-sm font-medium mb-2">Product Name (English) *</label>
+                        <label class="block text-sm font-medium mb-2" data-lang-key="admin_label_name_en">Product Name (English) *</label>
                         <input 
                             type="text" 
                             id="name_en" 
@@ -136,7 +143,7 @@
                     
                     <!-- Category -->
                     <div>
-                        <label class="block text-sm font-medium mb-2">التصنيف *</label>
+                        <label class="block text-sm font-medium mb-2" data-lang-key="admin_label_category">التصنيف *</label>
                         <select 
                             id="product-category" 
                             required
@@ -154,7 +161,7 @@
                     
                     <!-- Price -->
                     <div>
-                        <label class="block text-sm font-medium mb-2">السعر ($) *</label>
+                        <label class="block text-sm font-medium mb-2" data-lang-key="admin_label_price">السعر (د.ج) *</label>
                         <input 
                             type="number" 
                             id="product-price" 
@@ -168,7 +175,7 @@
                     
                     <!-- Description (Arabic) -->
                     <div>
-                        <label class="block text-sm font-medium mb-2">الوصف (العربية - اختياري)</label>
+                        <label class="block text-sm font-medium mb-2" data-lang-key="admin_label_desc_ar">الوصف (العربية - اختياري)</label>
                         <textarea 
                             id="desc_ar" 
                             rows="2"
@@ -179,7 +186,7 @@
                     
                     <!-- Description (English) -->
                     <div>
-                        <label class="block text-sm font-medium mb-2">Description (English - Optional)</label>
+                        <label class="block text-sm font-medium mb-2" data-lang-key="admin_label_desc_en">Description (English - Optional)</label>
                         <textarea 
                             id="desc_en" 
                             rows="2"
@@ -190,7 +197,7 @@
                     
                     <!-- Badge -->
                     <div>
-                        <label class="block text-sm font-medium mb-2">الشارة (اختياري)</label>
+                        <label class="block text-sm font-medium mb-2" data-lang-key="admin_label_badge">الشارة (اختياري)</label>
                         <select 
                             id="product-badge"
                             class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-dark-border bg-gray-50 dark:bg-dark-bg focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all"
@@ -207,7 +214,7 @@
                     
                     <!-- Image Upload -->
                     <div>
-                        <label class="block text-sm font-medium mb-2">صورة المنتج *</label>
+                        <label class="block text-sm font-medium mb-2" data-lang-key="admin_label_image">صورة المنتج *</label>
                         <div 
                             id="upload-area" 
                             class="upload-area rounded-lg p-8 text-center cursor-pointer"
@@ -253,7 +260,7 @@
                             class="flex-1 bg-primary-500 hover:bg-primary-600 text-white font-semibold py-3 px-6 rounded-lg transition-all flex items-center justify-center"
                         >
                             <i class="fas fa-plus ml-2"></i>
-                            <span id="submit-text">إضافة المنتج</span>
+                            <span id="submit-text" data-lang-key="admin_btn_add">إضافة المنتج</span>
                         </button>
                         <button 
                             type="button" 
@@ -337,6 +344,9 @@
     
     <!-- Firebase Configuration -->
     <script src="firebase-config.js"></script>
+    
+    <!-- Main Application Script (for language & translations) -->
+    <script src="script.js"></script>
     
     <!-- Admin Script -->
     <script src="admin.js"></script>

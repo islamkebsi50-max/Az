@@ -118,9 +118,11 @@ let isEditing = false;
 
 document.addEventListener('DOMContentLoaded', () => {
     cacheElements();
+    initLanguage();
     initTheme();
     initFirebase();
     initEventListeners();
+    setupLanguageToggle();
     loadProducts();
 });
 

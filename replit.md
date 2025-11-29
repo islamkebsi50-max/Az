@@ -17,11 +17,12 @@ Preferred communication style: Simple, everyday language.
 - **Tailwind CSS (CDN)**: Utility-first CSS framework for styling with custom theme configuration
 - **Vanilla JavaScript**: Client-side logic without framework dependencies
 - **Font Awesome (CDN)**: Icon library for UI elements
-- **Firebase Firestore (CDN)**: Cloud database for dynamic product management (optional)
+- **Firebase Firestore (CDN)**: Cloud database for dynamic product management
 
 **Design Patterns**
 - Single Page Application (SPA) approach with client-side rendering
 - Component-based structure using JavaScript objects for product data
+- Full bilingual support (Arabic/English) with RTL/LTR layout switching
 - Dark mode support using Tailwind's dark mode class strategy
 - Responsive-first design with mobile menu toggle functionality
 
@@ -94,9 +95,13 @@ Preferred communication style: Simple, everyday language.
 
 ### Admin Panel
 - Access via: `/admin.html`
-- Features: Add, edit, delete products
-- Image upload: Drag & drop or click to select
-- Arabic RTL interface
+- Features: Add, edit, delete products with bilingual support
+- Bilingual form: Separate fields for Arabic (name_ar, desc_ar) and English (name_en, desc_en)
+- Image upload: Drag & drop or click to select (via imgbb API)
+- Language toggle: Switch between العربية (RTL) and English (LTR) in the admin header
+- Currency: Displays د.ج (DZD) for price inputs
+- Theme toggle: Dark/Light mode support synchronized with main site
+- Synchronized design: Uses same Tailwind CSS theme, colors, and translations as main site
 - Note: Currently no authentication - consider adding Firebase Auth for production
 
 ### Future Integration Considerations
