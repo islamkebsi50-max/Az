@@ -1,0 +1,45 @@
+The random generator is assigning wrong categories to products (e.g., Shampoo in Food). I need "Context-Aware" generation.
+
+Please rewrite the `generateDemoData` function in `script.js` to use **Structured Data Arrays**.
+
+1.  **Define Mapped Data:**
+    Create a constant object mapping categories to specific Algerian items and brands:
+    ```javascript
+    const categoryMap = {
+        food: {
+            items: ["Couscous", "Pasta", "Tomato Paste", "Lentils", "Sugar", "Sunflower Oil"],
+            brands: ["Sim", "Amor Benamor", "Cevital", "Safina", "Mama", "Skor"]
+        },
+        drinks: {
+            items: ["Gazouz (Soda)", "Orange Juice", "Mineral Water", "Mint Lemonade", "Coffee"],
+            brands: ["Hamoud Boualem", "Ifri", "Rouiba", "Ngaous", "Guedila"]
+        },
+        cosmetics: {
+            items: ["Shampoo", "Shower Gel", "Hand Soap", "Body Lotion", "Hair Gel"],
+            brands: ["Venus", "Swalis", "Dop", "Cadum"]
+        },
+        baby: {
+            items: ["Diapers", "Baby Wipes", "Baby Powder", "Milk Formula"],
+            brands: ["Molfix", "Bylou", "Johnson's", "Modilac"]
+        },
+        nuts: {
+            items: ["Roasted Almonds", "Pistachios", "Cashews", "Peanuts", "Walnuts"],
+            brands: ["Premium", "Local Harvest", "Imported"]
+        },
+        spices: {
+            items: ["Black Pepper", "Cumin", "Paprika", "Ras El Hanout", "Curry"],
+            brands: ["Epices du Monde", "Local"]
+        }
+    };
+    ```
+
+2.  **Logic:**
+    * When the button is clicked, loop through EACH category in `categoryMap`.
+    * For each category, generate **2 random products**.
+    * **Name Construction:** Random Brand + Random Item (e.g., "Venus Shampoo").
+    * **Price:** Generate a realistic price based on category (e.g., Food: 50-500, Cosmetics: 200-1500).
+    * **Category:** MUST match the key (food items go to 'food', cosmetic items go to 'cosmetics').
+
+3.  **Result:** This ensures that every time I click, I get new combinations, but they are always correctly classified.
+
+Please apply this smart logic now.

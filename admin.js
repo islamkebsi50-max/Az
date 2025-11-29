@@ -655,49 +655,87 @@ async function confirmDelete() {
 }
 
 // ==========================================
-// Generate Demo Data (Procedural Generation)
+// Generate Demo Data (Context-Aware Procedural Generation)
 // ==========================================
 
 async function generateDemoData() {
-    // Define arrays for random combinations
-    const brands = ["Soummam", "Candia", "Ifri", "Cevital", "Bimo", "Safina", "Sim", "Ngaous", "Elio", "Omo"];
-    const items = ["Milk 1L", "Yoghurt", "Orange Juice", "Sugar 1kg", "Sunflower Oil", "Pasta 500g", "Biscuits", "Mineral Water", "Detergent", "Coffee"];
-    const categories = ["food", "drinks", "cosmetics", "baby", "nuts", "spices"];
-    
-    // Arabic translations for items
-    const itemsAr = ["حليب 1 لتر", "لبن زبادي", "عصير برتقال", "سكر 1 كيلو", "زيت دوار الشمس", "معكرونة 500غ", "بسكويت", "ماء معدني", "منظف الأطباق", "قهوة"];
+    // Category-specific Algerian brands and items
+    const categoryData = {
+        food: {
+            brands: ["Soummam", "Cevital", "Bimo", "Sim", "Ngaous", "Elio"],
+            items: ["Semoule", "Pasta", "Couscous", "Lentils", "Rice", "Flour"],
+            itemsAr: ["سميد", "معكرونة", "كسكس", "عدس", "أرز", "دقيق"],
+            prices: [150, 180, 200, 220, 250, 280]
+        },
+        drinks: {
+            brands: ["Candia", "Ifri", "Cevital", "Sim", "Bimo"],
+            items: ["Milk", "Orange Juice", "Coffee", "Tea", "Mineral Water"],
+            itemsAr: ["حليب", "عصير برتقال", "قهوة", "شاي", "ماء معدني"],
+            prices: [120, 180, 250, 200, 100]
+        },
+        cosmetics: {
+            brands: ["Elio", "Omo", "Safina", "Bimo", "Candia"],
+            items: ["Face Cream", "Soap", "Shampoo", "Toothpaste", "Deodorant"],
+            itemsAr: ["كريم الوجه", "صابون", "شامبو", "معجون الأسنان", "مزيل العرق"],
+            prices: [280, 150, 200, 120, 180]
+        },
+        baby: {
+            brands: ["Bimo", "Candia", "Elio", "Safina"],
+            items: ["Diapers", "Baby Wipes", "Baby Formula", "Baby Oil", "Teething Powder"],
+            itemsAr: ["حفاضات", "مناديل الأطفال", "حليب الأطفال", "زيت الأطفال", "مسحوق التسنين"],
+            prices: [320, 180, 450, 200, 150]
+        },
+        nuts: {
+            brands: ["Soummam", "Safina", "Ngaous", "Sim", "Elio"],
+            items: ["Almonds", "Walnuts", "Pistachios", "Hazelnuts", "Cashews"],
+            itemsAr: ["لوز", "جوز", "فستق", "بندق", "كاجو"],
+            prices: [450, 380, 520, 400, 480]
+        },
+        spices: {
+            brands: ["Soummam", "Cevital", "Safina", "Ngaous", "Sim"],
+            items: ["Saffron", "Cumin", "Paprika", "Cinnamon", "Cloves"],
+            itemsAr: ["زعفران", "كمون", "فلفل أحمر", "قرفة", "قرنفل"],
+            prices: [950, 280, 200, 300, 350]
+        }
+    };
     
     if (typeof db === 'undefined' || !db) {
         showStatus("Firebase غير متصل!", "error");
         return;
     }
 
-    // Generate 5 random products
     const randomProducts = [];
-    for (let i = 0; i < 5; i++) {
-        const randomBrand = brands[Math.floor(Math.random() * brands.length)];
-        const randomItemIndex = Math.floor(Math.random() * items.length);
-        const randomItem = items[randomItemIndex];
-        const randomItemAr = itemsAr[randomItemIndex];
-        const randomCategory = categories[Math.floor(Math.random() * categories.length)];
-        const randomPrice = Math.floor(Math.random() * (3000 - 100 + 1)) + 100; // Random between 100-3000
+    const categories = Object.keys(categoryData);
+    
+    // Generate 2 products for EACH category (12 total)
+    categories.forEach(category => {
+        const categoryInfo = categoryData[category];
         
-        // Create product name combining brand + item
-        const productName = `${randomBrand} ${randomItem}`;
-        const productNameAr = `${randomBrand} ${randomItemAr}`;
-        
-        // Dynamic image URL with product name as text
-        const imageUrl = `https://placehold.co/400?text=${encodeURIComponent(productName)}`;
-        
-        randomProducts.push({
-            name_ar: productNameAr,
-            name_en: productName,
-            category: randomCategory,
-            price: randomPrice,
-            image: imageUrl,
-            createdAt: new Date()
-        });
-    }
+        for (let i = 0; i < 2; i++) {
+            const randomBrand = categoryInfo.brands[Math.floor(Math.random() * categoryInfo.brands.length)];
+            const randomItemIndex = Math.floor(Math.random() * categoryInfo.items.length);
+            const randomItem = categoryInfo.items[randomItemIndex];
+            const randomItemAr = categoryInfo.itemsAr[randomItemIndex];
+            const randomNumber = Math.floor(Math.random() * 10000);
+            const randomPrice = categoryInfo.prices[Math.floor(Math.random() * categoryInfo.prices.length)];
+            
+            // Create unique product name: Brand + Item + " #" + Random Number
+            const productName = `${randomBrand} ${randomItem} #${randomNumber}`;
+            const productNameAr = `${randomBrand} ${randomItemAr} #${randomNumber}`;
+            
+            // Dynamic image URL with product name as text
+            const imageUrl = `https://placehold.co/400?text=${encodeURIComponent(productName)}`;
+            
+            randomProducts.push({
+                name_ar: productNameAr,
+                name_en: productName,
+                category: category,
+                price: randomPrice,
+                image: imageUrl,
+                createdAt: new Date()
+            });
+        }
+    });
 
     // Save all products to Firestore
     let count = 0;
@@ -705,7 +743,7 @@ async function generateDemoData() {
         db.collection("products").add(product).then(() => {
             count++;
             if (count === randomProducts.length) {
-                showStatus("✓ تم إضافة 5 منتجات عشوائية جديدة!", "success");
+                showStatus(`✓ تم إضافة 12 منتج جديد (2 لكل فئة)!`, "success");
                 loadProducts();
             }
         }).catch(error => {

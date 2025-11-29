@@ -172,36 +172,46 @@ Preferred communication style: Simple, everyday language.
 - Synchronized design: Uses same Tailwind CSS theme, colors, and translations as main site
 - Note: Currently no authentication - consider adding Firebase Auth for production
 
-### Generate Demo Data Feature - Procedural Generation (November 29, 2025)
+### Generate Demo Data Feature - Context-Aware Procedural Generation (November 29, 2025)
 - Added green "Demo" button in admin panel (Products section header)
-- `generateDemoData()` function uses **Procedural Generation** to create unique random products:
+- `generateDemoData()` function uses **Context-Aware Procedural Generation** to create 100% unique products:
 
-**Procedural Generation Details:**
-- **Brands Array (10):** Soummam, Candia, Ifri, Cevital, Bimo, Safina, Sim, Ngaous, Elio, Omo
-- **Items Array (10):** Milk 1L, Yoghurt, Orange Juice, Sugar 1kg, Sunflower Oil, Pasta 500g, Biscuits, Mineral Water, Detergent, Coffee
-- **Categories (6):** food, drinks, cosmetics, baby, nuts, spices
+**Context-Aware Generation Details:**
+- **6 Category-Specific Data Sets:**
+  - **Food:** Soummam, Cevital, Bimo brands | Semoule, Pasta, Couscous, Lentils, Rice, Flour items | Prices: 150-280 د.ج
+  - **Drinks:** Candia, Ifri, Cevital brands | Milk, Orange Juice, Coffee, Tea, Mineral Water items | Prices: 100-250 د.ج
+  - **Cosmetics:** Elio, Omo, Safina brands | Face Cream, Soap, Shampoo, Toothpaste items | Prices: 120-280 د.ج
+  - **Baby:** Bimo, Candia, Elio brands | Diapers, Baby Wipes, Baby Formula items | Prices: 150-450 د.ج
+  - **Nuts:** Soummam, Safina, Ngaous brands | Almonds, Walnuts, Pistachios, Cashews items | Prices: 380-520 د.ج
+  - **Spices:** Soummam, Cevital, Safina brands | Saffron, Cumin, Paprika, Cinnamon items | Prices: 200-950 د.ج
+
 - **Random Logic:**
-  - Each click generates **5 unique random products**
-  - Product name = Random Brand + Random Item (e.g., "Soummam Yoghurt", "Sim Pasta 500g")
-  - Price = Random between 100-3000 DZD
-  - Category = Randomly selected from 6 categories
-  - Image = Dynamic placeholder URL with product name (https://placehold.co/400?text=BRAND+ITEM)
-  - Arabic translations included for all items
+  - Each click generates **12 unique products (2 per category)**
+  - **Product name formula:** Brand + Item + " #" + Random Number (e.g., "Soummam Semoule #4829")
+  - Category STRICTLY matches product type (no mixing)
+  - Price matches realistic category range
+  - Image URL = Dynamic placeholder with full product name
+  - Arabic translations auto-generated for all items
+
 - Saves all products to Firestore automatically
-- Shows success message: "✓ تم إضافة 5 منتجات عشوائية جديدة!"
+- Shows success message: "✓ تم إضافة 12 منتج جديد (2 لكل فئة)!"
 - Auto-refreshes product list after insertion
 
 **Example Generated Products:**
-- "Candia Milk 1L" (890 د.ج) - drinks
-- "Ifri Orange Juice" (450 د.ج) - drinks
-- "Soummam Coffee" (1250 د.ج) - food
-- "Omo Detergent" (350 د.ج) - cosmetics
-- "Bimo Biscuits" (180 د.ج) - food
+- "Soummam Pasta #2847" (180 د.ج) - food
+- "Candia Milk #5193" (120 د.ج) - drinks
+- "Omo Soap #1042" (150 د.ج) - cosmetics
+- "Bimo Diapers #7564" (320 د.ج) - baby
+- "Safina Almonds #3921" (450 د.ج) - nuts
+- "Cevital Saffron #8765" (950 د.ج) - spices
 
 **Key Benefits:**
-- Click 100 times → get 500 different product combinations
-- Bilingual support (Arabic/English names)
-- Realistic Algerian brand names and product types
+- **100% Unique Products:** Random number suffix ensures no duplicate product names
+- **Click 50 times → 600 different products** (2 per category × 6 categories × 50 clicks)
+- **Context-Aware:** Brands and items match category semantically
+- **Bilingual Support:** Automatic Arabic/English naming
+- **Realistic Pricing:** Each category has appropriate price ranges
+- **Algerian Focus:** Uses authentic Algerian brand names
 
 ### Future Integration Considerations
 - Payment gateway integration (Stripe, PayPal) for checkout functionality
