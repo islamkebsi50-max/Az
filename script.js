@@ -106,6 +106,13 @@ const translations = {
         admin_loading: "جاري تحميل المنتجات...",
         admin_no_products: "لا توجد منتجات بعد",
         
+        // Admin Placeholders
+        admin_ph_name_ar: "مثال: لوز فاخر",
+        admin_ph_name_en: "مثال: Premium Almonds",
+        admin_ph_price: "0.00",
+        admin_ph_desc_ar: "أدخل وصف المنتج بالعربية...",
+        admin_ph_desc_en: "أدخل وصف المنتج بالإنجليزية...",
+        
         // Contact Page
         contact_title: "اتصل بنا",
         contact_desc: "تواصل معنا. نود أن نسمع منك!",
@@ -211,6 +218,13 @@ const translations = {
         admin_products_list: "Products",
         admin_loading: "Loading products...",
         admin_no_products: "No products yet",
+        
+        // Admin Placeholders
+        admin_ph_name_ar: "Example: Premium Almonds",
+        admin_ph_name_en: "Example: Premium Almonds",
+        admin_ph_price: "0.00",
+        admin_ph_desc_ar: "Enter product description in Arabic...",
+        admin_ph_desc_en: "Enter product description in English...",
         
         // Contact Page
         contact_title: "Contact Us",

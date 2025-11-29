@@ -10,6 +10,17 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes (November 29, 2025)
 
+### Admin Panel Translation Complete
+- All form labels now have `data-lang-key` attributes
+- All input placeholders now have `data-lang-placeholder` attributes
+- Placeholders translate dynamically when language is switched
+- Header text fixed with `whitespace-nowrap` to prevent wrapping
+- Example placeholders:
+  - Arabic name: "مثال: لوز فاخر"
+  - English name: "Example: Premium Almonds"
+  - Price: "0.00"
+  - Descriptions in both languages
+
 ### Mobile Menu Fix
 - Fixed mobile menu not closing when clicking navigation links
 - Added click listeners to all menu links in `setupUIControls()` function
@@ -23,9 +34,9 @@ Preferred communication style: Simple, everyday language.
 - Contact link in navigation now points to `/contact.html`
 
 ### Translations
-- Added 10 new translation keys for Contact page (both Arabic and English)
+- Added 30+ new translation keys including Contact page and Admin placeholders
 - Supports Arabic/English toggle with RTL/LTR switching
-- All form labels are translatable via `data-lang-key` attributes
+- All form labels and placeholders are translatable via `data-lang-key` and `data-lang-placeholder` attributes
 
 ## System Architecture
 

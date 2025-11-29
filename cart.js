@@ -6,8 +6,13 @@
 
 const WHATSAPP_PHONE = "213673425055";
 
-// CURRENCY_SYMBOL is defined in script.js, import it from there
-// Note: formatPrice is available globally from script.js
+// formatPrice helper function (uses global CURRENCY_SYMBOL from script.js)
+function formatPrice(price) {
+    if (typeof CURRENCY_SYMBOL !== 'undefined') {
+        return `${price.toFixed(2)} ${CURRENCY_SYMBOL}`;
+    }
+    return `${price.toFixed(2)} د.ج`;
+}
 
 // ==========================================
 // Translations (same as main script)
