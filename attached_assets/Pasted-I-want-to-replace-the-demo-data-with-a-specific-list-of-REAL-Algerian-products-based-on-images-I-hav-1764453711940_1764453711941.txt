@@ -1,0 +1,27 @@
+I want to replace the demo data with a specific list of REAL Algerian products based on images I have.
+
+Please update the `generateDemoData` function (or the button logic) in `script.js` to add exactly these 9 products instead of the random ones.
+
+Use this specific **Algerian Product List**:
+
+```javascript
+const algerianProducts = [
+    // 1. Touna Isabel
+    { name_ar: "تونة إيزابيل (زيت)", name_en: "Isabel Tuna (Oil)", price: 350, category: "food", image: "[https://placehold.co/400/orange/white?text=Isabel+Tuna](https://placehold.co/400/orange/white?text=Isabel+Tuna)" },
+    // 2. SOS Lentils
+    { name_ar: "عدس SOS فاخر (1 كغ)", name_en: "SOS Lentils (1kg)", price: 320, category: "food", image: "[https://placehold.co/400/green/white?text=SOS+Lentils](https://placehold.co/400/green/white?text=SOS+Lentils)" },
+    // 3. La Vache Qui Rit
+    { name_ar: "جبن لافاش كيري (32 قطعة)", name_en: "La Vache Qui Rit (32 Pcs)", price: 980, category: "food", image: "[https://placehold.co/400/red/white?text=La+Vache+Qui+Rit](https://placehold.co/400/red/white?text=La+Vache+Qui+Rit)" },
+    // 4. Safina Plombs (Mhamssa)
+    { name_ar: "محمصة سفينة (500غ)", name_en: "Safina Plombs (500g)", price: 140, category: "food", image: "[https://placehold.co/400/blue/white?text=Safina+Plombs](https://placehold.co/400/blue/white?text=Safina+Plombs)" },
+    // 5. Indomie
+    { name_ar: "إندومي نكهة دجاج كاري", name_en: "Indomie Chicken Curry", price: 65, category: "food", image: "[https://placehold.co/400/yellow/red?text=Indomie](https://placehold.co/400/yellow/red?text=Indomie)" },
+    // 6. Safina Semoule
+    { name_ar: "سميد سفينة رقيق (1 كغ)", name_en: "Safina Semolina Fine", price: 110, category: "food", image: "[https://placehold.co/400/blue/white?text=Safina+Semoule](https://placehold.co/400/blue/white?text=Safina+Semoule)" },
+    // 7. Heinz Mayonnaise
+    { name_ar: "مايونيز هاينز", name_en: "Heinz Mayonnaise", price: 550, category: "food", image: "[https://placehold.co/400/yellow/blue?text=Heinz+Mayo](https://placehold.co/400/yellow/blue?text=Heinz+Mayo)" },
+    // 8. Thika Beans
+    { name_ar: "لوبياء بيضاء ثقة", name_en: "Thika White Beans", price: 290, category: "food", image: "[https://placehold.co/400/red/white?text=Thika+Beans](https://placehold.co/400/red/white?text=Thika+Beans)" },
+    // 9. Amor Benamor Couscous
+    { name_ar: "كسكسي عمر بن عمر (رقيق)", name_en: "Amor Benamor Couscous", price: 170, category: "food", image: "[https://placehold.co/400/green/red?text=Amor+Benamor](https://placehold.co/400/green/red?text=Amor+Benamor)" }
+];
