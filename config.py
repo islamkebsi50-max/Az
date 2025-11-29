@@ -6,11 +6,12 @@ import socketserver
 
 class EnvInjectionHandler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
-        if self.path.endswith('.html') or self.path == '/' or self.path.endswith('firebase-config.js'):
-            file_path = self.path.lstrip('/')
-            if not file_path or file_path == '/':
-                file_path = 'index.html'
-            
+        file_path = self.path.lstrip('/')
+        if not file_path or file_path == '/':
+            file_path = 'index.html'
+        
+        # Handle HTML and JS files with environment variable injection and no-cache
+        if self.path.endswith('.html') or self.path == '/' or self.path.endswith('.js'):
             try:
                 with open(file_path, 'r', encoding='utf-8') as f:
                     content = f.read()
@@ -35,6 +36,21 @@ class EnvInjectionHandler(http.server.SimpleHTTPRequestHandler):
                 self.send_header('Pragma', 'no-cache')
                 self.send_header('Expires', '0')
                 self.send_header('Access-Control-Allow-Origin', '*')
+                self.end_headers()
+                self.wfile.write(content.encode('utf-8'))
+            except FileNotFoundError:
+                self.send_error(404)
+        # Handle CSS files with no-cache
+        elif self.path.endswith('.css'):
+            try:
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    content = f.read()
+                
+                self.send_response(200)
+                self.send_header('Content-type', 'text/css; charset=utf-8')
+                self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
+                self.send_header('Pragma', 'no-cache')
+                self.send_header('Expires', '0')
                 self.end_headers()
                 self.wfile.write(content.encode('utf-8'))
             except FileNotFoundError:
