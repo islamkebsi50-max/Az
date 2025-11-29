@@ -104,7 +104,19 @@ const translations = {
         admin_btn_update: "تحديث المنتج",
         admin_products_list: "المنتجات",
         admin_loading: "جاري تحميل المنتجات...",
-        admin_no_products: "لا توجد منتجات بعد"
+        admin_no_products: "لا توجد منتجات بعد",
+        
+        // Contact Page
+        contact_title: "اتصل بنا",
+        contact_desc: "تواصل معنا. نود أن نسمع منك!",
+        contact_form_name: "الاسم الكامل",
+        contact_form_email: "عنوان البريد الإلكتروني",
+        contact_form_message: "الرسالة",
+        contact_form_send: "إرسال الرسالة",
+        contact_info_title: "معلومات التواصل",
+        contact_phone: "الهاتف",
+        contact_email: "البريد الإلكتروني",
+        contact_address: "العنوان"
     },
     en: {
         // Navigation
@@ -198,7 +210,19 @@ const translations = {
         admin_btn_update: "Update Product",
         admin_products_list: "Products",
         admin_loading: "Loading products...",
-        admin_no_products: "No products yet"
+        admin_no_products: "No products yet",
+        
+        // Contact Page
+        contact_title: "Contact Us",
+        contact_desc: "Get in touch with our team. We'd love to hear from you!",
+        contact_form_name: "Full Name",
+        contact_form_email: "Email Address",
+        contact_form_message: "Message",
+        contact_form_send: "Send Message",
+        contact_info_title: "Contact Information",
+        contact_phone: "Phone",
+        contact_email: "Email",
+        contact_address: "Address"
     }
 };
 
@@ -645,6 +669,22 @@ function setupUIControls() {
                     icon.classList.add('fa-bars');
                 }
             }
+        });
+        
+        // Close menu when any link is clicked
+        const menuLinks = mobileMenu.querySelectorAll('a');
+        menuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                mobileMenu.classList.remove('open');
+                
+                // Reset menu icon
+                const icon = mobileMenuBtn.querySelector('i');
+                if (icon) {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
         });
     }
     

@@ -8,6 +8,25 @@ Aznaf Market is a premium e-commerce platform specializing in spices, nuts, and 
 
 Preferred communication style: Simple, everyday language.
 
+## Recent Changes (November 29, 2025)
+
+### Mobile Menu Fix
+- Fixed mobile menu not closing when clicking navigation links
+- Added click listeners to all menu links in `setupUIControls()` function
+- Menu now properly closes and icon resets after link selection
+
+### Contact Page
+- Created new `contact.html` page with fully bilingual support
+- Features include contact form (Name, Email, Message) and contact information cards
+- Integrated with WhatsApp API for form submissions
+- Consistent design and translations with main site
+- Contact link in navigation now points to `/contact.html`
+
+### Translations
+- Added 10 new translation keys for Contact page (both Arabic and English)
+- Supports Arabic/English toggle with RTL/LTR switching
+- All form labels are translatable via `data-lang-key` attributes
+
 ## System Architecture
 
 ### Frontend Architecture
