@@ -4,8 +4,12 @@
 // Configuration
 // ==========================================
 
-const WHATSAPP_PHONE_NUMBER = '+213673425055'; // Replace with actual Algerian WhatsApp number
+const WHATSAPP_PHONE = "213673425055";
 const CURRENCY_SYMBOL = 'د.ج';
+
+function formatPrice(price) {
+    return `${price.toFixed(2)} ${CURRENCY_SYMBOL}`;
+}
 
 // ==========================================
 // Theme Management
@@ -231,9 +235,9 @@ function updateCartSummary() {
     const tax = subtotal * TAX_RATE;
     const total = subtotal + tax;
     
-    subtotalEl.textContent = `${CURRENCY_SYMBOL}${subtotal.toFixed(2)}`;
-    taxEl.textContent = `${CURRENCY_SYMBOL}${tax.toFixed(2)}`;
-    totalEl.textContent = `${CURRENCY_SYMBOL}${total.toFixed(2)}`;
+    subtotalEl.textContent = formatPrice(subtotal);
+    taxEl.textContent = formatPrice(tax);
+    totalEl.textContent = formatPrice(total);
 }
 
 // ==========================================
@@ -242,7 +246,7 @@ function updateCartSummary() {
 
 function handleCheckout() {
     if (cart.length === 0) {
-        alert('سلتك فارغة!');
+        alert('السلة فارغة');
         return;
     }
     
@@ -251,21 +255,18 @@ function handleCheckout() {
     const tax = subtotal * TAX_RATE;
     const total = subtotal + tax;
     
-    let message = 'سلام عليكم، أريد طلب هذه المنتجات من متجر أزنف:\n\n';
+    let message = 'مرحباً، أريد طلب:\n\n';
     cart.forEach(item => {
-        message += `- ${item.name} (${item.quantity} كجم) - ${CURRENCY_SYMBOL}${(item.price * item.quantity).toFixed(2)}\n`;
+        message += `- ${item.name} (x${item.quantity}) : ${formatPrice(item.price * item.quantity)}\n`;
     });
-    message += `\nالمجموع الكلي (شامل الضريبة 10%): ${CURRENCY_SYMBOL}${total.toFixed(2)}`;
+    message += `\nالمجموع الكلي: ${formatPrice(total)}`;
     
     // Encode message for WhatsApp URL
     const encodedMessage = encodeURIComponent(message);
-    const whatsappURL = `https://wa.me/${WHATSAPP_PHONE_NUMBER}?text=${encodedMessage}`;
+    const whatsappURL = `https://wa.me/${WHATSAPP_PHONE}?text=${encodedMessage}`;
     
     // Redirect to WhatsApp
     window.open(whatsappURL, '_blank');
-    
-    saveCartToLocalStorage();
-    renderCart();
 }
 
 function handleClearCart() {

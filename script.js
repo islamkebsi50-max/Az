@@ -1,11 +1,39 @@
-// Aznaf Market - Main JavaScript with Firebase Integration
-
 // ==========================================
+// AZNAF MARKET - Main Application
+// ==========================================
+
 // Configuration
+const WHATSAPP_PHONE = "213673425055";
+const CURRENCY_SYMBOL = "د.ج";
+const TAX_RATE = 0.10;
+
+// ==========================================
+// Price Formatting Function
 // ==========================================
 
-const WHATSAPP_PHONE_NUMBER = '+213673425055'; // Replace with actual Algerian WhatsApp number
-const CURRENCY_SYMBOL = 'د.ج';
+function formatPrice(price) {
+    return `${price.toFixed(2)} ${CURRENCY_SYMBOL}`;
+}
+
+// ==========================================
+// Cart State
+// ==========================================
+
+let cart = [];
+
+function loadCartFromLocalStorage() {
+    try {
+        const saved = localStorage.getItem('aznaf_cart');
+        cart = saved ? JSON.parse(saved) : [];
+    } catch (error) {
+        console.error('Error loading cart:', error);
+        cart = [];
+    }
+}
+
+function saveCartToLocalStorage() {
+    localStorage.setItem('aznaf_cart', JSON.stringify(cart));
+}
 
 // ==========================================
 // Admin Secret Access (5 clicks on logo)
@@ -20,314 +48,17 @@ document.addEventListener('DOMContentLoaded', () => {
         logoBtn.addEventListener('click', () => {
             logoClickCount++;
             
-            // Reset counter after 5 seconds of inactivity
             clearTimeout(logoClickTimeout);
             logoClickTimeout = setTimeout(() => {
                 logoClickCount = 0;
             }, 5000);
             
-            // After 5 clicks, navigate to admin
             if (logoClickCount === 5) {
                 window.location.href = 'admin.html';
                 logoClickCount = 0;
             }
         });
     }
-});
-
-// ==========================================
-// Firebase Initialization
-// ==========================================
-
-let db = null;
-let firebaseInitialized = false;
-
-// Initialize Firebase if configured
-function initFirebase() {
-    try {
-        // Check if Firebase config is properly set up
-        if (typeof firebaseConfig !== 'undefined' && isFirebaseConfigured()) {
-            firebase.initializeApp(firebaseConfig);
-            db = firebase.firestore();
-            firebaseInitialized = true;
-            console.log('Firebase initialized successfully');
-            return true;
-        } else {
-            console.log('Firebase not configured - using local product data');
-            return false;
-        }
-    } catch (error) {
-        console.error('Firebase initialization error:', error);
-        return false;
-    }
-}
-
-// ==========================================
-// Local Product Data (Fallback)
-// ==========================================
-
-const localProducts = [
-    {
-        id: 1,
-        name: "Premium Almonds",
-        category: "nuts",
-        price: 12.99,
-        image: "https://images.unsplash.com/photo-1508061253366-f7da158b6d46?w=400&h=400&fit=crop",
-        badge: null
-    },
-    {
-        id: 2,
-        name: "Organic Cashews",
-        category: "nuts",
-        price: 15.99,
-        image: "https://images.unsplash.com/photo-1563292769-4e05b684851a?w=400&h=400&fit=crop",
-        badge: "Sale"
-    },
-    {
-        id: 3,
-        name: "Saffron Threads",
-        category: "spices",
-        price: 24.99,
-        image: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=400&h=400&fit=crop",
-        badge: "Premium"
-    },
-    {
-        id: 4,
-        name: "Ground Turmeric",
-        category: "spices",
-        price: 8.99,
-        image: "https://images.unsplash.com/photo-1615485290399-f10f394a7c6e?w=400&h=400&fit=crop",
-        badge: null
-    },
-    {
-        id: 5,
-        name: "Organic Honey",
-        category: "food",
-        price: 18.99,
-        image: "https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=400&h=400&fit=crop",
-        badge: "Organic"
-    },
-    {
-        id: 6,
-        name: "Extra Virgin Olive Oil",
-        category: "food",
-        price: 22.99,
-        image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=400&h=400&fit=crop",
-        badge: null
-    },
-    {
-        id: 7,
-        name: "Argan Oil Serum",
-        category: "cosmetics",
-        price: 29.99,
-        image: "https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=400&h=400&fit=crop",
-        badge: "Bestseller"
-    },
-    {
-        id: 8,
-        name: "Natural Face Cream",
-        category: "cosmetics",
-        price: 34.99,
-        image: "https://images.unsplash.com/photo-1570194065650-d99fb4b38b15?w=400&h=400&fit=crop",
-        badge: null
-    },
-    {
-        id: 9,
-        name: "Baby Diapers Pack",
-        category: "diapers",
-        price: 45.99,
-        image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&h=400&fit=crop",
-        badge: "Value Pack"
-    },
-    {
-        id: 10,
-        name: "Organic Baby Wipes",
-        category: "diapers",
-        price: 12.99,
-        image: "https://images.unsplash.com/photo-1584839404042-8bc21d240e46?w=400&h=400&fit=crop",
-        badge: null
-    },
-    {
-        id: 11,
-        name: "Fresh Orange Juice",
-        category: "drinks",
-        price: 6.99,
-        image: "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=400&h=400&fit=crop",
-        badge: null
-    },
-    {
-        id: 12,
-        name: "Green Tea Collection",
-        category: "drinks",
-        price: 14.99,
-        image: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&h=400&fit=crop",
-        badge: "New"
-    }
-];
-
-// Products arrays - will be populated from Firestore or local data
-let products = [];
-let allProducts = []; // Global storage for all products (used for instant search)
-
-// ==========================================
-// Firestore Functions
-// ==========================================
-
-async function fetchProducts() {
-    // Show loading state
-    showLoadingState();
-    
-    // Try to fetch from Firestore if initialized
-    if (firebaseInitialized && db) {
-        try {
-            const snapshot = await db.collection('products').orderBy('createdAt', 'desc').get();
-            
-            if (!snapshot.empty) {
-                products = snapshot.docs.map(doc => {
-                    const data = doc.data();
-                    return {
-                        id: doc.id,
-                        name: data.name || 'Unnamed Product',
-                        category: data.category || 'uncategorized',
-                        price: parseFloat(data.price) || 0,
-                        image: data.image || data.imageUrl || 'https://via.placeholder.com/400x400?text=Product',
-                        badge: data.badge || null,
-                        description: data.description || ''
-                    };
-                });
-                // Store in global array for instant search
-                allProducts = [...products];
-                console.log(`Fetched ${products.length} products from Firestore (ordered by newest first)`);
-                return products;
-            } else {
-                console.log('No products in Firestore, using local data');
-                products = [...localProducts];
-                allProducts = [...localProducts];
-                return products;
-            }
-        } catch (error) {
-            console.error('Error fetching products from Firestore:', error);
-            console.log('Falling back to local product data');
-            products = [...localProducts];
-            allProducts = [...localProducts];
-            return products;
-        }
-    } else {
-        // Use local products if Firebase is not configured
-        console.log('Using local product data');
-        products = [...localProducts];
-        allProducts = [...localProducts];
-        return products;
-    }
-}
-
-// Show loading skeleton while fetching products
-function showLoadingState() {
-    const productGrid = document.getElementById('product-grid');
-    if (!productGrid) return;
-    
-    const skeletonCount = 12;
-    const skeletonHTML = Array(skeletonCount).fill('').map(() => `
-        <div class="product-card bg-white dark:bg-dark-card rounded-2xl overflow-hidden shadow-md animate-pulse">
-            <div class="product-image aspect-square bg-gray-300 dark:bg-gray-700"></div>
-            <div class="p-4">
-                <div class="h-3 w-16 bg-gray-300 dark:bg-gray-700 rounded mb-3"></div>
-                <div class="h-5 w-full bg-gray-300 dark:bg-gray-700 rounded mb-3"></div>
-                <div class="flex items-center justify-between">
-                    <div class="h-6 w-20 bg-gray-300 dark:bg-gray-700 rounded"></div>
-                    <div class="h-10 w-10 bg-gray-300 dark:bg-gray-700 rounded-full"></div>
-                </div>
-            </div>
-        </div>
-    `).join('');
-    
-    productGrid.innerHTML = skeletonHTML;
-}
-
-// ==========================================
-// Cart State
-// ==========================================
-
-let cart = [];
-let cartCount = 0;
-
-// Load cart from localStorage on startup
-function loadCartFromLocalStorage() {
-    try {
-        const saved = localStorage.getItem('aznaf_cart');
-        if (saved) {
-            cart = JSON.parse(saved);
-            cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-        }
-    } catch (error) {
-        console.error('Error loading cart from localStorage:', error);
-        cart = [];
-        cartCount = 0;
-    }
-}
-
-// Save cart to localStorage
-function saveCartToLocalStorage() {
-    try {
-        localStorage.setItem('aznaf_cart', JSON.stringify(cart));
-    } catch (error) {
-        console.error('Error saving cart to localStorage:', error);
-    }
-}
-
-// ==========================================
-// DOM Elements
-// ==========================================
-
-let productGrid;
-let cartCountElement;
-let themeToggle;
-let mobileMenuBtn;
-let mobileMenu;
-let mobileSearchBtn;
-let mobileSearch;
-let toast;
-let toastMessage;
-let categoryBtns;
-
-// ==========================================
-// Initialization
-// ==========================================
-
-document.addEventListener('DOMContentLoaded', async () => {
-    // Cache DOM elements
-    productGrid = document.getElementById('product-grid');
-    cartCountElement = document.getElementById('cart-count');
-    themeToggle = document.getElementById('theme-toggle');
-    mobileMenuBtn = document.getElementById('mobile-menu-btn');
-    mobileMenu = document.getElementById('mobile-menu');
-    mobileSearchBtn = document.getElementById('mobile-search-btn');
-    mobileSearch = document.getElementById('mobile-search');
-    toast = document.getElementById('toast');
-    toastMessage = document.getElementById('toast-message');
-    categoryBtns = document.querySelectorAll('.category-btn');
-    
-    // Load cart from localStorage first
-    loadCartFromLocalStorage();
-    
-    // Initialize theme
-    initTheme();
-    
-    // Initialize Firebase
-    initFirebase();
-    
-    // Fetch and render products
-    await fetchProducts();
-    renderProducts('all');
-    
-    // Update cart count display
-    updateCartCount();
-    
-    // Set up event listeners
-    initEventListeners();
-    
-    // Initialize instant search functionality
-    initializeInstantSearch();
 });
 
 // ==========================================
@@ -351,322 +82,217 @@ function toggleTheme() {
 }
 
 // ==========================================
-// Event Listeners
+// Firebase Integration
 // ==========================================
 
-function initEventListeners() {
-    // Theme Toggle
-    if (themeToggle) {
-        themeToggle.addEventListener('click', toggleTheme);
-    }
-    
-    // Mobile Menu Toggle
-    if (mobileMenuBtn && mobileMenu) {
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-            mobileMenu.classList.toggle('open');
-        });
-    }
-    
-    // Mobile Search Toggle
-    if (mobileSearchBtn && mobileSearch) {
-        mobileSearchBtn.addEventListener('click', () => {
-            mobileSearch.classList.toggle('hidden');
-        });
-    }
-    
-    // Category Buttons
-    if (categoryBtns) {
-        categoryBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                categoryBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                const category = btn.dataset.category;
-                renderProducts(category);
-            });
-        });
-    }
-    
-    // Listen for system theme changes
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-        if (!localStorage.getItem('theme')) {
-            if (e.matches) {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
+let db = null;
+let products = [];
+
+async function initFirebase() {
+    try {
+        // Firebase config from firebase-config.js
+        const firebaseConfig = window.firebaseConfig;
+        
+        if (!firebaseConfig || !firebaseConfig.projectId) {
+            console.log('Firebase not configured, using local data');
+            loadLocalProducts();
+            renderProducts();
+            return;
         }
-    });
+
+        await firebase.initializeApp(firebaseConfig);
+        db = firebase.firestore();
+        
+        console.log('Firebase initialized successfully');
+        await fetchProducts();
+        renderProducts();
+    } catch (error) {
+        console.error('Firebase initialization error:', error);
+        loadLocalProducts();
+        renderProducts();
+    }
+}
+
+async function fetchProducts() {
+    try {
+        if (!db) {
+            loadLocalProducts();
+            return;
+        }
+
+        const snapshot = await db.collection('products')
+            .orderBy('createdAt', 'desc')
+            .get();
+        
+        products = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+        
+        console.log(`Fetched ${products.length} products from Firestore (ordered by newest first)`);
+    } catch (error) {
+        console.error('Error fetching products:', error);
+        loadLocalProducts();
+    }
+}
+
+function loadLocalProducts() {
+    products = [
+        {
+            id: '1',
+            name: 'زيت الزيتون الخام',
+            category: 'food',
+            price: 1500,
+            image: 'https://images.unsplash.com/photo-1474836599038-b981a64b9edf?w=400&h=400&fit=crop'
+        },
+        {
+            id: '2',
+            name: 'الفستق الحلبي',
+            category: 'nuts',
+            price: 2500,
+            image: 'https://images.unsplash.com/photo-1599599810694-a5f89b5c6ba7?w=400&h=400&fit=crop'
+        },
+        {
+            id: '3',
+            name: 'الزعفران الفاخر',
+            category: 'spices',
+            price: 3000,
+            image: 'https://images.unsplash.com/photo-1596040424414-d68d4caa3fb8?w=400&h=400&fit=crop'
+        }
+    ];
 }
 
 // ==========================================
 // Product Rendering
 // ==========================================
 
-function renderProducts(category) {
+function renderProducts(productsToShow = products) {
+    const productGrid = document.getElementById('product-grid');
     if (!productGrid) return;
-    
-    const filteredProducts = category === 'all' 
-        ? products 
-        : products.filter(p => p.category === category);
-    
-    if (filteredProducts.length === 0) {
-        productGrid.innerHTML = `
-            <div class="col-span-full text-center py-12">
-                <i class="fas fa-box-open text-4xl text-gray-400 mb-4"></i>
-                <p class="text-gray-500 dark:text-gray-400">No products found in this category.</p>
-            </div>
-        `;
+
+    productGrid.innerHTML = '';
+
+    if (productsToShow.length === 0) {
+        productGrid.innerHTML = '<p class="text-center text-gray-500">No products found</p>';
         return;
     }
-    
-    productGrid.innerHTML = filteredProducts.map(product => createProductCard(product)).join('');
-    
-    // Add event listeners to new Add to Cart buttons
+
+    productsToShow.forEach(product => {
+        const card = document.createElement('div');
+        card.className = 'bg-white dark:bg-dark-card rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow';
+        
+        card.innerHTML = `
+            <div class="relative overflow-hidden bg-gray-100 h-48">
+                <img 
+                    src="${product.image}" 
+                    alt="${product.name}"
+                    class="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
+                    onerror="this.src='https://via.placeholder.com/400x400?text=Product+Image'"
+                >
+                ${product.badge ? `<span class="absolute top-3 right-3 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">${product.badge}</span>` : ''}
+            </div>
+            <div class="p-4">
+                <h3 class="font-semibold text-lg text-gray-800 dark:text-white mb-2">${product.name}</h3>
+                <p class="text-primary-500 font-bold text-xl mb-3">${formatPrice(product.price)}</p>
+                <button 
+                    class="add-to-cart-btn w-full bg-primary-500 hover:bg-primary-600 text-white py-2 rounded-lg transition-colors"
+                    data-product-id="${product.id}"
+                    data-product-name="${product.name}"
+                    data-product-price="${product.price}"
+                    data-product-image="${product.image}"
+                >
+                    أضف إلى السلة
+                </button>
+            </div>
+        `;
+        
+        productGrid.appendChild(card);
+    });
+
+    // Attach event listeners
     document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const productId = e.currentTarget.dataset.productId;
-            addToCart(productId);
-        });
+        btn.addEventListener('click', addToCart);
     });
 }
 
-// Create Product Card HTML
-function createProductCard(product) {
-    const badgeColors = {
-        'Sale': 'bg-red-500',
-        'Premium': 'bg-purple-500',
-        'Organic': 'bg-green-500',
-        'Bestseller': 'bg-blue-500',
-        'Value Pack': 'bg-orange-500',
-        'New': 'bg-teal-500'
-    };
-    
-    const categoryLabels = {
-        'nuts': 'Nuts',
-        'spices': 'Spices',
-        'food': 'Food Products',
-        'cosmetics': 'Cosmetics',
-        'diapers': 'Baby Diapers',
-        'drinks': 'Drinks'
-    };
-    
-    // Handle image URL - ensure it's valid
-    let imageUrl = product.image || product.imageUrl || '';
-    if (!imageUrl || imageUrl === '') {
-        imageUrl = 'https://via.placeholder.com/400x400?text=Product';
-    }
-    
-    // Handle price - ensure it's a number
-    const price = typeof product.price === 'number' ? product.price : parseFloat(product.price) || 0;
-    
-    return `
-        <div class="product-card bg-white dark:bg-dark-card rounded-2xl overflow-hidden shadow-md">
-            <div class="product-image relative aspect-square overflow-hidden">
-                ${product.badge ? `
-                    <span class="absolute top-3 left-3 ${badgeColors[product.badge] || 'bg-gray-500'} text-white text-xs font-semibold px-3 py-1 rounded-full z-10 sale-badge">
-                        ${product.badge}
-                    </span>
-                ` : ''}
-                <img 
-                    src="${imageUrl}" 
-                    alt="${product.name}"
-                    class="w-full h-full object-cover"
-                    loading="lazy"
-                    onerror="this.onerror=null; this.src='https://via.placeholder.com/400x400?text=Product'"
-                >
-            </div>
-            <div class="p-4">
-                <span class="text-xs text-primary-500 dark:text-primary-400 font-medium uppercase tracking-wide">
-                    ${categoryLabels[product.category] || product.category || 'Product'}
-                </span>
-                <h3 class="font-semibold text-gray-900 dark:text-white mt-1 mb-2 truncate">
-                    ${product.name}
-                </h3>
-                <div class="flex items-center justify-between">
-                    <span class="text-lg font-bold text-gray-900 dark:text-white price-tag">
-                        $${price.toFixed(2)}
-                    </span>
-                    <button 
-                        class="add-to-cart-btn bg-primary-500 hover:bg-primary-600 text-white p-2.5 rounded-full shadow-md"
-                        data-product-id="${product.id}"
-                        aria-label="Add ${product.name} to cart"
-                    >
-                        <i class="fas fa-plus"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    `;
+// ==========================================
+// Search Functionality
+// ==========================================
+
+function setupSearch() {
+    const searchInput = document.getElementById('search-input');
+    if (!searchInput) return;
+
+    searchInput.addEventListener('keyup', (e) => {
+        const query = e.target.value.toLowerCase();
+        const filtered = products.filter(product =>
+            product.name.toLowerCase().includes(query) ||
+            (product.category && product.category.toLowerCase().includes(query))
+        );
+        renderProducts(filtered);
+    });
 }
 
 // ==========================================
-// Cart Functions
+// Cart Operations
 // ==========================================
 
-function addToCart(productId) {
-    // Handle both string and number IDs (Firestore uses strings)
-    const product = products.find(p => String(p.id) === String(productId));
-    if (!product) return;
-    
-    const existingItem = cart.find(item => String(item.id) === String(productId));
+function addToCart(e) {
+    const btn = e.target;
+    const productId = btn.dataset.productId;
+    const productName = btn.dataset.productName;
+    const productPrice = parseFloat(btn.dataset.productPrice);
+    const productImage = btn.dataset.productImage;
+
+    const existingItem = cart.find(item => item.id === productId);
     
     if (existingItem) {
         existingItem.quantity += 1;
     } else {
-        cart.push({ ...product, quantity: 1 });
-    }
-    
-    cartCount += 1;
-    updateCartCount();
-    saveCartToLocalStorage(); // Save to localStorage
-    showToast(`${product.name} تمت إضافته إلى السلة! 🛒`);
-}
-
-function updateCartCount() {
-    if (cartCountElement) {
-        cartCountElement.textContent = cartCount;
-        cartCountElement.classList.add('pulse');
-        setTimeout(() => {
-            cartCountElement.classList.remove('pulse');
-        }, 400);
-    }
-}
-
-// ==========================================
-// Toast Notification
-// ==========================================
-
-function showToast(message) {
-    if (toastMessage && toast) {
-        toastMessage.textContent = message;
-        toast.classList.add('toast-show');
-        
-        setTimeout(() => {
-            toast.classList.remove('toast-show');
-        }, 3000);
-    }
-}
-
-// ==========================================
-// Smooth Scrolling
-// ==========================================
-
-// ==========================================
-// Instant Live Search Functionality
-// ==========================================
-
-function performInstantSearch(query) {
-    if (!query || query.trim().length === 0) {
-        // Empty search - show all products
-        categoryBtns.forEach(b => b.classList.remove('active'));
-        const allBtn = Array.from(categoryBtns).find(btn => btn.dataset.category === 'all');
-        if (allBtn) allBtn.classList.add('active');
-        renderProducts('all');
-        return;
-    }
-    
-    const searchTerm = query.toLowerCase().trim();
-    
-    if (!productGrid || allProducts.length === 0) return;
-    
-    // Prioritize products that START with search term, then include products that contain it
-    const exactStarts = allProducts.filter(p => 
-        p.name.toLowerCase().startsWith(searchTerm)
-    );
-    
-    const includes = allProducts.filter(p => 
-        !p.name.toLowerCase().startsWith(searchTerm) && 
-        p.name.toLowerCase().includes(searchTerm)
-    );
-    
-    const categoryMatches = allProducts.filter(p =>
-        !p.name.toLowerCase().includes(searchTerm) &&
-        p.category && p.category.toLowerCase().includes(searchTerm)
-    );
-    
-    const descriptionMatches = allProducts.filter(p =>
-        !p.name.toLowerCase().includes(searchTerm) &&
-        (!p.category || !p.category.toLowerCase().includes(searchTerm)) &&
-        p.description && p.description.toLowerCase().includes(searchTerm)
-    );
-    
-    // Combine results with priority: starts with > includes > category > description
-    const filteredProducts = [...exactStarts, ...includes, ...categoryMatches, ...descriptionMatches];
-    
-    // Remove duplicates by ID
-    const uniqueProducts = Array.from(new Map(filteredProducts.map(p => [p.id, p])).values());
-    
-    // Remove active state from category buttons during search
-    categoryBtns.forEach(b => b.classList.remove('active'));
-    
-    if (uniqueProducts.length === 0) {
-        productGrid.innerHTML = `
-            <div class="col-span-full text-center py-12">
-                <i class="fas fa-search text-4xl text-gray-400 mb-4"></i>
-                <p class="text-gray-500 dark:text-gray-400">لا توجد منتجات تطابق "${query}"</p>
-            </div>
-        `;
-        return;
-    }
-    
-    // Render filtered products immediately
-    productGrid.innerHTML = uniqueProducts.map(product => createProductCard(product)).join('');
-    
-    // Attach event listeners to add-to-cart buttons
-    document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const productId = e.currentTarget.dataset.productId;
-            addToCart(productId);
-        });
-    });
-}
-
-// Initialize instant search with event listeners
-function initializeInstantSearch() {
-    // Desktop search input - instant on every keystroke
-    const desktopSearchInput = document.querySelector('div.flex-1 input[placeholder="Search for products..."]');
-    if (desktopSearchInput) {
-        desktopSearchInput.addEventListener('input', (e) => {
-            performInstantSearch(e.target.value);
+        cart.push({
+            id: productId,
+            name: productName,
+            price: productPrice,
+            image: productImage,
+            quantity: 1
         });
     }
+
+    saveCartToLocalStorage();
+    updateCartBadge();
+
+    // Show feedback
+    btn.textContent = 'تمت الإضافة ✓';
+    setTimeout(() => {
+        btn.textContent = 'أضف إلى السلة';
+    }, 1500);
+}
+
+function updateCartBadge() {
+    const badge = document.getElementById('cart-badge');
+    const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
     
-    // Mobile search input - instant on every keystroke
-    const mobileSearchInput = document.querySelector('#mobile-search input[placeholder="Search for products..."]');
-    if (mobileSearchInput) {
-        mobileSearchInput.addEventListener('input', (e) => {
-            performInstantSearch(e.target.value);
-        });
+    if (badge) {
+        badge.textContent = cartCount;
+        badge.style.display = cartCount > 0 ? 'flex' : 'none';
     }
 }
 
 // ==========================================
-// Smooth Scrolling
+// Initialization
 // ==========================================
 
-document.addEventListener('click', (e) => {
-    if (e.target.tagName === 'A') {
-        const href = e.target.getAttribute('href');
-        if (href && href.startsWith('#') && href.length > 1) {
-            e.preventDefault();
-            try {
-                const target = document.querySelector(href);
-                if (target) {
-                    // Close mobile menu if open
-                    if (mobileMenu) {
-                        mobileMenu.classList.add('hidden');
-                        mobileMenu.classList.remove('open');
-                    }
-                    
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            } catch (error) {
-                console.log('Invalid selector:', href);
-            }
-        }
-    }
+document.addEventListener('DOMContentLoaded', () => {
+    initTheme();
+    loadCartFromLocalStorage();
+    updateCartBadge();
+    setupSearch();
+    initFirebase();
 });
+
+// ==========================================
+// Export for cart.js
+// ==========================================
+
+window.formatPrice = formatPrice;
+window.addToCart = addToCart;
