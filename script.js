@@ -216,6 +216,30 @@ function showLoadingState() {
 let cart = [];
 let cartCount = 0;
 
+// Load cart from localStorage on startup
+function loadCartFromLocalStorage() {
+    try {
+        const saved = localStorage.getItem('aznaf_cart');
+        if (saved) {
+            cart = JSON.parse(saved);
+            cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+        }
+    } catch (error) {
+        console.error('Error loading cart from localStorage:', error);
+        cart = [];
+        cartCount = 0;
+    }
+}
+
+// Save cart to localStorage
+function saveCartToLocalStorage() {
+    try {
+        localStorage.setItem('aznaf_cart', JSON.stringify(cart));
+    } catch (error) {
+        console.error('Error saving cart to localStorage:', error);
+    }
+}
+
 // ==========================================
 // DOM Elements
 // ==========================================
@@ -248,6 +272,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     toastMessage = document.getElementById('toast-message');
     categoryBtns = document.querySelectorAll('.category-btn');
     
+    // Load cart from localStorage first
+    loadCartFromLocalStorage();
+    
     // Initialize theme
     initTheme();
     
@@ -257,6 +284,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Fetch and render products
     await fetchProducts();
     renderProducts('all');
+    
+    // Update cart count display
+    updateCartCount();
     
     // Set up event listeners
     initEventListeners();
@@ -454,7 +484,8 @@ function addToCart(productId) {
     
     cartCount += 1;
     updateCartCount();
-    showToast(`${product.name} added to cart!`);
+    saveCartToLocalStorage(); // Save to localStorage
+    showToast(`${product.name} تمت إضافته إلى السلة! 🛒`);
 }
 
 function updateCartCount() {
