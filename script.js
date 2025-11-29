@@ -92,8 +92,14 @@ async function initFirebase() {
     try {
         const firebaseConfig = window.firebaseConfig;
         
-        // Check if Firebase config is valid (not empty strings)
-        if (!firebaseConfig || !firebaseConfig.projectId || firebaseConfig.projectId === '') {
+        console.log('Firebase Config Check:', {
+            exists: !!firebaseConfig,
+            projectId: firebaseConfig?.projectId,
+            apiKey: firebaseConfig?.apiKey?.substring(0, 10)
+        });
+        
+        // Check if Firebase config is valid (not empty strings or placeholders)
+        if (!firebaseConfig || !firebaseConfig.projectId || firebaseConfig.projectId === '' || firebaseConfig.projectId.includes('%')) {
             console.log('Firebase not configured, using local data');
             loadLocalProducts();
             renderProducts();

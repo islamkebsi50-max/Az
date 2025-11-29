@@ -6,9 +6,9 @@ import socketserver
 
 class EnvInjectionHandler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
-        if self.path.endswith('.html') or self.path == '/' or self.path == '/index.html' or self.path.endswith('firebase-config.js'):
+        if self.path.endswith('.html') or self.path == '/' or self.path.endswith('firebase-config.js'):
             file_path = self.path.lstrip('/')
-            if not file_path or file_path == 'index.html':
+            if not file_path or file_path == '/':
                 file_path = 'index.html'
             
             try:

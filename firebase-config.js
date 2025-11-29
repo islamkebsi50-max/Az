@@ -18,10 +18,15 @@ const firebaseConfig = {
 // imgbb API Key for image uploads
 const imgbbApiKey = window.__IMGBB_API_KEY__ || "%IMGBB_API_KEY%";
 
+console.log('Firebase Config - projectId:', firebaseConfig.projectId);
+console.log('Firebase Config - apiKey exists:', !!firebaseConfig.apiKey);
+
 // Check if Firebase config has been set up
 function isFirebaseConfigured() {
-    return firebaseConfig.apiKey && firebaseConfig.apiKey.length > 0 && 
-           firebaseConfig.projectId && firebaseConfig.projectId.length > 0;
+    const configured = firebaseConfig.apiKey && firebaseConfig.apiKey.length > 0 && 
+           firebaseConfig.projectId && firebaseConfig.projectId.length > 0 &&
+           !firebaseConfig.projectId.includes('%');
+    return configured;
 }
 
 // Check if imgbb is configured
