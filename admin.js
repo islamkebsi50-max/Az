@@ -630,6 +630,11 @@ async function confirmDelete() {
                 renderAdminProducts(filterCategory.value);
             }
             
+            // Reload products globally on all pages
+            if (window.reloadProductsGlobally) {
+                await window.reloadProductsGlobally();
+            }
+            
         } catch (error) {
             console.error('Delete error:', error);
             showStatus('فشل حذف المنتج: ' + error.message, 'error');
@@ -823,6 +828,11 @@ async function deleteAllInCategory() {
         document.getElementById('inventory-filter-category').value = 'all';
         renderAdminProducts('all');
         loadProducts();
+        
+        // Reload products globally on all pages
+        if (window.reloadProductsGlobally) {
+            await window.reloadProductsGlobally();
+        }
     } catch (error) {
         showStatus('خطأ: ' + error.message, 'error');
     } finally {
@@ -846,6 +856,11 @@ async function deleteAllProducts() {
         document.getElementById('inventory-filter-category').value = 'all';
         renderAdminProducts('all');
         loadProducts();
+        
+        // Reload products globally on all pages
+        if (window.reloadProductsGlobally) {
+            await window.reloadProductsGlobally();
+        }
     } catch (error) {
         showStatus('خطأ: ' + error.message, 'error');
     } finally {

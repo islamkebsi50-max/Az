@@ -544,6 +544,13 @@ async function fetchProducts() {
     }
 }
 
+// Function to reload products globally (used by admin panel after changes)
+window.reloadProductsGlobally = async function() {
+    await fetchProducts();
+    renderProducts();
+    console.log('Products reloaded globally');
+}
+
 function loadLocalProducts() {
     products = [];
 }
