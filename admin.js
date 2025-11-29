@@ -757,9 +757,9 @@ function openDeleteCategoryModal() {
     const modalMsg = document.querySelector('#modal-content p');
     const confirmBtn = document.getElementById('confirm-delete-btn');
     
-    modalTitle.textContent = 'حذف الفئة';
-    modalMsg.textContent = 'هل أنت متأكد من حذف جميع المنتجات في هذه الفئة؟ لا يمكن التراجع عن هذا الإجراء.';
-    confirmBtn.textContent = 'نعم، احذف الفئة';
+    modalTitle.textContent = 'حذف الكل';
+    modalMsg.textContent = 'هل أنت متأكد من حذف جميع المنتجات؟ لا يمكن التراجع عن هذا الإجراء.';
+    confirmBtn.textContent = 'نعم، احذف الكل';
     
     deleteModal.classList.remove('hidden');
     setTimeout(() => {
