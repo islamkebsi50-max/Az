@@ -4,7 +4,7 @@
 // Configuration
 // ==========================================
 
-const WHATSAPP_PHONE_NUMBER = '213XXXXXXXXX'; // Replace with actual Algerian WhatsApp number
+const WHATSAPP_PHONE_NUMBER = '213673425055'; // Replace with actual Algerian WhatsApp number
 const CURRENCY_SYMBOL = 'د.ج';
 
 // ==========================================
