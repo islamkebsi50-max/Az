@@ -113,9 +113,11 @@ const translations = {
         admin_ph_desc_ar: "أدخل وصف المنتج بالعربية هنا...",
         admin_ph_desc_en: "أدخل الوصف بالإنجليزية (اختياري)...",
         
-        // Upload placeholders
-        admin_ph_upload: "اسحب الصورة هنا أو انقر للاختيار",
-        admin_ph_file_hint: "PNG, JPG, WEBP (حد أقصى 32MB)",
+        // Upload text
+        admin_upload_text: "اسحب الصورة هنا أو انقر للاختيار",
+        admin_upload_hint: "PNG, JPG, WEBP (حد أقصى 32MB)",
+        admin_remove_image: "إزالة الصورة",
+        admin_uploading: "جاري رفع الصورة...",
         
         // Contact Page
         contact_title: "اتصل بنا",
@@ -230,9 +232,11 @@ const translations = {
         admin_ph_desc_ar: "Arabic Description...",
         admin_ph_desc_en: "English Description...",
         
-        // Upload placeholders
-        admin_ph_upload: "Drag image here or click to select",
-        admin_ph_file_hint: "PNG, JPG, WEBP (max 32MB)",
+        // Upload text
+        admin_upload_text: "Drag image here or click to select",
+        admin_upload_hint: "PNG, JPG, WEBP (max 32MB)",
+        admin_remove_image: "Remove Image",
+        admin_uploading: "Uploading image...",
         
         // Contact Page
         contact_title: "Contact Us",

@@ -18,15 +18,18 @@ Preferred communication style: Simple, everyday language.
 - Applied consistently across index.html, cart.html, and admin.html
 
 ### Admin Panel Translation Complete
-- All form labels now have `data-lang-key` attributes
-- All input placeholders now have `data-lang-placeholder` attributes
-- Placeholders translate dynamically when language is switched
-- Header text fixed with `whitespace-nowrap` to prevent wrapping
+- **Form Labels** - All have `data-lang-key` attributes
+- **Input Placeholders** - All have `data-lang-placeholder` attributes
+- **Upload Section** - Text translates: "اسحب الصورة" ↔ "Drag image"
+- **Buttons** - All translatable: "إضافة" ↔ "Add", "إلغاء" ↔ "Cancel", "إزالة الصورة" ↔ "Remove Image"
+- **Progress Messages** - "جاري رفع الصورة..." ↔ "Uploading image..."
+- **Section Titles** - "المنتجات" ↔ "Products"
+- Dynamic update on language toggle without page refresh
 - Example placeholders:
-  - Arabic name: "مثال: لوز فاخر"
-  - English name: "Example: Premium Almonds"
-  - Price: "0.00"
-  - Descriptions in both languages
+  - Arabic name: "مثال: لوز فاخر" ↔ "Ex: Almonds"
+  - English name: "مثال: Premium Almonds" ↔ "Ex: Premium Almonds"
+  - Price: "0.00" (both languages)
+  - Descriptions with full translations
 
 ### Mobile Menu Fix
 - Fixed mobile menu not closing when clicking navigation links

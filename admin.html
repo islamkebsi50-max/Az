@@ -228,14 +228,14 @@
                             >
                             <div id="upload-placeholder">
                                 <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-3"></i>
-                                <p class="text-gray-500 dark:text-gray-400">اسحب الصورة هنا أو انقر للاختيار</p>
-                                <p class="text-xs text-gray-400 mt-2">PNG, JPG, WEBP (حد أقصى 32MB)</p>
+                                <p class="text-gray-500 dark:text-gray-400" data-lang-key="admin_upload_text">اسحب الصورة هنا أو انقر للاختيار</p>
+                                <p class="text-xs text-gray-400 mt-2" data-lang-key="admin_upload_hint">PNG, JPG, WEBP (حد أقصى 32MB)</p>
                             </div>
                             <div id="image-preview-container" class="hidden">
                                 <img id="image-preview" class="image-preview mx-auto rounded-lg shadow-md mb-3">
                                 <p id="image-name" class="text-sm text-gray-500"></p>
                                 <button type="button" id="remove-image" class="mt-2 text-red-500 hover:text-red-600 text-sm">
-                                    <i class="fas fa-times ml-1"></i> إزالة الصورة
+                                    <i class="fas fa-times ml-1"></i> <span data-lang-key="admin_remove_image">إزالة الصورة</span>
                                 </button>
                             </div>
                         </div>
@@ -245,7 +245,7 @@
                     <!-- Upload Progress -->
                     <div id="upload-progress" class="hidden">
                         <div class="flex items-center justify-between mb-2">
-                            <span class="text-sm">جاري رفع الصورة...</span>
+                            <span class="text-sm" data-lang-key="admin_uploading">جاري رفع الصورة...</span>
                             <span id="progress-percent" class="text-sm font-medium">0%</span>
                         </div>
                         <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
@@ -267,6 +267,7 @@
                             type="button" 
                             id="cancel-edit-btn"
                             class="hidden px-6 py-3 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-semibold rounded-lg transition-all"
+                            data-lang-key="admin_btn_cancel"
                         >
                             إلغاء
                         </button>
@@ -279,7 +280,7 @@
                 <h2 class="text-xl font-bold mb-6 flex items-center justify-between">
                     <span>
                         <i class="fas fa-box text-primary-500 ml-2"></i>
-                        المنتجات (<span id="products-count">0</span>)
+                        <span data-lang-key="admin_products_list">المنتجات</span> (<span id="products-count">0</span>)
                     </span>
                     <button 
                         id="refresh-btn"
