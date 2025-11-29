@@ -475,14 +475,78 @@ function showToast(message) {
 // Smooth Scrolling
 // ==========================================
 
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        const href = this.getAttribute('href');
-        if (href && href.length > 1) {
+// ==========================================
+// Search Functionality
+// ==========================================
+
+function searchProducts(query) {
+    if (!query.trim()) {
+        renderProducts('all');
+        return;
+    }
+    
+    const searchTerm = query.toLowerCase();
+    const filteredProducts = products.filter(p => 
+        p.name.toLowerCase().includes(searchTerm) || 
+        (p.category && p.category.toLowerCase().includes(searchTerm))
+    );
+    
+    if (!productGrid) return;
+    
+    if (filteredProducts.length === 0) {
+        productGrid.innerHTML = `
+            <div class="col-span-full text-center py-12">
+                <i class="fas fa-search text-4xl text-gray-400 mb-4"></i>
+                <p class="text-gray-500 dark:text-gray-400">No products found matching "${query}"</p>
+            </div>
+        `;
+        return;
+    }
+    
+    productGrid.innerHTML = filteredProducts.map(product => createProductCard(product)).join('');
+    
+    document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const productId = e.currentTarget.dataset.productId;
+            addToCart(productId);
+        });
+    });
+}
+
+// Desktop search input
+const desktopSearchInput = document.querySelector('input[placeholder="Search for products..."]');
+if (desktopSearchInput && !desktopSearchInput.closest('#mobile-search')) {
+    desktopSearchInput.addEventListener('input', (e) => {
+        searchProducts(e.target.value);
+    });
+}
+
+// Mobile search input
+const mobileSearchInput = document.querySelector('#mobile-search input[placeholder="Search for products..."]');
+if (mobileSearchInput) {
+    mobileSearchInput.addEventListener('input', (e) => {
+        searchProducts(e.target.value);
+    });
+}
+
+// ==========================================
+// Smooth Scrolling
+// ==========================================
+
+document.addEventListener('click', (e) => {
+    if (e.target.tagName === 'A') {
+        const href = e.target.getAttribute('href');
+        if (href && href.startsWith('#') && href.length > 1) {
             e.preventDefault();
             try {
                 const target = document.querySelector(href);
                 if (target) {
+                    // Close mobile menu if open
+                    if (mobileMenu) {
+                        mobileMenu.classList.add('hidden');
+                        mobileMenu.classList.remove('open');
+                    }
+                    
                     target.scrollIntoView({
                         behavior: 'smooth',
                         block: 'start'
@@ -492,5 +556,5 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 console.log('Invalid selector:', href);
             }
         }
-    });
+    }
 });
