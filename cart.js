@@ -270,7 +270,7 @@ function handleCheckout() {
 }
 
 function handleClearCart() {
-    if (confirm('Are you sure you want to clear your cart?')) {
+    if (confirm('هل أنت متأكد من إفراغ السلة؟')) {
         cart = [];
         saveCartToLocalStorage();
         renderCart();
