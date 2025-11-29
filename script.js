@@ -108,10 +108,10 @@ const translations = {
         
         // Admin Placeholders
         admin_ph_name_ar: "مثال: لوز فاخر",
-        admin_ph_name_en: "Example: Premium Almonds",
+        admin_ph_name_en: "مثال: Premium Almonds (اكتبه بالإنجليزية)",
         admin_ph_price: "0.00",
-        admin_ph_desc_ar: "أدخل وصف المنتج بالعربية...",
-        admin_ph_desc_en: "Enter product description in English...",
+        admin_ph_desc_ar: "أدخل وصف المنتج بالعربية هنا...",
+        admin_ph_desc_en: "أدخل الوصف بالإنجليزية (اختياري)...",
         
         // Upload placeholders
         admin_ph_upload: "اسحب الصورة هنا أو انقر للاختيار",
@@ -224,11 +224,11 @@ const translations = {
         admin_no_products: "No products yet",
         
         // Admin Placeholders
-        admin_ph_name_ar: "مثال: لوز فاخر",
-        admin_ph_name_en: "Example: Premium Almonds",
+        admin_ph_name_ar: "Ex: Almonds",
+        admin_ph_name_en: "Ex: Premium Almonds",
         admin_ph_price: "0.00",
-        admin_ph_desc_ar: "أدخل وصف المنتج بالعربية...",
-        admin_ph_desc_en: "Enter product description in English...",
+        admin_ph_desc_ar: "Arabic Description...",
+        admin_ph_desc_en: "English Description...",
         
         // Upload placeholders
         admin_ph_upload: "Drag image here or click to select",
