@@ -1,6 +1,34 @@
 // Aznaf Market - Main JavaScript with Firebase Integration
 
 // ==========================================
+// Admin Secret Access (5 clicks on logo)
+// ==========================================
+
+let logoClickCount = 0;
+let logoClickTimeout = null;
+
+document.addEventListener('DOMContentLoaded', () => {
+    const logoBtn = document.getElementById('logo-btn');
+    if (logoBtn) {
+        logoBtn.addEventListener('click', () => {
+            logoClickCount++;
+            
+            // Reset counter after 5 seconds of inactivity
+            clearTimeout(logoClickTimeout);
+            logoClickTimeout = setTimeout(() => {
+                logoClickCount = 0;
+            }, 5000);
+            
+            // After 5 clicks, navigate to admin
+            if (logoClickCount === 5) {
+                window.location.href = 'admin.html';
+                logoClickCount = 0;
+            }
+        });
+    }
+});
+
+// ==========================================
 // Firebase Initialization
 // ==========================================
 
