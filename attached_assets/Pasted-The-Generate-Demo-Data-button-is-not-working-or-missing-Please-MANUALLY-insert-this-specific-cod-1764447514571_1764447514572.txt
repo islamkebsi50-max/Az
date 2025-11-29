@@ -1,0 +1,61 @@
+The "Generate Demo Data" button is not working or missing.
+
+Please MANUALLY insert this specific code to fix it.
+
+1.  **UPDATE `admin.html`:**
+    Add this button explicitly under the "Add Product" button:
+    ```html
+    <button id="btn-force-demo" class="w-full bg-gray-600 text-white font-bold py-3 px-4 rounded-xl mt-4 hover:bg-gray-700 transition duration-300">
+        ⚡ Generate 12 Demo Products (توليد منتجات)
+    </button>
+    ```
+
+2.  **UPDATE `script.js`:**
+    Add this EXACT code at the bottom of the file (inside the DOMContentLoaded event if possible, or just at the end):
+
+    ```javascript
+    // Demo Data Generator
+    const demoBtn = document.getElementById('btn-force-demo');
+    if (demoBtn) {
+        demoBtn.addEventListener('click', async () => {
+            if(!confirm("Are you sure you want to add dummy products?")) return;
+            
+            demoBtn.innerText = "Processing...";
+            demoBtn.disabled = true;
+
+            const productsToAdd = [
+                { name_ar: "لوز فاخر", name_en: "Premium Almonds", price: 2500, category: "nuts", image: "[https://placehold.co/400/orange/white?text=Almonds](https://placehold.co/400/orange/white?text=Almonds)" },
+                { name_ar: "فستق حلبي", name_en: "Pistachios", price: 3500, category: "nuts", image: "[https://placehold.co/400/orange/white?text=Pistachios](https://placehold.co/400/orange/white?text=Pistachios)" },
+                { name_ar: "بهارات مشكلة", name_en: "Mixed Spices", price: 800, category: "spices", image: "[https://placehold.co/400/red/white?text=Spices](https://placehold.co/400/red/white?text=Spices)" },
+                { name_ar: "فلفل أسود", name_en: "Black Pepper", price: 400, category: "spices", image: "[https://placehold.co/400/red/white?text=Pepper](https://placehold.co/400/red/white?text=Pepper)" },
+                { name_ar: "أرز بسمتي", name_en: "Basmati Rice", price: 350, category: "food", image: "[https://placehold.co/400/green/white?text=Rice](https://placehold.co/400/green/white?text=Rice)" },
+                { name_ar: "زيت زيتون", name_en: "Olive Oil", price: 1200, category: "food", image: "[https://placehold.co/400/green/white?text=Oil](https://placehold.co/400/green/white?text=Oil)" },
+                { name_ar: "شامبو أطفال", name_en: "Baby Shampoo", price: 600, category: "baby", image: "[https://placehold.co/400/blue/white?text=Shampoo](https://placehold.co/400/blue/white?text=Shampoo)" },
+                { name_ar: "حفاضات (كبير)", name_en: "Diapers (L)", price: 1800, category: "baby", image: "[https://placehold.co/400/blue/white?text=Diapers](https://placehold.co/400/blue/white?text=Diapers)" },
+                { name_ar: "عصير برتقال", name_en: "Orange Juice", price: 200, category: "drinks", image: "[https://placehold.co/400/yellow/black?text=Juice](https://placehold.co/400/yellow/black?text=Juice)" },
+                { name_ar: "كريم مرطب", name_en: "Face Cream", price: 1500, category: "cosmetics", image: "[https://placehold.co/400/purple/white?text=Cream](https://placehold.co/400/purple/white?text=Cream)" }
+            ];
+
+            try {
+                const batchPromises = productsToAdd.map(item => {
+                    return db.collection("products").add({
+                        ...item,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                });
+
+                await Promise.all(batchPromises);
+                alert("✅ Success! 10 products added. Go to Home page and Refresh.");
+                window.location.href = "index.html"; // Go to home automatically
+            } catch (error) {
+                console.error(error);
+                alert("Error: " + error.message);
+            } finally {
+                demoBtn.innerText = "Done";
+                demoBtn.disabled = false;
+            }
+        });
+    }
+    ```
+
+Please force this update now.
