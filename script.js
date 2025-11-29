@@ -4,7 +4,7 @@
 // Configuration
 // ==========================================
 
-const WHATSAPP_PHONE_NUMBER = '213673425055'; // Replace with actual Algerian WhatsApp number
+const WHATSAPP_PHONE_NUMBER = '+213673425055'; // Replace with actual Algerian WhatsApp number
 const CURRENCY_SYMBOL = 'د.ج';
 
 // ==========================================
@@ -485,7 +485,7 @@ function createProductCard(product) {
                 </h3>
                 <div class="flex items-center justify-between">
                     <span class="text-lg font-bold text-gray-900 dark:text-white price-tag">
-                        ${CURRENCY_SYMBOL}${price.toFixed(2)}
+                        $${price.toFixed(2)}
                     </span>
                     <button 
                         class="add-to-cart-btn bg-primary-500 hover:bg-primary-600 text-white p-2.5 rounded-full shadow-md"

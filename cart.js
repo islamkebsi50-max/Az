@@ -4,7 +4,7 @@
 // Configuration
 // ==========================================
 
-const WHATSAPP_PHONE_NUMBER = '213673425055'; // Replace with actual Algerian WhatsApp number
+const WHATSAPP_PHONE_NUMBER = '+213673425055'; // Replace with actual Algerian WhatsApp number
 const CURRENCY_SYMBOL = 'د.ج';
 
 // ==========================================
@@ -264,7 +264,8 @@ function handleCheckout() {
     // Redirect to WhatsApp
     window.open(whatsappURL, '_blank');
     
-    // Note: Cart is NOT cleared - user can continue shopping or clear manually
+    saveCartToLocalStorage();
+    renderCart();
 }
 
 function handleClearCart() {
