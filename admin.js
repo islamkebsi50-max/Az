@@ -606,6 +606,12 @@ async function confirmDelete() {
         closeDeleteModal();
         loadProducts();
         
+        // Refresh inventory if visible
+        const filterCategory = document.getElementById('inventory-filter-category');
+        if (filterCategory) {
+            renderAdminProducts(filterCategory.value);
+        }
+        
     } catch (error) {
         console.error('Delete error:', error);
         showStatus('فشل حذف المنتج: ' + error.message, 'error');
@@ -713,7 +719,7 @@ async function renderAdminProducts(filterCategory = 'all') {
         }).join('');
 
         document.querySelectorAll('.delete-inventory-product-btn').forEach(btn => {
-            btn.addEventListener('click', () => deleteAdminProduct(btn.dataset.id));
+            btn.addEventListener('click', () => openDeleteModal(btn.dataset.id));
         });
     } catch (error) {
         console.error('Render error:', error);
@@ -721,19 +727,6 @@ async function renderAdminProducts(filterCategory = 'all') {
     }
 }
 
-async function deleteAdminProduct(productId) {
-    if (!confirm('هل أنت متأكد من حذف هذا المنتج؟')) return;
-    
-    try {
-        await db.collection('products').doc(productId).delete();
-        showStatus('تم حذف المنتج بنجاح', 'success');
-        const filterCategory = document.getElementById('inventory-filter-category').value;
-        renderAdminProducts(filterCategory);
-        loadProducts();
-    } catch (error) {
-        showStatus('خطأ في الحذف: ' + error.message, 'error');
-    }
-}
 
 async function deleteAllInCategory() {
     const filterCategory = document.getElementById('inventory-filter-category').value;
