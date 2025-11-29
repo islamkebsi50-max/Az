@@ -23,9 +23,12 @@ Preferred communication style: Simple, everyday language.
 - Hover effects with orange color matching brand theme
 - Applied consistently across index.html, cart.html, and admin.html
 
-### Admin Panel Translation Complete
+### Admin Panel Translation Complete - 100%
 - **Form Labels** - All have `data-lang-key` attributes
 - **Input Placeholders** - All have `data-lang-placeholder` attributes
+- **Dropdown Options** - Categories & Badges with full translations:
+  - Category: "المكسرات" ↔ "Nuts", "البهارات" ↔ "Spices", etc.
+  - Badges: "تخفيض" ↔ "Sale", "مميز" ↔ "Premium", "عضوي" ↔ "Organic", etc.
 - **Upload Section** - Text translates: "اسحب الصورة" ↔ "Drag image"
 - **Buttons** - All translatable: "إضافة" ↔ "Add", "إلغاء" ↔ "Cancel", "إزالة الصورة" ↔ "Remove Image"
 - **Progress Messages** - "جاري رفع الصورة..." ↔ "Uploading image..."

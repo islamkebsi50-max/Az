@@ -119,6 +119,22 @@ const translations = {
         admin_remove_image: "إزالة الصورة",
         admin_uploading: "جاري رفع الصورة...",
         
+        // Admin Dropdown Options
+        admin_opt_select_category: "اختر التصنيف",
+        admin_opt_nuts: "المكسرات",
+        admin_opt_spices: "البهارات",
+        admin_opt_food: "منتجات غذائية",
+        admin_opt_cosmetics: "مستحضرات التجميل",
+        admin_opt_diapers: "حفاضات الأطفال",
+        admin_opt_drinks: "المشروبات",
+        admin_opt_no_badge: "بدون شارة",
+        admin_opt_sale: "تخفيض",
+        admin_opt_premium: "مميز",
+        admin_opt_organic: "عضوي",
+        admin_opt_bestseller: "الأكثر مبيعًا",
+        admin_opt_new: "جديد",
+        admin_opt_value_pack: "عرض خاص",
+        
         // Contact Page
         contact_title: "اتصل بنا",
         contact_desc: "تواصل معنا. نود أن نسمع منك!",
@@ -238,6 +254,22 @@ const translations = {
         admin_remove_image: "Remove Image",
         admin_uploading: "Uploading image...",
         
+        // Admin Dropdown Options
+        admin_opt_select_category: "Choose Category",
+        admin_opt_nuts: "Nuts",
+        admin_opt_spices: "Spices",
+        admin_opt_food: "Food Products",
+        admin_opt_cosmetics: "Cosmetics",
+        admin_opt_diapers: "Baby Diapers",
+        admin_opt_drinks: "Drinks",
+        admin_opt_no_badge: "No Badge",
+        admin_opt_sale: "Sale",
+        admin_opt_premium: "Premium",
+        admin_opt_organic: "Organic",
+        admin_opt_bestseller: "Bestseller",
+        admin_opt_new: "New",
+        admin_opt_value_pack: "Value Pack",
+        
         // Contact Page
         contact_title: "Contact Us",
         contact_desc: "Get in touch with our team. We'd love to hear from you!",
@@ -292,11 +324,11 @@ function setLanguage(lang, save = true) {
         }
     });
     
-    // Update select options if needed
-    document.querySelectorAll('select[data-lang-key]').forEach(el => {
+    // Update all option elements with data-lang-key (dropdown options)
+    document.querySelectorAll('option[data-lang-key]').forEach(el => {
         const key = el.getAttribute('data-lang-key');
         if (translations[lang] && translations[lang][key]) {
-            // For selects, update the label elsewhere (already handled above)
+            el.textContent = translations[lang][key];
         }
     });
     
