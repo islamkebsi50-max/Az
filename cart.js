@@ -264,10 +264,7 @@ function handleCheckout() {
     // Redirect to WhatsApp
     window.open(whatsappURL, '_blank');
     
-    // Clear cart after checkout
-    cart = [];
-    saveCartToLocalStorage();
-    renderCart();
+    // Note: Cart is NOT cleared - user can continue shopping or clear manually
 }
 
 function handleClearCart() {
