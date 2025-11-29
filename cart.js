@@ -110,6 +110,9 @@ function setupEventListeners() {
         clearCartBtn.addEventListener('click', handleClearCart);
     }
     
+    // Setup modal listeners
+    setupModalListeners();
+    
     // Listen for system theme changes
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
         if (!localStorage.getItem('theme')) {
@@ -269,10 +272,59 @@ function handleCheckout() {
     window.open(whatsappURL, '_blank');
 }
 
-function handleClearCart() {
-    if (confirm('هل أنت متأكد من إفراغ السلة؟')) {
-        cart = [];
-        saveCartToLocalStorage();
-        renderCart();
+// ==========================================
+// Custom Modal Functions
+// ==========================================
+
+function showConfirmModal() {
+    const modal = document.getElementById('confirm-modal');
+    const modalContent = document.getElementById('modal-content');
+    
+    modal.classList.remove('hidden');
+    
+    // Animate in
+    setTimeout(() => {
+        modalContent.classList.remove('scale-95', 'opacity-0');
+        modalContent.classList.add('scale-100', 'opacity-100');
+    }, 10);
+}
+
+function hideConfirmModal() {
+    const modal = document.getElementById('confirm-modal');
+    const modalContent = document.getElementById('modal-content');
+    
+    // Animate out
+    modalContent.classList.remove('scale-100', 'opacity-100');
+    modalContent.classList.add('scale-95', 'opacity-0');
+    
+    setTimeout(() => {
+        modal.classList.add('hidden');
+    }, 200);
+}
+
+function setupModalListeners() {
+    const modalBackdrop = document.getElementById('modal-backdrop');
+    const modalCancel = document.getElementById('modal-cancel');
+    const modalConfirm = document.getElementById('modal-confirm');
+    
+    if (modalBackdrop) {
+        modalBackdrop.addEventListener('click', hideConfirmModal);
     }
+    
+    if (modalCancel) {
+        modalCancel.addEventListener('click', hideConfirmModal);
+    }
+    
+    if (modalConfirm) {
+        modalConfirm.addEventListener('click', () => {
+            cart = [];
+            saveCartToLocalStorage();
+            renderCart();
+            hideConfirmModal();
+        });
+    }
+}
+
+function handleClearCart() {
+    showConfirmModal();
 }

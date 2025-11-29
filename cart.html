@@ -126,6 +126,36 @@
         </div>
     </main>
 
+    <!-- Custom Confirmation Modal -->
+    <div id="confirm-modal" class="fixed inset-0 z-50 hidden">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" id="modal-backdrop"></div>
+        
+        <!-- Modal Content -->
+        <div class="absolute inset-0 flex items-center justify-center p-4">
+            <div class="bg-white dark:bg-dark-card rounded-2xl shadow-2xl max-w-sm w-full transform transition-all scale-95 opacity-0" id="modal-content">
+                <!-- Icon -->
+                <div class="pt-8 pb-4 text-center">
+                    <div class="mx-auto w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-trash-alt text-3xl text-red-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">إفراغ السلة</h3>
+                    <p class="text-gray-600 dark:text-gray-400 px-6">هل أنت متأكد من إفراغ السلة؟ لا يمكن التراجع عن هذا الإجراء.</p>
+                </div>
+                
+                <!-- Buttons -->
+                <div class="flex gap-3 p-6 pt-4">
+                    <button id="modal-cancel" class="flex-1 py-3 px-4 rounded-xl border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-semibold hover:bg-gray-100 dark:hover:bg-gray-700 transition-all">
+                        إلغاء
+                    </button>
+                    <button id="modal-confirm" class="flex-1 py-3 px-4 rounded-xl bg-red-500 hover:bg-red-600 text-white font-semibold transition-all">
+                        نعم، إفراغ السلة
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Inject Environment Variables -->
     <script>
         window.__FIREBASE_API_KEY__ = '%FIREBASE_API_KEY%';
