@@ -60,6 +60,16 @@ Preferred communication style: Simple, everyday language.
 - Integrated with WhatsApp API for form submissions
 - Consistent design and translations with main site
 - Contact link in navigation now points to `/contact.html`
+- Back arrow navigation added for easy return to homepage
+
+### Secondary Pages Navigation Flow Updated
+- **Replaced Hamburger Menu with Back Arrow** on `contact.html` and `cart.html`
+- Back arrow links directly to `index.html` (homepage)
+- Applied only to mobile view (`lg:hidden` class)
+- Desktop view still shows AznafMarket brand name on left
+- Consistent styling with other header icons (same size, dark gray color)
+- Improves mobile UX with clear navigation path back to homepage
+- Homepage (index.html) retains original hamburger menu for navigation
 
 ### Translations
 - Added 30+ new translation keys including Contact page and Admin placeholders
