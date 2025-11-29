@@ -10,6 +10,12 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes (November 29, 2025)
 
+### Critical Bug Fix - Removed Duplicate Firebase DB Declaration
+- Removed duplicate `let db = null;` from admin.js that was causing JavaScript error
+- admin.js and script.js now share same global `db` variable
+- Fixed error: "Identifier 'db' has already been declared"
+- Admin panel now runs without errors
+
 ### Language Toggle Button Redesigned
 - Updated styling to minimal, clean text (removed background box)
 - Changed button text logic to show opposite language shortcut

@@ -5,7 +5,7 @@
 // Firebase & imgbb Initialization
 // ==========================================
 
-let db = null;
+// db is declared in script.js and shared globally
 let firebaseInitialized = false;
 
 function initFirebase() {
