@@ -1,0 +1,35 @@
+// Firestore Security Rules for Aznaf Market
+// انسخ هذه الـ Rules في Firestore Console
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // السماح بقراءة المنتجات للجميع
+    match /products/{document=**} {
+      allow read: if true;
+      allow create, update, delete: if request.auth.uid != null;
+    }
+    
+    // اختياري: إذا أردت السماح بالكتابة للجميع مؤقتاً (غير آمن - فقط للتطوير)
+    // match /products/{document=**} {
+    //   allow read, write: if true;
+    // }
+    
+    // اختياري: إذا أردت تحديد مستخدمين معينين فقط
+    // match /products/{document=**} {
+    //   allow read: if true;
+    //   allow create, update, delete: if request.auth.uid in ['user-id-1', 'user-id-2'];
+    // }
+    
+    // منع الوصول لأي شيء آخر
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
+
+// ملاحظات:
+// 1. الـ Rule الأول: يسمح بقراءة المنتجات للجميع، والكتابة فقط للمستخدمين المسجلين
+// 2. إذا لم تكن تستخدم Firebase Authentication حالياً، استخدم الـ Rule الثاني (مؤقتاً فقط)
+// 3. بعد إضافة Firebase Auth لـ Admin Panel، استخدم الـ Rule الثالث
