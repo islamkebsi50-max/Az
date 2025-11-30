@@ -272,6 +272,23 @@ Preferred communication style: Simple, everyday language (Arabic).
 
 ---
 
+## Bug Fixes (November 30, 2025 - Latest)
+
+### ✅ Fixed JavaScript Errors & Data Display Issues
+- ✅ Removed duplicate `translations` object declarations in status.js and my-orders.js
+- ✅ Both pages now use global translations from script.js
+- ✅ Fixed language switching functionality
+- ✅ Order data now displays correctly in status page and my-orders dashboard
+- ✅ Status badges show correctly (pending = yellow, completed = green)
+- ✅ Customer information displays properly
+
+**Files Fixed:**
+- ✅ `status.js` - Removed duplicate translations, now uses global scope
+- ✅ `my-orders.js` - Removed duplicate translations, now uses global scope
+- ✅ Both pages now inherit currentLang and setLanguage from script.js
+
+---
+
 ## Deployment Status
 
 ✅ **Production Ready:**

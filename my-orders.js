@@ -1,37 +1,11 @@
 // Aznaf Market - Customer Orders Dashboard
+// Note: Uses translations and language functions from script.js
 
 let allOrders = [];
 
 // ==========================================
-// Language Functions
+// Toggle Language and Theme
 // ==========================================
-
-function initLanguage() {
-    const savedLang = localStorage.getItem('aznaf_lang') || 'ar';
-    setLanguage(savedLang, false);
-}
-
-function setLanguage(lang, save = true) {
-    const html = document.documentElement;
-    html.lang = lang;
-    html.dir = lang === 'ar' ? 'rtl' : 'ltr';
-    
-    if (save) {
-        localStorage.setItem('aznaf_lang', lang);
-    }
-    
-    document.querySelectorAll('[data-lang-key]').forEach(el => {
-        const key = el.getAttribute('data-lang-key');
-        if (translations[lang] && translations[lang][key]) {
-            el.textContent = translations[lang][key];
-        }
-    });
-    
-    const langToggle = document.getElementById('lang-toggle');
-    if (langToggle) {
-        langToggle.textContent = lang === 'ar' ? 'EN' : 'AR';
-    }
-}
 
 function toggleLanguage() {
     const newLang = currentLang === 'ar' ? 'en' : 'ar';
@@ -43,19 +17,6 @@ function setupLanguageToggle() {
     const langToggle = document.getElementById('lang-toggle');
     if (langToggle) {
         langToggle.addEventListener('click', toggleLanguage);
-    }
-}
-
-// ==========================================
-// Theme Functions
-// ==========================================
-
-function initTheme() {
-    const theme = localStorage.getItem('theme');
-    if (theme === 'dark') {
-        document.documentElement.classList.add('dark');
-    } else if (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        document.documentElement.classList.add('dark');
     }
 }
 
