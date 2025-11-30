@@ -267,43 +267,43 @@ function renderCart() {
     if (clearCartBtn) clearCartBtn.disabled = false;
     
     const itemsHTML = cart.map(item => `
-        <div class="bg-white dark:bg-dark-card rounded-xl shadow p-4 flex gap-4">
+        <div class="bg-white dark:bg-dark-card rounded-xl shadow p-3 sm:p-4 flex gap-2 sm:gap-4">
             <!-- Image -->
             <div class="flex-shrink-0">
                 <img 
                     src="${item.image || 'https://via.placeholder.com/100x100?text=Product'}"
                     alt="${item.name}"
-                    class="w-24 h-24 object-cover rounded-lg"
+                    class="w-16 sm:w-24 h-16 sm:h-24 object-cover rounded-lg"
                     onerror="this.onerror=null; this.src='https://via.placeholder.com/100x100?text=Product'"
                 >
             </div>
             
             <!-- Item Details -->
-            <div class="flex-1">
-                <h3 class="font-semibold text-gray-900 dark:text-white mb-1">${item.name}</h3>
-                <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">${item.category || t('product')}</p>
-                <p class="text-lg font-bold text-primary-600 dark:text-primary-400">${formatPrice(item.price * item.quantity)}</p>
+            <div class="flex-1 min-w-0">
+                <h3 class="font-semibold text-xs sm:text-base text-gray-900 dark:text-white mb-1 truncate">${item.name}</h3>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mb-2 sm:mb-3">${item.category || t('product')}</p>
+                <p class="text-sm sm:text-lg font-bold text-primary-600 dark:text-primary-400">${formatPrice(item.price * item.quantity)}</p>
             </div>
             
             <!-- Quantity Adjuster -->
-            <div class="flex flex-col items-center justify-center gap-2">
+            <div class="flex flex-col items-center justify-center gap-1 sm:gap-2 flex-shrink-0">
                 <button 
-                    class="qty-increase bg-primary-500 hover:bg-primary-600 text-white w-8 h-8 rounded flex items-center justify-center transition-all"
+                    class="qty-increase bg-primary-500 hover:bg-primary-600 text-white w-7 sm:w-8 h-7 sm:h-8 rounded flex items-center justify-center transition-all"
                     data-product-id="${item.id}"
                     title="Increase quantity"
                 >
-                    <i class="fas fa-plus text-sm"></i>
+                    <i class="fas fa-plus text-xs sm:text-sm"></i>
                 </button>
-                <span class="text-lg font-bold w-8 text-center">${item.quantity}</span>
+                <span class="text-sm sm:text-lg font-bold w-6 sm:w-8 text-center">${item.quantity}</span>
                 <button 
-                    class="qty-decrease bg-red-500 hover:bg-red-600 text-white w-8 h-8 rounded flex items-center justify-center transition-all"
+                    class="qty-decrease bg-red-500 hover:bg-red-600 text-white w-7 sm:w-8 h-7 sm:h-8 rounded flex items-center justify-center transition-all"
                     data-product-id="${item.id}"
                     title="Decrease quantity"
                 >
-                    <i class="fas fa-minus text-sm"></i>
+                    <i class="fas fa-minus text-xs sm:text-sm"></i>
                 </button>
                 <button
-                    class="remove-item mt-2 text-gray-400 hover:text-red-500 transition-colors text-xs"
+                    class="remove-item mt-1 sm:mt-2 text-gray-400 hover:text-red-500 transition-colors text-xs whitespace-nowrap"
                     data-product-id="${item.id}"
                     title="Remove item"
                 >
