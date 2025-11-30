@@ -1,9 +1,7 @@
 config.py
+*.pyc
+__pycache__
 .git
-.cache
-.replit
-replit.md
-FIRESTORE_RULES.txt
-attached_assets
 .gitignore
-.local
+FIRESTORE_RULES.txt
+README.md

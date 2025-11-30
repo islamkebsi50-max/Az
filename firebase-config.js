@@ -7,7 +7,7 @@
 
 // Firebase Configuration - loaded from environment variables via server injection
 window.firebaseConfig = {
-    apiKey: "test123",
+    apiKey: "test-key",
     authDomain: "aznef-9cea0.firebaseapp.com",
     projectId: "test-project",
     storageBucket: "aznef-9cea0.firebasestorage.app",
@@ -16,7 +16,7 @@ window.firebaseConfig = {
 };
 
 // imgbb API Key for image uploads
-window.imgbbApiKey = "cc23afbf7e88b3229cc855a58155028e";
+window.imgbbApiKey = "test-imgbb";
 
 console.log('Firebase Config - projectId:', window.firebaseConfig.projectId);
 console.log('Firebase Config - apiKey exists:', !!window.firebaseConfig.apiKey);
