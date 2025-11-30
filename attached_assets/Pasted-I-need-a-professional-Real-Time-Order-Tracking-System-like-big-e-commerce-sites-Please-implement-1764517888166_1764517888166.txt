@@ -1,0 +1,33 @@
+I need a professional "Real-Time Order Tracking System" like big e-commerce sites.
+
+Please implement the following major features across `script.js`, `cart.html`, `status.html`, and `admin.html`:
+
+1.  **Step 1: The Checkout Logic (Update `cart.html` & `script.js`):**
+    * Add a simple input field for "Customer Name" and "Phone Number" in the Cart page before the checkout button.
+    * Update the Checkout Button logic:
+        * **First:** Save the Order to Firestore collection `orders`.
+        * **Data:** `{ items: cart, total: ..., status: 'pending', createdAt: ..., customerName: ... }`.
+        * **Second:** Get the `doc.id` (Order ID) and save it to `localStorage.setItem('activeOrderId', doc.id)`.
+        * **Third:** Redirect the user to a new page: `status.html`.
+        * **Fourth:** Open WhatsApp as usual (so you still get the message).
+
+2.  **Step 2: The User Status Page (Create `status.html`):**
+    * Create a modern page showing the "Order Status".
+    * **Visual Timeline (The most important part):**
+        * Use a Stepper UI (3 circles connected by lines).
+        * **Stage 1:** "Order Received" (تم استلام الطلب).
+        * **Stage 2:** "Under Review" (قيد المراجعة).
+        * **Stage 3:** "Completed/Delivered" (تم التنفيذ).
+    * **Real-Time Listener:** Use `db.collection('orders').doc(id).onSnapshot(...)`.
+        * If status is 'pending' -> Stage 1 & 2 are Active (Yellow/Orange).
+        * If status is 'completed' -> Stage 3 becomes Active (Green) with a success animation.
+
+3.  **Step 3: The Admin Dashboard (Update `admin.html`):**
+    * Add a new tab or section: "Customer Orders" (طلبات الزبائن).
+    * List the orders fetched from Firestore (Newest first).
+    * Each order card should show: Customer Name, Total Price, and a prominent **"Approve Order"** button.
+    * **Action:** When Admin clicks "Approve", update the Firestore document status to 'completed'.
+
+4.  **Style:** Use Tailwind CSS. Make the Timeline look animated and professional.
+
+Please build this tracking system now.
