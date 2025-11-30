@@ -521,7 +521,13 @@ function handleCheckout() {
     
     renderCart();
     
+    // Open WhatsApp and redirect to tracking page
     window.open(whatsappURL, '_blank');
+    
+    // Redirect to status tracking page after 1 second
+    setTimeout(() => {
+        window.location.href = `status.html?id=${order.id}`;
+    }, 1000);
 }
 
 // Save order to Firebase and localStorage

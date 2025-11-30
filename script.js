@@ -191,7 +191,26 @@ const translations = {
         contact_email: "البريد الإلكتروني",
         contact_address: "العنوان",
         contact_address_line1: "نارة منعة",
-        contact_address_line2: "باتنة"
+        contact_address_line2: "باتنة",
+        
+        // Status Page
+        status_title: "حالة الطلب",
+        status_pending: "⏳ الطلب قيد المراجعة",
+        status_approved: "✅ تم الموافقة على الطلب!",
+        order_id: "رقم الطلب",
+        order_time: "وقت الطلب",
+        customer_info: "معلومات العميل",
+        customer_name: "الاسم:",
+        customer_phone: "الهاتف:",
+        order_items: "المنتجات",
+        order_total: "المجموع:",
+        status_timeline: "تطور الطلب",
+        step_pending: "قيد المراجعة",
+        step_pending_desc: "تم استقبال طلبك وقيد المراجعة",
+        step_approved: "تم الموافقة",
+        step_approved_desc: "سيتم إبلاغك عند الموافقة",
+        status_auto_refresh: "يتم تحديث الحالة تلقائياً كل 5 ثواني",
+        back_to_cart: "العودة للسلة"
     },
     en: {
         // Navigation
@@ -372,7 +391,26 @@ const translations = {
         contact_email: "Email",
         contact_address: "Address",
         contact_address_line1: "Naara Manaa",
-        contact_address_line2: "Batna"
+        contact_address_line2: "Batna",
+        
+        // Status Page
+        status_title: "Order Status",
+        status_pending: "⏳ Order Under Review",
+        status_approved: "✅ Order Approved!",
+        order_id: "Order Number",
+        order_time: "Order Time",
+        customer_info: "Customer Information",
+        customer_name: "Name:",
+        customer_phone: "Phone:",
+        order_items: "Items",
+        order_total: "Total:",
+        status_timeline: "Order Progress",
+        step_pending: "Under Review",
+        step_pending_desc: "Your order has been received and is under review",
+        step_approved: "Approved",
+        step_approved_desc: "You will be notified when your order is approved",
+        status_auto_refresh: "Status updates automatically every 5 seconds",
+        back_to_cart: "Back to Cart"
     }
 };
 

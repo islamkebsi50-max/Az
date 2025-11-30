@@ -68,10 +68,10 @@ function renderOrders() {
                 </div>
                 <span class="px-3 py-1 rounded-full text-xs font-semibold ${
                     order.status === 'pending' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-200' :
-                    order.status === 'confirmed' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-200' :
+                    order.status === 'completed' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-200' :
                     'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
                 }">
-                    ${order.status === 'pending' ? 'قيد الانتظار' : order.status === 'confirmed' ? 'مؤكد' : 'إلغاء'}
+                    ${order.status === 'pending' ? 'قيد الانتظار' : order.status === 'completed' ? 'موافق عليه' : 'إلغاء'}
                 </span>
             </div>
             
@@ -97,9 +97,12 @@ function renderOrders() {
             <div class="flex gap-2">
                 ${order.status === 'pending' ? `
                     <button class="flex-1 bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg text-sm font-semibold transition-colors confirm-order" data-order-id="${order.id}">
-                        <i class="fas fa-check me-1"></i>تأكيد
+                        <i class="fas fa-check me-1"></i>الموافقة
                     </button>
                 ` : ''}
+                <a href="status.html?id=${order.id}" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg text-sm font-semibold transition-colors text-center">
+                    <i class="fas fa-eye me-1"></i>عرض الحالة
+                </a>
                 <button class="flex-1 bg-red-500 hover:bg-red-600 text-white py-2 rounded-lg text-sm font-semibold transition-colors delete-order" data-order-id="${order.id}">
                     <i class="fas fa-trash me-1"></i>حذف
                 </button>
@@ -123,13 +126,13 @@ async function confirmOrder(orderId) {
     const order = allOrders.find(o => o.id === orderId);
     if (!order) return;
     
-    order.status = 'confirmed';
+    order.status = 'completed';
     order.confirmedAt = new Date().toISOString();
     
     // Save to Firebase
     try {
         if (typeof db !== 'undefined') {
-            await db.collection('orders').doc(orderId).update({ status: 'confirmed', confirmedAt: order.confirmedAt });
+            await db.collection('orders').doc(orderId).update({ status: 'completed', confirmedAt: order.confirmedAt });
         }
     } catch (error) {
         console.error('Error updating order:', error);

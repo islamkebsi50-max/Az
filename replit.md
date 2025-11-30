@@ -10,6 +10,49 @@ Preferred communication style: Simple, everyday language (Arabic).
 
 ## Recent Changes (November 30, 2025)
 
+### ✅ Real-Time Order Tracking System - Complete Implementation
+
+**Order Tracking Page (`status.html`):**
+- ✅ Created new `status.html` page with real-time order tracking
+- ✅ Real-time Firebase listener (`onSnapshot`) updates order status automatically
+- ✅ Status badges: Yellow "⏳ الطلب قيد المراجعة" for pending, Green "✅ تم الموافقة!" for completed
+- ✅ Displays order details: ID, time, customer info, items, and total
+- ✅ Order progress timeline showing pending and approved steps
+- ✅ Bilingual support (Arabic/English) with automatic RTL/LTR switching
+- ✅ Auto-refresh every 5 seconds with fallback to localStorage
+- ✅ Responsive design for all devices
+
+**Checkout Flow Updated (`cart.js`):**
+- ✅ After checkout, saves order to Firestore with `status: 'pending'`
+- ✅ Automatically redirects to `status.html?id=ORDER_ID` after order placement
+- ✅ Preserves WhatsApp integration (opens in new tab before redirect)
+- ✅ Order includes: customer info (name, phone, address), items, total, timestamp
+
+**Admin Order Management (`admin-orders.js` & `admin.html`):**
+- ✅ Orders tab displays all orders from Firestore collection
+- ✅ "Approve" button changes order status from 'pending' to 'completed'
+- ✅ "View Status" button links to order tracking page
+- ✅ "Delete" button removes completed orders
+- ✅ Status badges show yellow for pending, green for completed/approved
+- ✅ Orders auto-delete 1 day after confirmation
+- ✅ Real-time updates with Firebase integration
+
+**Translations Added:**
+- ✅ 20+ new translation keys for status page (Arabic + English)
+- ✅ Status page translations: order_id, order_time, customer_info, order_items, status_timeline, etc.
+- ✅ Admin translations updated: admin_orders_title, admin_no_orders, status badges
+
+**Files Created/Modified:**
+- ✅ `status.html` - New order tracking page
+- ✅ `status.js` - Real-time tracking logic with Firebase listener
+- ✅ `cart.js` - Updated handleCheckout to redirect to status page
+- ✅ `admin-orders.js` - Updated confirmOrder to use 'completed' status, added "View Status" link
+- ✅ `script.js` - Added 20+ translation keys for status page
+
+---
+
+## Previous Changes (November 30, 2025)
+
 ### ✅ Hero Slider with Real Unsplash Images - 6 Category Showcase
 
 **Hero Slider Implementation:**
