@@ -406,6 +406,13 @@ function setLanguage(lang, save = true) {
     if (typeof renderProducts === 'function' && products.length > 0) {
         renderProducts(products);
     }
+    
+    // Reinitialize Swiper to fix image display on language change (RTL/LTR)
+    if (typeof window.reinitHeroSwiper === 'function') {
+        setTimeout(() => {
+            window.reinitHeroSwiper();
+        }, 100);
+    }
 }
 
 function toggleLanguage() {

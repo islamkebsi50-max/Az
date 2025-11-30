@@ -383,8 +383,13 @@
     
     <!-- Swiper Initialization -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const swiper = new Swiper('.heroSwiper', {
+        let heroSwiper = null;
+        
+        function initHeroSwiper() {
+            if (heroSwiper) {
+                heroSwiper.destroy();
+            }
+            heroSwiper = new Swiper('.heroSwiper', {
                 loop: true,
                 autoplay: {
                     delay: 3000,
@@ -401,7 +406,14 @@
                 effect: 'slide',
                 speed: 800,
             });
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            initHeroSwiper();
         });
+        
+        // Make reinitialize function available globally
+        window.reinitHeroSwiper = initHeroSwiper;
     </script>
     
     <!-- Main Application Script -->
