@@ -1,5 +1,8 @@
-.cache
-.replit
-.local
-attached_assets
-node_modules
+node_modules/
+.DS_Store
+*.pyc
+__pycache__/
+.env.local
+.vercel/
+dist/
+*.log

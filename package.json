@@ -1,0 +1,8 @@
+{
+  "name": "aznaf-market",
+  "version": "1.0.0",
+  "description": "Premium bilingual e-commerce platform for spices and specialty foods",
+  "scripts": {
+    "build": "node build.js"
+  }
+}

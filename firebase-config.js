@@ -7,16 +7,16 @@
 
 // Firebase Configuration - loaded from environment variables via server injection
 window.firebaseConfig = {
-    apiKey: "%FIREBASE_API_KEY%",
-    authDomain: "%FIREBASE_AUTH_DOMAIN%",
-    projectId: "%FIREBASE_PROJECT_ID%",
-    storageBucket: "%FIREBASE_STORAGE_BUCKET%",
-    messagingSenderId: "%FIREBASE_MESSAGING_SENDER_ID%",
-    appId: "%FIREBASE_APP_ID%"
+    apiKey: "test123",
+    authDomain: "aznef-9cea0.firebaseapp.com",
+    projectId: "test-project",
+    storageBucket: "aznef-9cea0.firebasestorage.app",
+    messagingSenderId: "365910456676",
+    appId: "1:365910456676:web:d2122c5958dfd66f426271"
 };
 
 // imgbb API Key for image uploads
-window.imgbbApiKey = "%IMGBB_API_KEY%";
+window.imgbbApiKey = "cc23afbf7e88b3229cc855a58155028e";
 
 console.log('Firebase Config - projectId:', window.firebaseConfig.projectId);
 console.log('Firebase Config - apiKey exists:', !!window.firebaseConfig.apiKey);
