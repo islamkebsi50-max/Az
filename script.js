@@ -826,6 +826,27 @@ function setupUIControls() {
 // Initialization
 // ==========================================
 
+// Handle URL parameters (e.g., ?category=nuts)
+function handleURLParameters() {
+    const params = new URLSearchParams(window.location.search);
+    const category = params.get('category');
+    
+    if (category && category !== 'all') {
+        currentCategory = category;
+        const categoryBtn = document.querySelector(`[data-category="${category}"]`);
+        if (categoryBtn) {
+            // Remove active class from all category buttons
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            // Add active class to selected category
+            categoryBtn.classList.add('active');
+            // Filter products
+            filterProducts();
+        }
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     initLanguage();
     initTheme();
@@ -835,6 +856,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupCategoryFilters();
     setupUIControls();
     setupLanguageToggle();
+    handleURLParameters();
     initFirebase();
 });
 
