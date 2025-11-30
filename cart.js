@@ -5,6 +5,7 @@
 // ==========================================
 
 const WHATSAPP_PHONE = "213673425055";
+let customerLocationLink = "";
 
 // formatPrice helper function (uses global CURRENCY_SYMBOL from script.js)
 function formatPrice(price) {
@@ -44,7 +45,10 @@ const translations = {
         lang_toggle: "English",
         remove: "حذف",
         product: "منتج",
-        delivery_address: "عنوان التسليم"
+        delivery_address: "عنوان التسليم",
+        location_saved: "✅ تم حفظ الموقع",
+        location_share: "📍 مشاركة موقعي للاستلام",
+        location_error: "تعذر الحصول على الموقع، يرجى تفعيل GPS"
     },
     en: {
         nav_home: "Home",
@@ -71,7 +75,10 @@ const translations = {
         lang_toggle: "عربي",
         remove: "Remove",
         product: "Product",
-        delivery_address: "Delivery Address"
+        delivery_address: "Delivery Address",
+        location_saved: "✅ Location Saved",
+        location_share: "📍 Share my delivery location",
+        location_error: "Could not get location, please enable GPS"
     }
 };
 
@@ -233,6 +240,12 @@ function setupEventListeners() {
         clearCartBtn.addEventListener('click', handleClearCart);
     }
     
+    // Setup location button listener
+    const locationBtn = document.getElementById('btn-get-location');
+    if (locationBtn) {
+        locationBtn.addEventListener('click', handleGetLocation);
+    }
+    
     // Setup modal listeners
     setupModalListeners();
     
@@ -369,6 +382,45 @@ function updateCartSummary() {
 }
 
 // ==========================================
+// Location Handler
+// ==========================================
+
+function handleGetLocation() {
+    const locationBtn = document.getElementById('btn-get-location');
+    if (!locationBtn) return;
+    
+    if (navigator.geolocation) {
+        locationBtn.disabled = true;
+        locationBtn.style.opacity = '0.5';
+        
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const { latitude, longitude } = position.coords;
+                customerLocationLink = `https://www.google.com/maps?q=${latitude},${longitude}`;
+                
+                // Update button to show location saved
+                const span = locationBtn.querySelector('span');
+                if (span) {
+                    span.textContent = currentLang === 'ar' ? '✅ تم حفظ الموقع' : '✅ Location Saved';
+                }
+                locationBtn.style.borderColor = '#10b981';
+                locationBtn.style.backgroundColor = '#ecfdf5';
+                locationBtn.style.color = '#059669';
+                locationBtn.classList.add('dark:bg-green-900/20', 'dark:text-green-400');
+                locationBtn.disabled = true;
+            },
+            (error) => {
+                alert(t('location_error'));
+                locationBtn.disabled = false;
+                locationBtn.style.opacity = '1';
+            }
+        );
+    } else {
+        alert(currentLang === 'ar' ? 'المتصفح لا يدعم خاصية الموقع' : 'Your browser does not support geolocation');
+    }
+}
+
+// ==========================================
 // Actions
 // ==========================================
 
@@ -437,16 +489,36 @@ function handleCheckout() {
         ? `\nالمجموع الكلي: ${formatPrice(total)}\nرقم الطلب: ${order.id}`
         : `\nTotal: ${formatPrice(total)}\nOrder #: ${order.id}`;
     
+    // Add location link if available
+    if (customerLocationLink) {
+        message += currentLang === 'ar'
+            ? `\n\n📍 موقع الاستلام:\n${customerLocationLink}`
+            : `\n\n📍 Delivery Location:\n${customerLocationLink}`;
+    }
+    
     const encodedMessage = encodeURIComponent(message);
     const whatsappURL = `https://wa.me/${WHATSAPP_PHONE}?text=${encodedMessage}`;
     
-    // Clear cart and reset form
+    // Clear cart, location, and reset form
     cart = [];
+    customerLocationLink = '';
     saveCartToLocalStorage();
     document.getElementById('customer-name').value = '';
     document.getElementById('customer-phone').value = '';
     document.getElementById('customer-address').value = '';
     document.getElementById('address-form-container').classList.add('hidden');
+    
+    // Reset location button
+    const locationBtn = document.getElementById('btn-get-location');
+    if (locationBtn) {
+        locationBtn.disabled = false;
+        locationBtn.style.opacity = '1';
+        locationBtn.style.borderColor = '#3b82f6';
+        locationBtn.style.backgroundColor = 'transparent';
+        locationBtn.style.color = '#2563eb';
+        locationBtn.querySelector('span').textContent = currentLang === 'ar' ? '📍 مشاركة موقعي للاستلام' : '📍 Share my delivery location';
+    }
+    
     renderCart();
     
     window.open(whatsappURL, '_blank');
