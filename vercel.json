@@ -1,25 +1,5 @@
 {
   "version": 2,
-  "public": true,
-  "builds": [
-    {
-      "src": "index.html",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
-    {
-      "src": "^/(?P<path>.*)\\.html$",
-      "dest": "/$path.html"
-    },
-    {
-      "src": "^/(?P<path>.*)$",
-      "dest": "/$path"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html",
-      "status": 200
-    }
-  ]
+  "buildCommand": "echo 'Static HTML site'",
+  "framework": "html"
 }
