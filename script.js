@@ -583,21 +583,21 @@ function renderProducts(productsToShow = products) {
         }
         
         card.innerHTML = `
-            <div class="relative overflow-hidden bg-gray-100 h-32 md:h-40">
+            <div class="relative overflow-hidden bg-gray-100 h-24 md:h-28">
                 <img 
                     src="${product.image}" 
                     alt="${displayName}"
                     class="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
                     onerror="this.src='https://via.placeholder.com/400x400?text=Product+Image'"
                 >
-                ${product.badge ? `<span class="absolute top-2 end-2 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-semibold">${product.badge}</span>` : ''}
+                ${product.badge ? `<span class="absolute top-1 end-1 bg-red-500 text-white px-1.5 py-0.5 rounded-full text-xs font-semibold">${product.badge}</span>` : ''}
             </div>
-            <div class="p-3 flex-1 flex flex-col justify-between">
-                <h3 class="font-bold text-sm text-gray-800 dark:text-white truncate mb-1">${displayName}</h3>
+            <div class="p-2 flex-1 flex flex-col justify-between">
+                <h3 class="font-bold text-xs text-gray-800 dark:text-white truncate mb-1">${displayName}</h3>
                 <div>
-                    <p class="text-primary-500 font-bold text-base mb-2">${formatPrice(product.price)}</p>
+                    <p class="text-primary-500 font-bold text-sm mb-1">${formatPrice(product.price)}</p>
                     <button 
-                        class="add-to-cart-btn w-full bg-primary-500 hover:bg-primary-600 text-white py-2 rounded-lg text-sm transition-colors"
+                        class="add-to-cart-btn w-full bg-primary-500 hover:bg-primary-600 text-white py-1.5 rounded-lg text-xs transition-colors"
                         data-product-id="${product.id}"
                         data-product-name="${displayName}"
                         data-product-price="${product.price}"
