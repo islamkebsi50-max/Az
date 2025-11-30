@@ -190,12 +190,12 @@ const translations = {
         hero_title: "Premium Spices & Nuts from Around the World",
         hero_subtitle: "Discover our handpicked selection of authentic spices, fresh nuts, and specialty food products. Quality you can taste in every bite.",
         hero_btn: "Shop Now",
-        hero_nuts: "Premium Fresh Nuts Selection",
-        hero_spices: "Authentic Original Spices & Flavors",
-        hero_food: "Essential Food Products for Every Home",
-        hero_cosmetics: "Beauty & Personal Care",
-        hero_baby: "Your Baby's Comfort is Our Priority",
-        hero_drinks: "Refreshing & Diverse Beverages",
+        hero_nuts: "Premium Fresh Nuts",
+        hero_spices: "Authentic Spices",
+        hero_food: "Quality Food Products",
+        hero_cosmetics: "Beauty & Care",
+        hero_baby: "Baby's Comfort First",
+        hero_drinks: "Refreshing Beverages",
         
         // Categories
         cat_all: "All",
