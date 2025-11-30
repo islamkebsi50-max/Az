@@ -169,7 +169,9 @@ const translations = {
         contact_info_title: "معلومات التواصل",
         contact_phone: "الهاتف",
         contact_email: "البريد الإلكتروني",
-        contact_address: "العنوان"
+        contact_address: "العنوان",
+        contact_address_line1: "نارة منعة",
+        contact_address_line2: "باتنة"
     },
     en: {
         // Navigation
@@ -328,7 +330,9 @@ const translations = {
         contact_info_title: "Contact Information",
         contact_phone: "Phone",
         contact_email: "Email",
-        contact_address: "Address"
+        contact_address: "Address",
+        contact_address_line1: "Naara Manaa",
+        contact_address_line2: "Batna"
     }
 };
 
