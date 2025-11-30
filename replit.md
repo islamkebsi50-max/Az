@@ -8,7 +8,29 @@ Aznaf Market is a premium e-commerce platform specializing in spices, nuts, and 
 
 Preferred communication style: Simple, everyday language.
 
-## Recent Changes (November 29, 2025)
+## Recent Changes (November 30, 2025)
+
+### Color-Coded Category Buttons
+- Updated category navigation buttons on homepage with category-specific colors:
+  - 🟠 **Nuts** → Orange
+  - 🔴 **Spices** → Red
+  - 🟢 **Food** → Green
+  - 🟡 **Drinks** → Gold/Yellow
+  - 🟣 **Cosmetics** → Purple
+  - 🔵 **Baby** → Blue
+  - 🟠 **All** → Orange
+- White text on colored background for maximum contrast
+- Hover effects with darker shade of each color
+- Improved visual navigation and category identification
+- Consistent styling with demo product images color scheme
+
+### Demo Product Images - Color-Coded by Category
+- Product images now display with category-specific background colors
+- Format: `https://placehold.co/400/[COLOR]/white?text=[PRODUCT_NAME]`
+- Each category has distinct visual color for quick identification
+- Colors match the category button colors for consistent branding
+
+## Previous Changes (November 29, 2025)
 
 ### Critical Bug Fix - Removed Duplicate Firebase DB Declaration
 - Removed duplicate `let db = null;` from admin.js that was causing JavaScript error
