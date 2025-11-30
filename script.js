@@ -572,7 +572,7 @@ function renderProducts(productsToShow = products) {
 
     productsToShow.forEach(product => {
         const card = document.createElement('div');
-        card.className = 'bg-white dark:bg-dark-card rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow';
+        card.className = 'bg-white dark:bg-dark-card rounded-xl shadow-sm hover:shadow-lg transition-shadow overflow-hidden flex flex-col';
         
         // Get product name in current language
         let displayName = product.name || '';
@@ -583,27 +583,29 @@ function renderProducts(productsToShow = products) {
         }
         
         card.innerHTML = `
-            <div class="relative overflow-hidden bg-gray-100 h-48">
+            <div class="relative overflow-hidden bg-gray-100 h-32 md:h-40">
                 <img 
                     src="${product.image}" 
                     alt="${displayName}"
                     class="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
                     onerror="this.src='https://via.placeholder.com/400x400?text=Product+Image'"
                 >
-                ${product.badge ? `<span class="absolute top-3 end-3 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">${product.badge}</span>` : ''}
+                ${product.badge ? `<span class="absolute top-2 end-2 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-semibold">${product.badge}</span>` : ''}
             </div>
-            <div class="p-4">
-                <h3 class="font-semibold text-lg text-gray-800 dark:text-white mb-2">${displayName}</h3>
-                <p class="text-primary-500 font-bold text-xl mb-3">${formatPrice(product.price)}</p>
-                <button 
-                    class="add-to-cart-btn w-full bg-primary-500 hover:bg-primary-600 text-white py-2 rounded-lg transition-colors"
-                    data-product-id="${product.id}"
-                    data-product-name="${displayName}"
-                    data-product-price="${product.price}"
-                    data-product-image="${product.image}"
-                >
-                    ${t('add_to_cart')}
-                </button>
+            <div class="p-3 flex-1 flex flex-col justify-between">
+                <h3 class="font-bold text-sm text-gray-800 dark:text-white truncate mb-1">${displayName}</h3>
+                <div>
+                    <p class="text-primary-500 font-bold text-base mb-2">${formatPrice(product.price)}</p>
+                    <button 
+                        class="add-to-cart-btn w-full bg-primary-500 hover:bg-primary-600 text-white py-2 rounded-lg text-sm transition-colors"
+                        data-product-id="${product.id}"
+                        data-product-name="${displayName}"
+                        data-product-price="${product.price}"
+                        data-product-image="${product.image}"
+                    >
+                        ${t('add_to_cart')}
+                    </button>
+                </div>
             </div>
         `;
         
