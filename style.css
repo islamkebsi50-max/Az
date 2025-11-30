@@ -67,7 +67,19 @@ html[dir="ltr"] .fa-arrow-left {
 
 /* Hero Section */
 .hero-section {
-    min-height: 500px;
+    min-height: 350px;
+}
+
+@media (min-width: 640px) {
+    .hero-section {
+        min-height: 450px;
+    }
+}
+
+@media (min-width: 768px) {
+    .hero-section {
+        min-height: 500px;
+    }
 }
 
 .hero-bg {
@@ -310,17 +322,33 @@ input:focus:not(:focus-visible) {
 }
 
 /* Responsive Adjustments */
-@media (max-width: 768px) {
+@media (max-width: 640px) {
     .hero-section {
-        min-height: 400px;
+        min-height: 350px;
     }
     
     .hero-section h1 {
-        font-size: 2rem;
+        font-size: 1.875rem;
     }
     
     .product-card {
         animation-delay: 0s !important;
+    }
+    
+    #mobile-menu.open {
+        max-height: 500px;
+    }
+}
+
+@media (min-width: 641px) and (max-width: 768px) {
+    .hero-section {
+        min-height: 450px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .container {
+        max-width: 100%;
     }
 }
 
