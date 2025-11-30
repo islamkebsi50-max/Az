@@ -281,10 +281,10 @@ function handleFile(file) {
     
     const reader = new FileReader();
     reader.onload = (e) => {
-        imagePreview.src = e.target.result;
-        imageName.textContent = file.name;
-        uploadPlaceholder.classList.add('hidden');
-        imagePreviewContainer.classList.remove('hidden');
+        if (imagePreview) imagePreview.src = e.target.result;
+        if (imageName) imageName.textContent = file.name;
+        if (uploadPlaceholder) uploadPlaceholder.classList.add('hidden');
+        if (imagePreviewContainer) imagePreviewContainer.classList.remove('hidden');
     };
     reader.readAsDataURL(file);
 }
@@ -292,12 +292,12 @@ function handleFile(file) {
 function removeSelectedImage(e) {
     e.stopPropagation();
     selectedFile = null;
-    productImageInput.value = '';
-    productImageUrlInput.value = '';
-    imagePreview.src = '';
-    imageName.textContent = '';
-    uploadPlaceholder.classList.remove('hidden');
-    imagePreviewContainer.classList.add('hidden');
+    if (productImageInput) productImageInput.value = '';
+    if (productImageUrlInput) productImageUrlInput.value = '';
+    if (imagePreview) imagePreview.src = '';
+    if (imageName) imageName.textContent = '';
+    if (uploadPlaceholder) uploadPlaceholder.classList.remove('hidden');
+    if (imagePreviewContainer) imagePreviewContainer.classList.add('hidden');
 }
 
 // ==========================================
@@ -388,22 +388,22 @@ async function handleFormSubmit(e) {
 }
 
 function updateProgress(percent) {
-    progressBar.style.width = percent + '%';
-    progressPercent.textContent = percent + '%';
+    if (progressBar) progressBar.style.width = percent + '%';
+    if (progressPercent) progressPercent.textContent = percent + '%';
 }
 
 function resetForm() {
-    productForm.reset();
-    productIdInput.value = '';
-    productImageUrlInput.value = '';
+    if (productForm) productForm.reset();
+    if (productIdInput) productIdInput.value = '';
+    if (productImageUrlInput) productImageUrlInput.value = '';
     selectedFile = null;
     isEditing = false;
     
-    uploadPlaceholder.classList.remove('hidden');
-    imagePreviewContainer.classList.add('hidden');
-    cancelEditBtn.classList.add('hidden');
-    submitText.textContent = 'إضافة المنتج';
-    submitBtn.querySelector('i').className = 'fas fa-plus ml-2';
+    if (uploadPlaceholder) uploadPlaceholder.classList.remove('hidden');
+    if (imagePreviewContainer) imagePreviewContainer.classList.add('hidden');
+    if (cancelEditBtn) cancelEditBtn.classList.add('hidden');
+    if (submitText) submitText.textContent = 'إضافة المنتج';
+    if (submitBtn) submitBtn.querySelector('i').className = 'fas fa-plus ml-2';
 }
 
 // ==========================================
@@ -955,6 +955,17 @@ function showStatus(message, type = 'info') {
         warning: 'fa-exclamation-circle'
     };
     
+    // Get status container - handle both cached and fresh lookup
+    let container = statusContainer;
+    if (!container) {
+        container = document.getElementById('status-container');
+    }
+    
+    if (!container) {
+        console.warn('Status container not found', message);
+        return;
+    }
+    
     const statusEl = document.createElement('div');
     statusEl.className = `${colors[type]} text-white px-4 py-3 rounded-lg shadow-lg flex items-center gap-2 animate-slide-up`;
     statusEl.innerHTML = `
@@ -962,7 +973,7 @@ function showStatus(message, type = 'info') {
         <span>${message}</span>
     `;
     
-    statusContainer.appendChild(statusEl);
+    container.appendChild(statusEl);
     
     setTimeout(() => {
         statusEl.style.opacity = '0';
