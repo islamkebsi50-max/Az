@@ -505,6 +505,7 @@ async function initFirebase() {
             console.log('Firebase not configured, using local data');
             loadLocalProducts();
             renderProducts();
+            handleURLParameters();
             return;
         }
 
@@ -514,10 +515,12 @@ async function initFirebase() {
         console.log('Firebase initialized successfully');
         await fetchProducts();
         renderProducts();
+        handleURLParameters();
     } catch (error) {
         console.error('Firebase initialization error:', error);
         loadLocalProducts();
         renderProducts();
+        handleURLParameters();
     }
 }
 
@@ -856,7 +859,6 @@ document.addEventListener('DOMContentLoaded', () => {
     setupCategoryFilters();
     setupUIControls();
     setupLanguageToggle();
-    handleURLParameters();
     initFirebase();
 });
 
