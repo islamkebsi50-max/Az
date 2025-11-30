@@ -22,12 +22,12 @@ Preferred communication style: Simple, everyday language (Arabic).
 - ✅ Pagination dots for direct slide selection
 
 **Slide Categories & Images:**
-1. Nuts - Pistachios image (unsplash.com/photo-1606914614357)
-2. Spices - Colorful spices (unsplash.com/photo-1596040033229)
-3. Food - Market/grocery (unsplash.com/photo-1542838132)
-4. Cosmetics - Beauty products (unsplash.com/photo-1616683693504)
-5. Baby - Happy baby (unsplash.com/photo-1555252333)
-6. Drinks - Fresh juice (unsplash.com/photo-1620916566398)
+1. Nuts - Premium fresh pistachios and nuts
+2. Spices - Vibrant colorful authentic spices
+3. Food - Canned beans, legumes, grains (chickpeas, lentils, pasta)
+4. Cosmetics - Premium beauty and skincare products
+5. Baby - Happy healthy smiling baby
+6. Drinks - Colorful carbonated soft drinks and sodas
 
 **Mobile Optimization:**
 - ✅ Arrows hidden on mobile (class: `hidden md:flex`)
