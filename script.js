@@ -56,7 +56,7 @@ const translations = {
         footer_about: "من نحن",
         footer_categories: "الأصناف",
         footer_contact: "اتصل بنا",
-        footer_address: "123 شارع السوق، نيويورك",
+        footer_address: "نارة منعة باتنة",
         footer_rights: "© 2024 أزناف ماركت. جميع الحقوق محفوظة.",
         
         // Cart
