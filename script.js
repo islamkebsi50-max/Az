@@ -653,17 +653,17 @@ function filterProducts() {
     const productsSection = document.getElementById('products');
     if (productsSection) {
         // Remove all background classes
-        productsSection.classList.remove('bg-orange-50', 'bg-red-50', 'bg-green-50', 'bg-yellow-50', 'bg-purple-50', 'bg-blue-50', 'dark:bg-orange-900/20', 'dark:bg-red-900/20', 'dark:bg-green-900/20', 'dark:bg-yellow-900/20', 'dark:bg-purple-900/20', 'dark:bg-blue-900/20');
+        productsSection.classList.remove('bg-orange-100', 'bg-red-100', 'bg-green-100', 'bg-yellow-100', 'bg-purple-100', 'bg-blue-100', 'bg-gray-100', 'dark:bg-orange-900/40', 'dark:bg-red-900/40', 'dark:bg-green-900/40', 'dark:bg-yellow-900/40', 'dark:bg-purple-900/40', 'dark:bg-blue-900/40');
         
         // Add new background class based on category
         const backgroundMap = {
-            'all': ['bg-gray-50', 'dark:bg-dark-bg'],
-            'nuts': ['bg-orange-50', 'dark:bg-orange-900/20'],
-            'spices': ['bg-red-50', 'dark:bg-red-900/20'],
-            'food': ['bg-green-50', 'dark:bg-green-900/20'],
-            'drinks': ['bg-yellow-50', 'dark:bg-yellow-900/20'],
-            'cosmetics': ['bg-purple-50', 'dark:bg-purple-900/20'],
-            'baby': ['bg-blue-50', 'dark:bg-blue-900/20']
+            'all': ['bg-gray-100', 'dark:bg-dark-bg'],
+            'nuts': ['bg-orange-100', 'dark:bg-orange-900/40'],
+            'spices': ['bg-red-100', 'dark:bg-red-900/40'],
+            'food': ['bg-green-100', 'dark:bg-green-900/40'],
+            'drinks': ['bg-yellow-100', 'dark:bg-yellow-900/40'],
+            'cosmetics': ['bg-purple-100', 'dark:bg-purple-900/40'],
+            'baby': ['bg-blue-100', 'dark:bg-blue-900/40']
         };
         
         const bgClasses = backgroundMap[currentCategory] || backgroundMap['all'];
