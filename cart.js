@@ -43,7 +43,8 @@ const translations = {
         search_placeholder: "ابحث عن المنتجات...",
         lang_toggle: "English",
         remove: "حذف",
-        product: "منتج"
+        product: "منتج",
+        delivery_address: "عنوان التسليم"
     },
     en: {
         nav_home: "Home",
@@ -69,7 +70,8 @@ const translations = {
         search_placeholder: "Search for products...",
         lang_toggle: "عربي",
         remove: "Remove",
-        product: "Product"
+        product: "Product",
+        delivery_address: "Delivery Address"
     }
 };
 
@@ -376,26 +378,96 @@ function handleCheckout() {
         return;
     }
     
+    // Show address form
+    const addressForm = document.getElementById('address-form-container');
+    if (addressForm.classList.contains('hidden')) {
+        addressForm.classList.remove('hidden');
+        addressForm.scrollIntoView({ behavior: 'smooth' });
+        return;
+    }
+    
+    // Validate address form
+    const customerName = document.getElementById('customer-name').value.trim();
+    const customerPhone = document.getElementById('customer-phone').value.trim();
+    const customerAddress = document.getElementById('customer-address').value.trim();
+    
+    if (!customerName || !customerPhone || !customerAddress) {
+        alert(currentLang === 'ar' ? 'يرجى ملء جميع حقول العنوان' : 'Please fill all address fields');
+        return;
+    }
+    
+    // Create order object
     const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     const tax = subtotal * TAX_RATE;
     const total = subtotal + tax;
     
+    const order = {
+        id: 'ORD-' + Date.now(),
+        timestamp: new Date().toISOString(),
+        status: 'pending',
+        customer: {
+            name: customerName,
+            phone: customerPhone,
+            address: customerAddress
+        },
+        items: cart.map(item => ({
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            quantity: item.quantity
+        })),
+        subtotal: subtotal,
+        tax: tax,
+        total: total
+    };
+    
+    // Save to localStorage and Firebase
+    saveOrderToDatabase(order);
+    
+    // Show WhatsApp message
     let message = currentLang === 'ar' 
-        ? 'مرحباً، أريد طلب:\n\n'
-        : 'Hello, I would like to order:\n\n';
+        ? `مرحباً، أريد طلب:\n\nالاسم: ${customerName}\nالهاتف: ${customerPhone}\nالعنوان: ${customerAddress}\n\n`
+        : `Hello, I would like to order:\n\nName: ${customerName}\nPhone: ${customerPhone}\nAddress: ${customerAddress}\n\n`;
     
     cart.forEach(item => {
         message += `- ${item.name} (x${item.quantity}) : ${formatPrice(item.price * item.quantity)}\n`;
     });
     
     message += currentLang === 'ar'
-        ? `\nالمجموع الكلي: ${formatPrice(total)}`
-        : `\nTotal: ${formatPrice(total)}`;
+        ? `\nالمجموع الكلي: ${formatPrice(total)}\nرقم الطلب: ${order.id}`
+        : `\nTotal: ${formatPrice(total)}\nOrder #: ${order.id}`;
     
     const encodedMessage = encodeURIComponent(message);
     const whatsappURL = `https://wa.me/${WHATSAPP_PHONE}?text=${encodedMessage}`;
     
+    // Clear cart and reset form
+    cart = [];
+    saveCartToLocalStorage();
+    document.getElementById('customer-name').value = '';
+    document.getElementById('customer-phone').value = '';
+    document.getElementById('customer-address').value = '';
+    document.getElementById('address-form-container').classList.add('hidden');
+    renderCart();
+    
     window.open(whatsappURL, '_blank');
+}
+
+// Save order to Firebase and localStorage
+async function saveOrderToDatabase(order) {
+    try {
+        // Save to localStorage for backup
+        let orders = JSON.parse(localStorage.getItem('aznaf_orders') || '[]');
+        orders.push(order);
+        localStorage.setItem('aznaf_orders', JSON.stringify(orders));
+        
+        // Try to save to Firebase
+        if (typeof db !== 'undefined') {
+            await db.collection('orders').doc(order.id).set(order);
+            console.log('Order saved to Firebase:', order.id);
+        }
+    } catch (error) {
+        console.log('Order saved locally (Firebase unavailable):', order.id);
+    }
 }
 
 // ==========================================
