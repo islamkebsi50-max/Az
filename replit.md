@@ -49,7 +49,7 @@ Preferred communication style: Simple, everyday language (Arabic).
 - ✅ Drinks: Fresh colorful refreshing beverages
 - ✅ Dark overlay (50% opacity) for text readability
 - ✅ Arabic titles only - no buttons on slides
-- ✅ Auto-play every 5 seconds with smooth transitions
+- ✅ Auto-play every 3 seconds with smooth transitions
 - ✅ Navigation arrows (desktop only)
 - ✅ Pagination dots for category selection
 - ✅ Responsive on all devices
