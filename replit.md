@@ -10,6 +10,35 @@ Preferred communication style: Simple, everyday language (Arabic).
 
 ## Recent Changes (November 30, 2025)
 
+### ✅ Hero Slider with Real Unsplash Images - 6 Category Showcase
+
+**Hero Slider Implementation:**
+- ✅ Swiper.js library integrated for smooth slider functionality
+- ✅ 6 high-quality Unsplash images - one for each category
+- ✅ Dark overlay (bg-black/50) ensures text readability over images
+- ✅ Each slide displays category name and "Shop Now" button
+- ✅ Autoplay every 5 seconds with smooth 800ms transitions
+- ✅ Navigation arrows (visible on desktop only, hidden on mobile)
+- ✅ Pagination dots for direct slide selection
+
+**Slide Categories & Images:**
+1. Nuts - Pistachios image (unsplash.com/photo-1606914614357)
+2. Spices - Colorful spices (unsplash.com/photo-1596040033229)
+3. Food - Market/grocery (unsplash.com/photo-1542838132)
+4. Cosmetics - Beauty products (unsplash.com/photo-1616683693504)
+5. Baby - Happy baby (unsplash.com/photo-1555252333)
+6. Drinks - Fresh juice (unsplash.com/photo-1620916566398)
+
+**Mobile Optimization:**
+- ✅ Arrows hidden on mobile (class: `hidden md:flex`)
+- ✅ Users can swipe to navigate on mobile
+- ✅ Responsive text sizes: sm on mobile → xl on desktop
+- ✅ Slider height: 400px (mobile) → full screen (desktop)
+
+---
+
+### ✅ Hero Slider UI Cleanup - Clean Images & Better Text
+
 ### ✅ Dense Mobile Header Layout - All Icons Visible & Compact
 
 **Mobile Header Optimization:**
