@@ -1,0 +1,8 @@
+config.py
+.git
+.cache
+.replit
+replit.md
+FIRESTORE_RULES.txt
+attached_assets
+.gitignore
