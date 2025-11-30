@@ -1,5 +1,3 @@
 {
-  "version": 2,
-  "buildCommand": "echo 'Static HTML site'",
-  "framework": "html"
+  "version": 2
 }
