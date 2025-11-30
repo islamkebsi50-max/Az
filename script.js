@@ -649,6 +649,28 @@ function filterProducts() {
         });
     }
     
+    // Change background color based on category
+    const productsSection = document.getElementById('products');
+    if (productsSection) {
+        // Remove all background classes
+        productsSection.classList.remove('bg-orange-50', 'bg-red-50', 'bg-green-50', 'bg-yellow-50', 'bg-purple-50', 'bg-blue-50', 'dark:bg-orange-900/20', 'dark:bg-red-900/20', 'dark:bg-green-900/20', 'dark:bg-yellow-900/20', 'dark:bg-purple-900/20', 'dark:bg-blue-900/20');
+        
+        // Add new background class based on category
+        const backgroundMap = {
+            'all': ['bg-gray-50', 'dark:bg-dark-bg'],
+            'nuts': ['bg-orange-50', 'dark:bg-orange-900/20'],
+            'spices': ['bg-red-50', 'dark:bg-red-900/20'],
+            'food': ['bg-green-50', 'dark:bg-green-900/20'],
+            'drinks': ['bg-yellow-50', 'dark:bg-yellow-900/20'],
+            'cosmetics': ['bg-purple-50', 'dark:bg-purple-900/20'],
+            'baby': ['bg-blue-50', 'dark:bg-blue-900/20']
+        };
+        
+        const bgClasses = backgroundMap[currentCategory] || backgroundMap['all'];
+        productsSection.classList.add(...bgClasses);
+        productsSection.dataset.category = currentCategory;
+    }
+    
     renderProducts(filtered);
 }
 

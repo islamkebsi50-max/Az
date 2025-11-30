@@ -10,6 +10,20 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes (November 30, 2025)
 
+### Dynamic Background Color Based on Category Selection
+- Products section background color now changes based on selected category
+- Light color backgrounds for better visibility:
+  - 🟠 **Nuts** → Orange-50 (light orange)
+  - 🔴 **Spices** → Red-50 (light red)
+  - 🟢 **Food** → Green-50 (light green)
+  - 🟡 **Drinks** → Yellow-50 (light yellow)
+  - 🟣 **Cosmetics** → Purple-50 (light purple)
+  - 🔵 **Baby** → Blue-50 (light blue)
+  - 🟠 **All** → Gray-50 (light gray)
+- Dark mode support with darker hues for proper contrast
+- Smooth transition animation when changing categories
+- Background color matching for consistent branding
+
 ### Color-Coded Category Buttons
 - Updated category navigation buttons on homepage with category-specific colors:
   - 🟠 **Nuts** → Orange
