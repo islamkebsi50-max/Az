@@ -23,6 +23,12 @@ const translations = {
         hero_title: "توابل ومكسرات فاخرة من جميع أنحاء العالم",
         hero_subtitle: "اكتشف مجموعتنا المختارة بعناية من التوابل الأصيلة والمكسرات الطازجة والمنتجات الغذائية المميزة. جودة تتذوقها في كل قضمة.",
         hero_btn: "تسوق الآن",
+        hero_nuts: "أجود أنواع المكسرات الطازجة",
+        hero_spices: "نكهات وتوابل أصلية",
+        hero_food: "منتجات غذائية أساسية لكل منزل",
+        hero_cosmetics: "الجمال والعناية الشخصية",
+        hero_baby: "راحة طفلك أولويتنا",
+        hero_drinks: "انتعاش ومشروبات متنوعة",
         
         // Categories
         cat_all: "الكل",
@@ -184,6 +190,12 @@ const translations = {
         hero_title: "Premium Spices & Nuts from Around the World",
         hero_subtitle: "Discover our handpicked selection of authentic spices, fresh nuts, and specialty food products. Quality you can taste in every bite.",
         hero_btn: "Shop Now",
+        hero_nuts: "Premium Fresh Nuts Selection",
+        hero_spices: "Authentic Original Spices & Flavors",
+        hero_food: "Essential Food Products for Every Home",
+        hero_cosmetics: "Beauty & Personal Care",
+        hero_baby: "Your Baby's Comfort is Our Priority",
+        hero_drinks: "Refreshing & Diverse Beverages",
         
         // Categories
         cat_all: "All",
