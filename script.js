@@ -210,7 +210,11 @@ const translations = {
         step_approved: "تم الموافقة",
         step_approved_desc: "سيتم إبلاغك عند الموافقة",
         status_auto_refresh: "يتم تحديث الحالة تلقائياً كل 5 ثواني",
-        back_to_cart: "العودة للسلة"
+        back_to_cart: "العودة للسلة",
+        
+        // My Orders Page
+        my_orders_title: "طلباتي",
+        no_orders: "لا توجد طلبات"
     },
     en: {
         // Navigation
@@ -410,7 +414,11 @@ const translations = {
         step_approved: "Approved",
         step_approved_desc: "You will be notified when your order is approved",
         status_auto_refresh: "Status updates automatically every 5 seconds",
-        back_to_cart: "Back to Cart"
+        back_to_cart: "Back to Cart",
+        
+        // My Orders Page
+        my_orders_title: "My Orders",
+        no_orders: "No orders"
     }
 };
 

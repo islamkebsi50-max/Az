@@ -48,6 +48,10 @@ Preferred communication style: Simple, everyday language (Arabic).
 - ✅ `cart.js` - Updated handleCheckout to redirect to status page
 - ✅ `admin-orders.js` - Updated confirmOrder to use 'completed' status, added "View Status" link
 - ✅ `script.js` - Added 20+ translation keys for status page
+- ✅ `my-orders.html` - New customer orders dashboard
+- ✅ `my-orders.js` - Customer orders listing with real-time updates
+- ✅ Removed automatic order deletion (orders kept indefinitely)
+- ✅ Added "My Orders" link to navigation and footer
 
 ---
 

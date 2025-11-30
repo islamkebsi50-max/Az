@@ -26,23 +26,8 @@ async function loadOrders() {
 }
 
 function deleteOldOrders() {
-    const now = Date.now();
-    const oneDayMs = 24 * 60 * 60 * 1000;
-    
-    allOrders = allOrders.filter(order => {
-        if (order.status !== 'confirmed') return true;
-        
-        const confirmTime = order.confirmedAt ? new Date(order.confirmedAt).getTime() : null;
-        if (!confirmTime) return true;
-        
-        const isOld = (now - confirmTime) > oneDayMs;
-        if (isOld) {
-            deleteOrderFromDB(order.id);
-        }
-        return !isOld;
-    });
-    
-    localStorage.setItem('aznaf_orders', JSON.stringify(allOrders));
+    // Keep all orders - do not delete automatically
+    // Orders are kept indefinitely
 }
 
 function renderOrders() {
