@@ -172,25 +172,30 @@ Preferred communication style: Simple, everyday language.
 - Synchronized design: Uses same Tailwind CSS theme, colors, and translations as main site
 - Note: Currently no authentication - consider adding Firebase Auth for production
 
-### Generate Demo Data Feature - Context-Aware Procedural Generation (November 29, 2025)
+### Generate Demo Data Feature - Context-Aware Procedural Generation with Color-Coded Images (November 29, 2025)
 - Added green "Demo" button in admin panel (Products section header)
 - `generateDemoData()` function uses **Context-Aware Procedural Generation** to create 100% unique products:
 
 **Context-Aware Generation Details:**
 - **6 Category-Specific Data Sets:**
-  - **Food:** Soummam, Cevital, Bimo brands | Semoule, Pasta, Couscous, Lentils, Rice, Flour items | Prices: 150-280 د.ج
-  - **Drinks:** Candia, Ifri, Cevital brands | Milk, Orange Juice, Coffee, Tea, Mineral Water items | Prices: 100-250 د.ج
-  - **Cosmetics:** Elio, Omo, Safina brands | Face Cream, Soap, Shampoo, Toothpaste items | Prices: 120-280 د.ج
-  - **Baby:** Bimo, Candia, Elio brands | Diapers, Baby Wipes, Baby Formula items | Prices: 150-450 د.ج
-  - **Nuts:** Soummam, Safina, Ngaous brands | Almonds, Walnuts, Pistachios, Cashews items | Prices: 380-520 د.ج
-  - **Spices:** Soummam, Cevital, Safina brands | Saffron, Cumin, Paprika, Cinnamon items | Prices: 200-950 د.ج
+  - **Food (🟢 Green):** Soummam, Cevital, Bimo brands | Semoule, Pasta, Couscous, Lentils, Rice, Flour items | Prices: 150-280 د.ج
+  - **Drinks (🟡 Gold):** Candia, Ifri, Cevital brands | Milk, Orange Juice, Coffee, Tea, Mineral Water items | Prices: 100-250 د.ج
+  - **Cosmetics (🟣 Purple):** Elio, Omo, Safina brands | Face Cream, Soap, Shampoo, Toothpaste items | Prices: 120-280 د.ج
+  - **Baby (🔵 Blue):** Bimo, Candia, Elio brands | Diapers, Baby Wipes, Baby Formula items | Prices: 150-450 د.ج
+  - **Nuts (🟠 Orange):** Soummam, Safina, Ngaous brands | Almonds, Walnuts, Pistachios, Cashews items | Prices: 380-520 د.ج
+  - **Spices (🔴 Red):** Soummam, Cevital, Safina brands | Saffron, Cumin, Paprika, Cinnamon items | Prices: 200-950 د.ج
+
+- **Color-Coded Image URLs:**
+  - Each product image uses format: `https://placehold.co/400/[COLOR]/white?text=[PRODUCT_NAME]`
+  - Colors are category-specific for easy visual identification
+  - Text is white on colored background for contrast
 
 - **Random Logic:**
   - Each click generates **12 unique products (2 per category)**
   - **Product name formula:** Brand + Item + " #" + Random Number (e.g., "Soummam Semoule #4829")
   - Category STRICTLY matches product type (no mixing)
   - Price matches realistic category range
-  - Image URL = Dynamic placeholder with full product name
+  - Image color matches category theme
   - Arabic translations auto-generated for all items
 
 - Saves all products to Firestore automatically
@@ -198,17 +203,18 @@ Preferred communication style: Simple, everyday language.
 - Auto-refreshes product list after insertion
 
 **Example Generated Products:**
-- "Soummam Pasta #2847" (180 د.ج) - food
-- "Candia Milk #5193" (120 د.ج) - drinks
-- "Omo Soap #1042" (150 د.ج) - cosmetics
-- "Bimo Diapers #7564" (320 د.ج) - baby
-- "Safina Almonds #3921" (450 د.ج) - nuts
-- "Cevital Saffron #8765" (950 د.ج) - spices
+- "Soummam Pasta #2847" (180 د.ج) - food (green background)
+- "Candia Milk #5193" (120 د.ج) - drinks (gold background)
+- "Omo Soap #1042" (150 د.ج) - cosmetics (purple background)
+- "Bimo Diapers #7564" (320 د.ج) - baby (blue background)
+- "Safina Almonds #3921" (450 د.ج) - nuts (orange background)
+- "Cevital Saffron #8765" (950 د.ج) - spices (red background)
 
 **Key Benefits:**
 - **100% Unique Products:** Random number suffix ensures no duplicate product names
 - **Click 50 times → 600 different products** (2 per category × 6 categories × 50 clicks)
 - **Context-Aware:** Brands and items match category semantically
+- **Color-Coded Visualization:** Each category has distinct background color for quick identification
 - **Bilingual Support:** Automatic Arabic/English naming
 - **Realistic Pricing:** Each category has appropriate price ranges
 - **Algerian Focus:** Uses authentic Algerian brand names

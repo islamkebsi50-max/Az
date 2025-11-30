@@ -699,6 +699,16 @@ async function generateDemoData() {
         }
     };
     
+    // Color mapping by category
+    const categoryColors = {
+        nuts: 'orange',
+        spices: 'red',
+        baby: 'blue',
+        food: 'green',
+        cosmetics: 'purple',
+        drinks: 'gold'
+    };
+    
     if (typeof db === 'undefined' || !db) {
         showStatus("Firebase غير متصل!", "error");
         return;
@@ -710,6 +720,7 @@ async function generateDemoData() {
     // Generate 2 products for EACH category (12 total)
     categories.forEach(category => {
         const categoryInfo = categoryData[category];
+        const categoryColor = categoryColors[category];
         
         for (let i = 0; i < 2; i++) {
             const randomBrand = categoryInfo.brands[Math.floor(Math.random() * categoryInfo.brands.length)];
@@ -723,8 +734,8 @@ async function generateDemoData() {
             const productName = `${randomBrand} ${randomItem} #${randomNumber}`;
             const productNameAr = `${randomBrand} ${randomItemAr} #${randomNumber}`;
             
-            // Dynamic image URL with product name as text
-            const imageUrl = `https://placehold.co/400?text=${encodeURIComponent(productName)}`;
+            // Color-coded image URL with category-specific background color
+            const imageUrl = `https://placehold.co/400/${categoryColor}/white?text=${encodeURIComponent(productName)}`;
             
             randomProducts.push({
                 name_ar: productNameAr,
