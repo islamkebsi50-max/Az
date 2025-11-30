@@ -694,12 +694,25 @@ function setupSearch() {
     const mobileSearchInput = document.getElementById('mobile-search-input');
     
     const handleSearch = (e) => {
-        const query = e.target.value.toLowerCase();
-        let filtered = products.filter(product =>
-            product.name.toLowerCase().includes(query) ||
-            (product.category && product.category.toLowerCase().includes(query))
-        );
+        const query = e.target.value.toLowerCase().trim();
         
+        // If search is empty, show all products from current category
+        if (query === '') {
+            filterProducts();
+            return;
+        }
+        
+        // Filter products by search query in both Arabic and English names
+        let filtered = products.filter(product => {
+            const nameAr = (product.name_ar || '').toLowerCase();
+            const nameEn = (product.name_en || '').toLowerCase();
+            const name = (product.name || '').toLowerCase();
+            
+            // Check if query matches any name field (Arabic, English, or generic)
+            return nameAr.includes(query) || nameEn.includes(query) || name.includes(query);
+        });
+        
+        // Apply category filter if one is selected
         if (currentCategory !== 'all') {
             filtered = filtered.filter(product => {
                 const productCategory = (product.category || '').toLowerCase();
@@ -711,12 +724,13 @@ function setupSearch() {
         renderProducts(filtered);
     };
     
+    // Use 'input' event for instant/live search on every keystroke
     if (searchInput) {
-        searchInput.addEventListener('keyup', handleSearch);
+        searchInput.addEventListener('input', handleSearch);
     }
     
     if (mobileSearchInput) {
-        mobileSearchInput.addEventListener('keyup', handleSearch);
+        mobileSearchInput.addEventListener('input', handleSearch);
     }
 }
 
