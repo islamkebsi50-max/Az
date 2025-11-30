@@ -674,6 +674,12 @@ function filterProducts() {
     }
     
     renderProducts(filtered);
+    
+    // Scroll to products section smoothly
+    const productsContainer = document.getElementById('products');
+    if (productsContainer) {
+        productsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
 }
 
 // ==========================================
