@@ -6,8 +6,10 @@ import socketserver
 
 class Handler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
-        if self.path == '/' or self.path == '':
+        if self.path in ['/', '']:
             self.path = '/index.html'
+        elif self.path.endswith('/'):
+            self.path = self.path.rstrip('/') + '.html'
         return http.server.SimpleHTTPRequestHandler.do_GET(self)
 
 if __name__ == '__main__':

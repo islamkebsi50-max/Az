@@ -7,5 +7,3 @@ FIRESTORE_RULES.txt
 attached_assets
 .gitignore
 .local
-*.md
-node_modules
