@@ -59,6 +59,21 @@ const translations = {
         footer_address: "نارة منعة باتنة",
         footer_rights: "© 2024 أزناف ماركت. جميع الحقوق محفوظة.",
         
+        // About Page
+        about_title: "من نحن",
+        about_subtitle: "قصة نجاح AZ Market",
+        about_story_title: "قصتنا",
+        about_story_p1: "نحن متجر جزائري رائد متخصص في توفير أجود أنواع المكسرات، التوابل، والمنتجات الغذائية. هدفنا هو إيصال الجودة العالمية إلى باب منزلك.",
+        about_story_p2: "مع سنوات من الخبرة والالتزام بالتميز، نقدم منتجات منتقاة بعناية من أفضل المصادر العالمية، مع ضمان الجودة والأصالة في كل منتج.",
+        about_why_title: "لماذا تختار AZ Market؟",
+        about_why_subtitle: "أفضل الخدمات والمنتجات لك",
+        about_card1_title: "توصيل سريع",
+        about_card1_desc: "نغطي 58 ولاية جزائرية مع توصيل سريع وآمن",
+        about_card2_title: "جودة مضمونة",
+        about_card2_desc: "منتجات أصلية 100% من أفضل المصادر العالمية",
+        about_card3_title: "دفع آمن",
+        about_card3_desc: "الدفع عند الاستلام والعديد من خيارات الدفع الآمنة",
+        
         // Cart
         cart_title: "سلة التسوق",
         cart_items: "عناصر السلة",
@@ -202,6 +217,21 @@ const translations = {
         footer_contact: "Contact Us",
         footer_address: "123 Market Street, NY",
         footer_rights: "© 2024 Aznaf Market. All rights reserved.",
+        
+        // About Page
+        about_title: "About Us",
+        about_subtitle: "AZ Market Success Story",
+        about_story_title: "Our Story",
+        about_story_p1: "We are a leading Algerian store specializing in providing the finest types of nuts, spices, and food products. Our goal is to deliver world-class quality to your doorstep.",
+        about_story_p2: "With years of experience and commitment to excellence, we offer carefully selected products from the best global sources, with guaranteed quality and authenticity in every product.",
+        about_why_title: "Why Choose AZ Market?",
+        about_why_subtitle: "Best Services and Products for You",
+        about_card1_title: "Fast Delivery",
+        about_card1_desc: "We cover 58 Algerian states with fast and safe delivery",
+        about_card2_title: "Guaranteed Quality",
+        about_card2_desc: "100% authentic products from the best international sources",
+        about_card3_title: "Secure Payment",
+        about_card3_desc: "Cash on Delivery and many secure payment options",
         
         // Cart
         cart_title: "Shopping Cart",
