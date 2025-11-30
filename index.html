@@ -35,6 +35,8 @@
     </script>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 </head>
 <body class="bg-gray-50 dark:bg-dark-bg text-gray-900 dark:text-gray-100 transition-colors duration-300">
     
@@ -125,23 +127,113 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
+    <!-- Hero Section - Swiper Slider -->
     <section class="hero-section relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-r from-black/70 to-black/40 z-10"></div>
-        <div class="hero-bg absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1596040033229-a9821ebd058d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');"></div>
-        <div class="container mx-auto px-4 py-16 sm:py-24 md:py-32 relative z-20">
-            <div class="max-w-2xl text-white animate-fade-in">
-                <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight" data-lang-key="hero_title">
-                    توابل ومكسرات فاخرة من جميع أنحاء العالم
-                </h1>
-                <p class="text-base sm:text-lg md:text-xl mb-6 sm:mb-8 text-gray-200 line-clamp-3 sm:line-clamp-none" data-lang-key="hero_subtitle">
-                    اكتشف مجموعتنا المختارة بعناية من التوابل الأصيلة والمكسرات الطازجة والمنتجات الغذائية المميزة. جودة تتذوقها في كل قضمة.
-                </p>
-                <a href="#products" class="inline-block bg-primary-500 hover:bg-primary-600 text-white font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-full transition-all transform hover:scale-105 shadow-lg hover:shadow-xl text-sm sm:text-base">
-                    <i class="fas fa-shopping-bag me-2"></i>
-                    <span data-lang-key="hero_btn">تسوق الآن</span>
-                </a>
+        <div class="swiper heroSwiper w-full h-96 sm:h-96 md:h-screen max-h-screen">
+            <div class="swiper-wrapper">
+                <!-- Slide 1: Nuts -->
+                <div class="swiper-slide relative overflow-hidden">
+                    <img src="https://placehold.co/1920x500/FF8C00/white?text=Nuts" alt="Nuts" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30 z-10"></div>
+                    <div class="absolute inset-0 flex items-center justify-start z-20">
+                        <div class="container mx-auto px-4 sm:px-6 md:px-8">
+                            <div class="max-w-2xl text-white">
+                                <h2 class="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-6">أجود أنواع المكسرات الطازجة</h2>
+                                <a href="index.html?category=nuts" class="inline-block bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-lg transition-all transform hover:scale-105 text-sm sm:text-base">
+                                    <i class="fas fa-shopping-bag me-2"></i>تسوق الآن
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 2: Spices -->
+                <div class="swiper-slide relative overflow-hidden">
+                    <img src="https://placehold.co/1920x500/DC143C/white?text=Spices" alt="Spices" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30 z-10"></div>
+                    <div class="absolute inset-0 flex items-center justify-start z-20">
+                        <div class="container mx-auto px-4 sm:px-6 md:px-8">
+                            <div class="max-w-2xl text-white">
+                                <h2 class="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-6">نكهات وتوابل أصلية</h2>
+                                <a href="index.html?category=spices" class="inline-block bg-red-600 hover:bg-red-700 text-white font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-lg transition-all transform hover:scale-105 text-sm sm:text-base">
+                                    <i class="fas fa-shopping-bag me-2"></i>تسوق الآن
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 3: Food -->
+                <div class="swiper-slide relative overflow-hidden">
+                    <img src="https://placehold.co/1920x500/228B22/white?text=Food" alt="Food" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30 z-10"></div>
+                    <div class="absolute inset-0 flex items-center justify-start z-20">
+                        <div class="container mx-auto px-4 sm:px-6 md:px-8">
+                            <div class="max-w-2xl text-white">
+                                <h2 class="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-6">منتجات غذائية أساسية لكل منزل</h2>
+                                <a href="index.html?category=food" class="inline-block bg-green-600 hover:bg-green-700 text-white font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-lg transition-all transform hover:scale-105 text-sm sm:text-base">
+                                    <i class="fas fa-shopping-bag me-2"></i>تسوق الآن
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 4: Cosmetics -->
+                <div class="swiper-slide relative overflow-hidden">
+                    <img src="https://placehold.co/1920x500/9370DB/white?text=Beauty" alt="Cosmetics" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30 z-10"></div>
+                    <div class="absolute inset-0 flex items-center justify-start z-20">
+                        <div class="container mx-auto px-4 sm:px-6 md:px-8">
+                            <div class="max-w-2xl text-white">
+                                <h2 class="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-6">الجمال والعناية الشخصية</h2>
+                                <a href="index.html?category=cosmetics" class="inline-block bg-purple-600 hover:bg-purple-700 text-white font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-lg transition-all transform hover:scale-105 text-sm sm:text-base">
+                                    <i class="fas fa-shopping-bag me-2"></i>تسوق الآن
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 5: Baby -->
+                <div class="swiper-slide relative overflow-hidden">
+                    <img src="https://placehold.co/1920x500/0047AB/white?text=Baby" alt="Baby" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30 z-10"></div>
+                    <div class="absolute inset-0 flex items-center justify-start z-20">
+                        <div class="container mx-auto px-4 sm:px-6 md:px-8">
+                            <div class="max-w-2xl text-white">
+                                <h2 class="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-6">راحة طفلك أولويتنا</h2>
+                                <a href="index.html?category=baby" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-lg transition-all transform hover:scale-105 text-sm sm:text-base">
+                                    <i class="fas fa-shopping-bag me-2"></i>تسوق الآن
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 6: Drinks -->
+                <div class="swiper-slide relative overflow-hidden">
+                    <img src="https://placehold.co/1920x500/FFD700/white?text=Drinks" alt="Drinks" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30 z-10"></div>
+                    <div class="absolute inset-0 flex items-center justify-start z-20">
+                        <div class="container mx-auto px-4 sm:px-6 md:px-8">
+                            <div class="max-w-2xl text-white">
+                                <h2 class="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-6">انتعاش ومشروبات متنوعة</h2>
+                                <a href="index.html?category=drinks" class="inline-block bg-yellow-600 hover:bg-yellow-700 text-white font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-lg transition-all transform hover:scale-105 text-sm sm:text-base">
+                                    <i class="fas fa-shopping-bag me-2"></i>تسوق الآن
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            <!-- Navigation Arrows -->
+            <div class="swiper-button-next text-white bg-black/30 hover:bg-black/60 w-12 h-12 rounded-full flex items-center justify-center transition-all"></div>
+            <div class="swiper-button-prev text-white bg-black/30 hover:bg-black/60 w-12 h-12 rounded-full flex items-center justify-center transition-all"></div>
+
+            <!-- Pagination -->
+            <div class="swiper-pagination"></div>
         </div>
     </section>
 
@@ -290,6 +382,9 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    
     <!-- Inject Environment Variables -->
     <script>
         window.__FIREBASE_API_KEY__ = '%FIREBASE_API_KEY%';
@@ -303,6 +398,29 @@
     
     <!-- Firebase Configuration -->
     <script src="firebase-config.js"></script>
+    
+    <!-- Swiper Initialization -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const swiper = new Swiper('.heroSwiper', {
+                loop: true,
+                autoplay: {
+                    delay: 5000,
+                    disableOnInteraction: false,
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                effect: 'slide',
+                speed: 800,
+            });
+        });
+    </script>
     
     <!-- Main Application Script -->
     <script src="script.js"></script>
