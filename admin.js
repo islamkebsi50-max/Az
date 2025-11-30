@@ -378,7 +378,21 @@ async function handleFormSubmit(e) {
         }
         
         resetForm();
-        loadProducts();
+        
+        // Update product list immediately without full reload
+        const listContainer = document.getElementById('products-list');
+        if (listContainer && listContainer.children.length > 0 && !listContainer.innerHTML.includes('جاري') && !listContainer.innerHTML.includes('لا توجد')) {
+            // List exists and is populated, reload it
+            loadProducts();
+        } else if (!listContainer || !listContainer.children.length) {
+            // List is empty, just load products
+            loadProducts();
+        }
+        
+        // Also update globally if products are being displayed on other pages
+        if (window.reloadProductsGlobally) {
+            await window.reloadProductsGlobally();
+        }
     } catch (error) {
         console.error('Save error:', error);
         showStatus('فشل حفظ المنتج: ' + error.message, 'error');
@@ -403,7 +417,10 @@ function resetForm() {
     if (imagePreviewContainer) imagePreviewContainer.classList.add('hidden');
     if (cancelEditBtn) cancelEditBtn.classList.add('hidden');
     if (submitText) submitText.textContent = 'إضافة المنتج';
-    if (submitBtn) submitBtn.querySelector('i').className = 'fas fa-plus ml-2';
+    if (submitBtn) {
+        const icon = submitBtn.querySelector('i');
+        if (icon) icon.className = 'fas fa-plus ml-2';
+    }
 }
 
 // ==========================================
@@ -541,27 +558,30 @@ async function editProduct(productId) {
         
         const product = doc.data();
         
-        productIdInput.value = productId;
-        nameArInput.value = product.name_ar || product.name || '';
-        nameEnInput.value = product.name_en || '';
-        descArInput.value = product.desc_ar || '';
-        descEnInput.value = product.desc_en || '';
-        productCategoryInput.value = product.category || '';
-        productPriceInput.value = product.price || '';
-        productBadgeInput.value = product.badge || '';
-        productImageUrlInput.value = product.image || '';
+        if (productIdInput) productIdInput.value = productId;
+        if (nameArInput) nameArInput.value = product.name_ar || product.name || '';
+        if (nameEnInput) nameEnInput.value = product.name_en || '';
+        if (descArInput) descArInput.value = product.desc_ar || '';
+        if (descEnInput) descEnInput.value = product.desc_en || '';
+        if (productCategoryInput) productCategoryInput.value = product.category || '';
+        if (productPriceInput) productPriceInput.value = product.price || '';
+        if (productBadgeInput) productBadgeInput.value = product.badge || '';
+        if (productImageUrlInput) productImageUrlInput.value = product.image || '';
         
         if (product.image) {
-            imagePreview.src = product.image;
-            imageName.textContent = 'الصورة الحالية';
-            uploadPlaceholder.classList.add('hidden');
-            imagePreviewContainer.classList.remove('hidden');
+            if (imagePreview) imagePreview.src = product.image;
+            if (imageName) imageName.textContent = 'الصورة الحالية';
+            if (uploadPlaceholder) uploadPlaceholder.classList.add('hidden');
+            if (imagePreviewContainer) imagePreviewContainer.classList.remove('hidden');
         }
         
         isEditing = true;
-        submitText.textContent = 'تحديث المنتج';
-        submitBtn.querySelector('i').className = 'fas fa-save ml-2';
-        cancelEditBtn.classList.remove('hidden');
+        if (submitText) submitText.textContent = 'تحديث المنتج';
+        if (submitBtn) {
+            const icon = submitBtn.querySelector('i');
+            if (icon) icon.className = 'fas fa-save ml-2';
+        }
+        if (cancelEditBtn) cancelEditBtn.classList.remove('hidden');
         
         nameArInput.focus();
         window.scrollTo({ top: 0, behavior: 'smooth' });
