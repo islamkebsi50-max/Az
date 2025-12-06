@@ -63,7 +63,7 @@ const translations = {
         footer_categories: "الأصناف",
         footer_contact: "اتصل بنا",
         footer_address: "نارة منعة باتنة",
-        footer_rights: "© 2024 أزناف ماركت. جميع الحقوق محفوظة.",
+        footer_rights: "© 2024 AZ Market. جميع الحقوق محفوظة.",
         
         // Hero Section - Spices
         hero_spices: "بيع بالجملة - أسعار منافسة",
