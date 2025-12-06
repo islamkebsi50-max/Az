@@ -33,7 +33,7 @@ const translations = {
         // Categories
         cat_all: "الكل",
         cat_nuts: "مواد النظافة",
-        cat_spices: "توابل",
+        cat_spices: "بيع بالجملة",
         cat_food: "منتجات غذائية",
         cat_cosmetics: "مستحضرات تجميل",
         cat_baby: "حفاضات أطفال",
@@ -64,6 +64,9 @@ const translations = {
         footer_contact: "اتصل بنا",
         footer_address: "نارة منعة باتنة",
         footer_rights: "© 2024 أزناف ماركت. جميع الحقوق محفوظة.",
+        
+        // Hero Section - Spices
+        hero_spices: "بيع بالجملة - أسعار منافسة",
         
         // About Page
         about_title: "من نحن",
@@ -228,7 +231,7 @@ const translations = {
         hero_subtitle: "Discover our handpicked selection of authentic spices, fresh nuts, and specialty food products. Quality you can taste in every bite.",
         hero_btn: "Shop Now",
         hero_nuts: "Premium Cleaning Products",
-        hero_spices: "Authentic Spices",
+        hero_spices: "Wholesale - Competitive Prices",
         hero_food: "Quality Food Products",
         hero_cosmetics: "Beauty & Care",
         hero_baby: "Baby's Comfort First",
@@ -237,7 +240,7 @@ const translations = {
         // Categories
         cat_all: "All",
         cat_nuts: "Cleaning Products",
-        cat_spices: "Spices",
+        cat_spices: "Wholesale",
         cat_food: "Food Products",
         cat_cosmetics: "Cosmetics",
         cat_baby: "Baby Diapers",
@@ -515,7 +518,7 @@ function t(key) {
 const categoryLabels = {
     ar: {
         'nuts': 'مواد النظافة',
-        'spices': 'توابل',
+        'spices': 'بيع بالجملة',
         'food': 'منتجات غذائية',
         'cosmetics': 'مستحضرات تجميل',
         'baby': 'حفاضات أطفال',
@@ -523,7 +526,7 @@ const categoryLabels = {
     },
     en: {
         'nuts': 'Cleaning Products',
-        'spices': 'Spices',
+        'spices': 'Wholesale',
         'food': 'Food Products',
         'cosmetics': 'Cosmetics',
         'baby': 'Baby Diapers',

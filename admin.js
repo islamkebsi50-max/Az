@@ -492,7 +492,7 @@ async function loadProducts() {
 function createProductItem(product) {
     const categoryLabels = {
         'nuts': 'مواد النظافة',
-        'spices': 'البهارات',
+        'spices': 'بيع بالجملة',
         'food': 'منتجات غذائية',
         'cosmetics': 'مستحضرات التجميل',
         'baby': 'حفاضات الأطفال',
