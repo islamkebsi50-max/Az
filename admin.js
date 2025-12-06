@@ -495,7 +495,7 @@ function createProductItem(product) {
         'spices': 'البهارات',
         'food': 'منتجات غذائية',
         'cosmetics': 'مستحضرات التجميل',
-        'diapers': 'حفاضات الأطفال',
+        'baby': 'حفاضات الأطفال',
         'drinks': 'المشروبات'
     };
     

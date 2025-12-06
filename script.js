@@ -36,7 +36,7 @@ const translations = {
         cat_spices: "توابل",
         cat_food: "منتجات غذائية",
         cat_cosmetics: "مستحضرات تجميل",
-        cat_diapers: "حفاضات أطفال",
+        cat_baby: "حفاضات أطفال",
         cat_drinks: "مشروبات",
         
         // Products Section
@@ -240,7 +240,7 @@ const translations = {
         cat_spices: "Spices",
         cat_food: "Food Products",
         cat_cosmetics: "Cosmetics",
-        cat_diapers: "Baby Diapers",
+        cat_baby: "Baby Diapers",
         cat_drinks: "Drinks",
         
         // Products Section
@@ -518,7 +518,7 @@ const categoryLabels = {
         'spices': 'توابل',
         'food': 'منتجات غذائية',
         'cosmetics': 'مستحضرات تجميل',
-        'diapers': 'حفاضات أطفال',
+        'baby': 'حفاضات أطفال',
         'drinks': 'مشروبات'
     },
     en: {
@@ -526,7 +526,7 @@ const categoryLabels = {
         'spices': 'Spices',
         'food': 'Food Products',
         'cosmetics': 'Cosmetics',
-        'diapers': 'Baby Diapers',
+        'baby': 'Baby Diapers',
         'drinks': 'Drinks'
     }
 };
