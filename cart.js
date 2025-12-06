@@ -4,7 +4,7 @@
 // Configuration
 // ==========================================
 
-const WHATSAPP_PHONE = "213YOUR_NEW_NUMBER";
+const WHATSAPP_PHONE = "213658479384";
 let customerLocationLink = "";
 
 // formatPrice helper function (uses global CURRENCY_SYMBOL from script.js)

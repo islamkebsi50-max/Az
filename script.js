@@ -3,7 +3,7 @@
 // ==========================================
 
 // Configuration
-const WHATSAPP_PHONE = "213YOUR_NEW_NUMBER";
+const WHATSAPP_PHONE = "213658479384";
 const CURRENCY_SYMBOL = "د.ج";
 const TAX_RATE = 0.10;
 
