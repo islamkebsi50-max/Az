@@ -39,18 +39,18 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 </head>
 <body class="bg-gray-50 dark:bg-dark-bg text-gray-900 dark:text-gray-100 transition-colors duration-300">
-    
+
     <!-- Header -->
     <header class="sticky top-0 z-50 bg-white dark:bg-dark-card shadow-md transition-colors duration-300">
         <div class="container mx-auto px-2 sm:px-4">
             <div class="flex items-center justify-between h-14 sm:h-16 md:h-20 flex-nowrap">
-                
+
                 <!-- Left: Menu + Logo -->
                 <div class="flex items-center gap-1 flex-shrink-0">
                     <button id="mobile-menu-btn" class="lg:hidden p-1.5 w-10 h-10 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors flex items-center justify-center flex-shrink-0">
                         <i class="fas fa-bars text-base sm:text-lg"></i>
                     </button>
-                    
+
                     <!-- Brand Name -->
                     <button id="logo-btn" class="flex items-center cursor-pointer hover:opacity-80 transition-opacity flex-shrink-0">
                         <span class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-primary-600 dark:text-primary-400 tracking-tight whitespace-nowrap">
@@ -58,7 +58,7 @@
                         </span>
                     </button>
                 </div>
-                
+
                 <!-- Center: Search Bar (Desktop) -->
                 <div class="hidden md:flex flex-1 max-w-xl mx-4 lg:mx-8">
                     <div class="relative w-full">
@@ -72,25 +72,25 @@
                         <i class="fas fa-search absolute start-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
                     </div>
                 </div>
-                
+
                 <!-- Right: All Icons -->
                 <div class="flex items-center gap-0.5 flex-shrink-0">
                     <!-- Search Icon (Mobile) -->
                     <button id="mobile-search-btn" class="md:hidden p-1.5 w-10 h-10 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors flex items-center justify-center">
                         <i class="fas fa-search text-base sm:text-lg"></i>
                     </button>
-                    
+
                     <!-- Dark Mode Toggle -->
                     <button id="theme-toggle" class="p-1.5 w-10 h-10 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors flex items-center justify-center" aria-label="Toggle dark mode">
                         <i class="fas fa-sun text-base sm:text-lg text-yellow-500 dark:hidden"></i>
                         <i class="fas fa-moon text-base sm:text-lg text-blue-400 hidden dark:block"></i>
                     </button>
-                    
+
                     <!-- Language Toggle -->
                     <button id="lang-toggle" class="font-bold text-gray-700 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400 uppercase text-xs font-bold px-1.5 w-10 h-10 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors flex items-center justify-center">
                         EN
                     </button>
-                    
+
                     <!-- Cart Icon -->
                     <a href="cart.html" id="cart-btn" class="relative p-1.5 w-10 h-10 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors flex items-center justify-center flex-shrink-0">
                         <i class="fas fa-shopping-cart text-base sm:text-lg"></i>
@@ -98,7 +98,7 @@
                     </a>
                 </div>
             </div>
-            
+
             <!-- Mobile Search Bar -->
             <div id="mobile-search" class="hidden pb-2 md:hidden">
                 <div class="relative w-full">
@@ -113,7 +113,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden lg:hidden bg-white dark:bg-dark-card border-t border-gray-200 dark:border-dark-border">
             <nav class="container mx-auto px-4 py-4">
@@ -224,7 +224,7 @@
     <section class="bg-white dark:bg-dark-card shadow-sm transition-colors duration-300 sticky top-16 sm:top-16 md:top-20 z-40">
         <div class="container mx-auto px-2 sm:px-4">
             <div class="categories-scroll flex items-center gap-1 sm:gap-2 py-3 sm:py-4 overflow-x-auto scrollbar-hide">
-                <button class="category-btn category-all active flex-shrink-0 px-3 sm:px-4 md:px-6 py-2 sm:py-2.5 rounded-full font-medium text-xs sm:text-sm transition-all text-white bg-orange-500 hover:bg-orange-600" data-category="all">
+                <button class="category-btn category-all flex-shrink-0 px-3 sm:px-4 md:px-6 py-2 sm:py-2.5 rounded-full font-medium text-xs sm:text-sm transition-all text-white bg-orange-500 hover:bg-orange-600" data-category="all">
                     <i class="fas fa-th-large me-1 sm:me-2"></i><span data-lang-key="cat_all">الكل</span>
                 </button>
                 <button class="category-btn category-nuts flex-shrink-0 px-3 sm:px-4 md:px-6 py-2 sm:py-2.5 rounded-full font-medium text-xs sm:text-sm transition-all text-white bg-orange-500 hover:bg-orange-600" data-category="nuts">
@@ -245,6 +245,9 @@
                 <button class="category-btn category-drinks flex-shrink-0 px-3 sm:px-4 md:px-6 py-2 sm:py-2.5 rounded-full font-medium text-xs sm:text-sm transition-all text-white bg-yellow-500 hover:bg-yellow-600" data-category="drinks">
                     <i class="fas fa-glass-water me-1 sm:me-2"></i><span data-lang-key="cat_drinks">مشروبات</span>
                 </button>
+                <button class="category-btn category-cleaning flex-shrink-0 px-3 sm:px-4 md:px-6 py-2 sm:py-2.5 rounded-full font-medium text-xs sm:text-sm transition-all text-white bg-pink-500 hover:bg-pink-600" data-category="cleaning">
+                    <i class="fas fa-soap me-1 sm:me-2"></i><span data-lang-key="cat_cleaning">مواد نظافة</span>
+                </button>
             </div>
         </div>
     </section>
@@ -258,7 +261,7 @@
                     <span data-lang-key="view_all">عرض الكل</span> <i class="fas fa-arrow-left ms-2 rtl:rotate-0 ltr:rotate-180"></i>
                 </a>
             </div>
-            
+
             <!-- Product Grid -->
             <div id="product-grid" class="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 lg:gap-4">
                 <!-- Products will be dynamically inserted here -->
@@ -337,6 +340,7 @@
                         <li><a href="index.html?category=cosmetics" class="text-gray-400 hover:text-white transition-colors" data-lang-key="cat_cosmetics">مستحضرات تجميل</a></li>
                         <li><a href="index.html?category=diapers" class="text-gray-400 hover:text-white transition-colors" data-lang-key="cat_diapers">حفاضات أطفال</a></li>
                         <li><a href="index.html?category=drinks" class="text-gray-400 hover:text-white transition-colors" data-lang-key="cat_drinks">مشروبات</a></li>
+                        <li><a href="index.html?category=cleaning" class="text-gray-400 hover:text-white transition-colors" data-lang-key="cat_cleaning">مواد نظافة</a></li>
                     </ul>
                 </div>
                 <div>
@@ -365,10 +369,10 @@
     <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-    
+
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    
+
     <!-- Inject Environment Variables -->
     <script>
         window.__FIREBASE_API_KEY__ = '%FIREBASE_API_KEY%';
@@ -379,14 +383,14 @@
         window.__FIREBASE_APP_ID__ = '%FIREBASE_APP_ID%';
         window.__IMGBB_API_KEY__ = '%IMGBB_API_KEY%';
     </script>
-    
+
     <!-- Firebase Configuration -->
     <script src="firebase-config.js"></script>
-    
+
     <!-- Swiper Initialization -->
     <script>
         let heroSwiper = null;
-        
+
         function initHeroSwiper() {
             if (heroSwiper) {
                 heroSwiper.destroy();
@@ -409,15 +413,15 @@
                 speed: 800,
             });
         }
-        
+
         document.addEventListener('DOMContentLoaded', () => {
             initHeroSwiper();
         });
-        
+
         // Make reinitialize function available globally
         window.reinitHeroSwiper = initHeroSwiper;
     </script>
-    
+
     <!-- Main Application Script -->
     <script src="script.js"></script>
 </body>

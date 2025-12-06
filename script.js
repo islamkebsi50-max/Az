@@ -23,7 +23,7 @@ const translations = {
         hero_title: "توابل ومكسرات فاخرة من جميع أنحاء العالم",
         hero_subtitle: "اكتشف مجموعتنا المختارة بعناية من التوابل الأصيلة والمكسرات الطازجة والمنتجات الغذائية المميزة. جودة تتذوقها في كل قضمة.",
         hero_btn: "تسوق الآن",
-        hero_nuts: "أجود أنواع المكسرات الطازجة",
+        hero_nuts: "منتجات نظافة عالية الجودة",
         hero_spices: "نكهات وتوابل أصلية",
         hero_food: "منتجات غذائية أساسية لكل منزل",
         hero_cosmetics: "الجمال والعناية الشخصية",
@@ -32,7 +32,7 @@ const translations = {
         
         // Categories
         cat_all: "الكل",
-        cat_nuts: "مكسرات",
+        cat_nuts: "مواد النظافة",
         cat_spices: "توابل",
         cat_food: "منتجات غذائية",
         cat_cosmetics: "مستحضرات تجميل",
@@ -57,7 +57,7 @@ const translations = {
         feat_support_desc: "فريق دعم متخصص",
         
         // Footer
-        footer_desc: "مصدرك الموثوق للتوابل والمكسرات والمنتجات الغذائية الفاخرة.",
+        footer_desc: "مصدرك الموثوق للتوابل ومواد النظافة والمنتجات الغذائية الفاخرة.",
         footer_links: "روابط سريعة",
         footer_about: "من نحن",
         footer_categories: "الأصناف",
@@ -69,7 +69,7 @@ const translations = {
         about_title: "من نحن",
         about_subtitle: "قصة نجاح AZ Market",
         about_story_title: "قصتنا",
-        about_story_p1: "نحن متجر جزائري رائد متخصص في توفير أجود أنواع المكسرات، التوابل، والمنتجات الغذائية. هدفنا هو إيصال الجودة العالمية إلى باب منزلك.",
+        about_story_p1: "نحن متجر جزائري رائد متخصص في توفير أجود أنواع مواد النظافة، التوابل، والمنتجات الغذائية. هدفنا هو إيصال الجودة العالمية إلى باب منزلك.",
         about_story_p2: "مع سنوات من الخبرة والالتزام بالتميز، نقدم منتجات منتقاة بعناية من أفضل المصادر العالمية، مع ضمان الجودة والأصالة في كل منتج.",
         about_why_title: "لماذا تختار AZ Market؟",
         about_why_subtitle: "أفضل الخدمات والمنتجات لك",
@@ -227,7 +227,7 @@ const translations = {
         hero_title: "Premium Spices & Nuts from Around the World",
         hero_subtitle: "Discover our handpicked selection of authentic spices, fresh nuts, and specialty food products. Quality you can taste in every bite.",
         hero_btn: "Shop Now",
-        hero_nuts: "Premium Fresh Nuts",
+        hero_nuts: "Premium Cleaning Products",
         hero_spices: "Authentic Spices",
         hero_food: "Quality Food Products",
         hero_cosmetics: "Beauty & Care",
@@ -236,7 +236,7 @@ const translations = {
         
         // Categories
         cat_all: "All",
-        cat_nuts: "Nuts",
+        cat_nuts: "Cleaning Products",
         cat_spices: "Spices",
         cat_food: "Food Products",
         cat_cosmetics: "Cosmetics",
@@ -261,7 +261,7 @@ const translations = {
         feat_support_desc: "Dedicated support team",
         
         // Footer
-        footer_desc: "Your trusted source for premium spices, nuts, and specialty food products.",
+        footer_desc: "Your trusted source for premium spices, cleaning products, and specialty food products.",
         footer_links: "Quick Links",
         footer_about: "About Us",
         footer_categories: "Categories",
@@ -273,7 +273,7 @@ const translations = {
         about_title: "About Us",
         about_subtitle: "AZ Market Success Story",
         about_story_title: "Our Story",
-        about_story_p1: "We are a leading Algerian store specializing in providing the finest types of nuts, spices, and food products. Our goal is to deliver world-class quality to your doorstep.",
+        about_story_p1: "We are a leading Algerian store specializing in providing the finest types of cleaning products, spices, and food products. Our goal is to deliver world-class quality to your doorstep.",
         about_story_p2: "With years of experience and commitment to excellence, we offer carefully selected products from the best global sources, with guaranteed quality and authenticity in every product.",
         about_why_title: "Why Choose AZ Market?",
         about_why_subtitle: "Best Services and Products for You",
@@ -514,7 +514,7 @@ function t(key) {
 
 const categoryLabels = {
     ar: {
-        'nuts': 'مكسرات',
+        'nuts': 'مواد النظافة',
         'spices': 'توابل',
         'food': 'منتجات غذائية',
         'cosmetics': 'مستحضرات تجميل',
@@ -522,7 +522,7 @@ const categoryLabels = {
         'drinks': 'مشروبات'
     },
     en: {
-        'nuts': 'Nuts',
+        'nuts': 'Cleaning Products',
         'spices': 'Spices',
         'food': 'Food Products',
         'cosmetics': 'Cosmetics',

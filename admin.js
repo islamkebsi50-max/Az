@@ -491,7 +491,7 @@ async function loadProducts() {
 
 function createProductItem(product) {
     const categoryLabels = {
-        'nuts': 'المكسرات',
+        'nuts': 'مواد النظافة',
         'spices': 'البهارات',
         'food': 'منتجات غذائية',
         'cosmetics': 'مستحضرات التجميل',
@@ -706,10 +706,10 @@ async function generateDemoData() {
             prices: [320, 180, 450, 200, 150]
         },
         nuts: {
-            brands: ["Soummam", "Safina", "Ngaous", "Sim", "Elio"],
-            items: ["Almonds", "Walnuts", "Pistachios", "Hazelnuts", "Cashews"],
-            itemsAr: ["لوز", "جوز", "فستق", "بندق", "كاجو"],
-            prices: [450, 380, 520, 400, 480]
+            brands: ["Persil", "Ariel", "Tide", "Omo", "Elio"],
+            items: ["Detergent", "Soap", "Bleach", "Floor Cleaner", "Dish Soap"],
+            itemsAr: ["مسحوق غسيل", "صابون", "مبيض", "منظف أرضيات", "سائل جلي"],
+            prices: [250, 180, 220, 300, 200]
         },
         spices: {
             brands: ["Soummam", "Cevital", "Safina", "Ngaous", "Sim"],
